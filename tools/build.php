@@ -19,6 +19,10 @@ $stub = function (string $dir, string $slug, string $template) use ($root, &$wri
 };
 foreach ($pages as $slug => $page) { $stub(str_starts_with($slug, 'legal/') ? $slug : 'pages/'.$slug, $slug, '_page_template.php'); }
 foreach ($hubs as $hub) { $stub('pages/'.$hub, $hub, '_hub_template.php'); }
+$services = require __DIR__.'/../content/services.php';
+$stub('pages/services', 'services', '_service_template.php');
+foreach (array_keys($services) as $sk) { $stub('pages/services/'.$sk, 'services/'.$sk, '_service_template.php'); }
+$expected[] = 'pages/jurisdictions'; // hand-written page, not a generated stub
 
 // Report stub folders with no matching registry entry (they would render the 404 page).
 $orphans = [];
@@ -27,11 +31,13 @@ foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator("$root/pag
   if ($f->getFilename() === 'index.php' && !in_array($dir, $expected, true)) $orphans[] = $dir;
 }
 
-// Sitemap: indexable pages only (legal pages are noindex until final text is approved).
-$entries = [[page_url(''), null, 'weekly', '1.0'], [page_url('about'), null, 'monthly', '0.7']];
-foreach ($hubs as $hub) { $entries[] = [page_url($hub), null, 'monthly', '0.9']; }
+// Sitemap: indexable pages only (legal pages and Phase A topic/service pages are noindex).
+$entries = [[page_url(''), null, 'weekly', '1.0'], [page_url('jurisdictions'), null, 'monthly', '0.9'], [page_url('get-started'), null, 'monthly', '0.8'], [page_url('services'), null, 'monthly', '0.8']];
+foreach (['about', 'about/methodology', 'about/source-policy', 'about/editorial-policy'] as $p) { $entries[] = [page_url($p), null, 'monthly', '0.6']; }
+foreach ($hubs as $hub) { $entries[] = [page_url($hub), site_registry()['sources'][$hub]['verified'] ?? null, 'monthly', '0.9']; }
+foreach (array_keys($services) as $sk) { $entries[] = [page_url('services/'.$sk), null, 'monthly', '0.8']; }
 foreach ($pages as $slug => $page) {
-  if ($page['kind'] === 'legal') continue;
+  if ($page['kind'] === 'legal' || !empty($page['noindex'])) continue;
   $entries[] = [page_url($slug), $page['verified'] ?? null, 'monthly', '0.8'];
 }
 $xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n";
@@ -39,6 +45,12 @@ foreach ($entries as [$loc, $lastmod, $freq, $prio]) {
   $xml .= '<url><loc>'.e($loc).'</loc>'.($lastmod ? "<lastmod>$lastmod</lastmod>" : '')."<changefreq>$freq</changefreq><priority>$prio</priority></url>\n";
 }
 file_put_contents("$root/sitemap.xml", $xml."</urlset>\n");
+
+// Source registry export for review (docs/ is not web-accessible).
+$fh = fopen("$root/docs/source-registry.csv", 'w');
+fputcsv($fh, ['id', 'jurisdiction', 'fact', 'source', 'url', 'verified', 'notes', 'status'], ',', '"', '');
+foreach (source_registry() as $row) { fputcsv($fh, array_values($row), ',', '"', ''); }
+fclose($fh);
 
 echo count($pages)." content pages, ".count($hubs)." hubs; $written stub files written; ".count($entries)." sitemap URLs\n";
 if ($orphans) echo "Stub folders with no content entry (delete them):\n  ".implode("\n  ", $orphans)."\n";

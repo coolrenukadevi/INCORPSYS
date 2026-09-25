@@ -1,4 +1,60 @@
-<?php $page=$page??[];$navSources=site_registry()['sources'];$title=$page['title']??DEFAULT_TITLE;$description=$page['description']??DEFAULT_DESCRIPTION;$canonical=page_url($page['slug']??'');$robots=($noindex??false)?'noindex,nofollow':'index,follow,max-image-preview:large';$ogImage=url('assets/incorpsys-logo.png'); ?>
-<!doctype html><html lang="en-IN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title><?=e($title)?></title><meta name="description" content="<?=e($description)?>"><meta name="robots" content="<?=e($robots)?>"><?php if(!($noindex??false)):?><link rel="canonical" href="<?=e($canonical)?>"><?php endif;?><link rel="icon" href="<?=e(asset('favicon.png'))?>" type="image/png"><link rel="apple-touch-icon" href="<?=e(asset('icon-192.png'))?>"><meta property="og:type" content="website"><meta property="og:site_name" content="INCORPSYS"><meta property="og:title" content="<?=e($title)?>"><meta property="og:description" content="<?=e($description)?>"><meta property="og:url" content="<?=e($canonical)?>"><meta property="og:image" content="<?=e($ogImage)?>"><meta property="og:image:alt" content="INCORPSYS — Global Company Incorporation"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="<?=e($title)?>"><meta name="twitter:description" content="<?=e($description)?>"><meta name="twitter:image" content="<?=e($ogImage)?>"><meta name="theme-color" content="#07264f"><link rel="manifest" href="/manifest.webmanifest"><link rel="stylesheet" href="<?=e(asset('css/site.css'))?>"></head><body><a class="skip" href="#main">Skip to content</a>
-<div class="utility"><div class="utility-left"><a href="/login/">Login</a><a class="signup" href="/signup/">Sign Up</a></div><div class="utility-center">Technology-Driven Global Company Incorporation</div><div class="utility-right"><a href="mailto:<?=e(SITE_EMAIL)?>"><?=e(SITE_EMAIL)?></a><span>•</span><a href="<?=e(tel_url())?>"><?=e(SITE_PHONE)?></a></div></div>
-<header class="header"><div class="container header-in"><a class="logo" href="/" aria-label="INCORPSYS home"><img src="<?=e(asset('incorpsys-logo.png'))?>" alt="INCORPSYS — Global Company Incorporation" width="1400" height="425" fetchpriority="high"></a><button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="Open menu"><span></span><span></span><span></span></button><nav class="nav" id="primary-nav" aria-label="Primary"><a href="/">Home</a><a href="/about/">About</a><a href="/#services">Services</a><div class="nav-group"><button class="nav-parent" type="button" aria-expanded="false" aria-controls="nav-jurisdictions">Jurisdictions <span aria-hidden="true">⌄</span></button><div class="nav-panel" id="nav-jurisdictions"><?php foreach($navSources as $k=>$s):?><a href="<?=e(path_url($k))?>"><?=e($s['label'])?></a><?php endforeach;?></div></div><a href="/resources/">Resources</a><a href="/contact/">Contact</a><a class="nav-contact" href="mailto:<?=e(SITE_EMAIL)?>"><?=e(SITE_EMAIL)?></a><a class="nav-contact" href="<?=e(tel_url())?>"><?=e(SITE_PHONE)?></a><a class="nav-cta" href="/#enquiry">Enquiry Now</a></nav></div></header>
+<?php
+$page=$page??[];
+$title=$page['title']??DEFAULT_TITLE;
+$description=$page['description']??DEFAULT_DESCRIPTION;
+$canonical=page_url($page['slug']??'');
+$robots=($noindex??false)?'noindex,follow':'index,follow,max-image-preview:large';
+$ogImage=url('assets/img/og-default.png');
+$nav=require __DIR__.'/../content/navigation.php';
+$current=path_url($page['slug']??'');
+?><!DOCTYPE html>
+<html lang="en" class="no-js"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<script><?=JS_FLAG_SCRIPT?></script>
+<title><?=e($title)?></title>
+<meta name="description" content="<?=e($description)?>"><meta name="robots" content="<?=e($robots)?>"><?php if(!($noindex??false)):?><link rel="canonical" href="<?=e($canonical)?>"><?php endif;?>
+<link rel="preload" href="<?=e(asset('fonts/inter-var-latin.woff2'))?>" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="<?=e(asset('css/site.css'))?>">
+<link rel="icon" href="<?=e(asset('favicon.png'))?>" type="image/png"><link rel="apple-touch-icon" href="<?=e(asset('icon-192.png'))?>"><link rel="manifest" href="/manifest.webmanifest"><meta name="theme-color" content="#0a2146">
+<meta property="og:type" content="website"><meta property="og:site_name" content="INCORPSYS"><meta property="og:title" content="<?=e($title)?>"><meta property="og:description" content="<?=e($description)?>"><meta property="og:url" content="<?=e($canonical)?>"><meta property="og:image" content="<?=e($ogImage)?>"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="INCORPSYS — Build your business beyond borders"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@incorpsys"><meta name="twitter:title" content="<?=e($title)?>"><meta name="twitter:description" content="<?=e($description)?>"><meta name="twitter:image" content="<?=e($ogImage)?>">
+</head><body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" id="site-header">
+  <div class="utility"><div class="container utility-in">
+    <p class="utility-context"><?=icon('map-pin')?> Company setup in UAE · Singapore · Hong Kong · UK · USA · Malaysia</p>
+    <ul class="utility-links">
+      <li><a href="<?=e(tel_url())?>"><?=icon('phone')?><span class="label-long"><?=e(SITE_PHONE)?></span><span class="visually-hidden">Call INCORPSYS</span></a></li>
+      <li><a href="<?=e(wa_url())?>" target="_blank" rel="noopener"><?=icon('message-circle')?>WhatsApp</a></li>
+      <li><a href="mailto:<?=e(SITE_EMAIL)?>"><?=icon('mail')?><span class="label-long"><?=e(SITE_EMAIL)?></span><span class="visually-hidden">Email INCORPSYS</span></a></li>
+    </ul>
+  </div></div>
+  <div class="masthead"><div class="container masthead-in">
+    <a class="logo" href="/" aria-label="INCORPSYS home"><picture><source type="image/webp" srcset="<?=e(asset('img/logo-48.webp'))?> 239w, <?=e(asset('img/logo-96.webp'))?> 479w, <?=e(asset('img/logo-144.webp'))?> 718w" sizes="(max-width: 640px) 170px, 220px"><img src="<?=e(asset('img/logo-96.png'))?>" srcset="<?=e(asset('img/logo-96.png'))?> 479w, <?=e(asset('img/logo-144.png'))?> 718w" sizes="(max-width: 640px) 170px, 220px" alt="INCORPSYS — Global Company Incorporation" width="220" height="44" fetchpriority="high"></picture></a>
+    <nav class="primary-nav" id="primary-nav" aria-label="Primary">
+      <ul class="nav-list">
+        <?php foreach($nav as $id=>$menu): $cols=count($menu['cols']);?>
+        <li class="nav-item">
+          <button class="nav-trigger" type="button" aria-expanded="false" aria-controls="mega-<?=e($id)?>"><?=e($menu['label'])?><?=icon('chevron-down')?></button>
+          <div class="mega" id="mega-<?=e($id)?>"><div class="container mega-in mega-cols-<?=$cols?>">
+            <?php foreach($menu['cols'] as $col):?><div>
+              <p class="mega-title"><?=$col['title']?></p>
+              <ul class="mega-list"><?php foreach($col['links'] as $l):?><li><a href="<?=e($l['url'])?>"<?=$current===$l['url']?' aria-current="page"':''?>><?=icon($col['icon'])?><span><b><?=e($l['label'])?></b><small><?=e($l['desc'])?></small></span></a></li><?php endforeach;?></ul>
+              <?php if(!empty($menu['all'])&&$col===end($menu['cols'])):?><a class="mega-all" href="<?=e($menu['all']['url'])?>"><?=e($menu['all']['label'])?><?=icon('arrow-right')?></a><?php endif;?>
+            </div><?php endforeach;?>
+            <div class="mega-feature"><b><?=e($menu['feature']['title'])?></b><p><?=e($menu['feature']['text'])?></p><a class="btn btn-on-dark btn-sm" href="<?=e($menu['feature']['url'])?>"><?=e($menu['feature']['cta'])?><?=icon('arrow-right')?></a></div>
+          </div></div>
+        </li>
+        <?php endforeach;?>
+      </ul>
+      <div class="nav-mobile-only">
+        <a class="btn btn-primary btn-block" href="/get-started/">Get Started<?=icon('arrow-right')?></a>
+        <div class="grid grid-2 gap-3"><a class="btn btn-secondary" href="/login/">Login</a><a class="btn btn-secondary" href="/signup/">Sign Up</a></div>
+      </div>
+    </nav>
+    <div class="header-actions">
+      <a class="btn btn-ghost btn-sm hide-tablet" href="/login/">Login</a>
+      <a class="btn btn-secondary btn-sm hide-tablet" href="/signup/">Sign Up</a>
+      <a class="btn btn-primary btn-sm" href="/get-started/">Get Started</a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav"><span class="icon-open"><?=icon('menu')?></span><span class="icon-close"><?=icon('x')?></span><span class="visually-hidden">Menu</span></button>
+    </div>
+  </div></div>
+</header>

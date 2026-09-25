@@ -26,12 +26,14 @@ $serviceLenses=[
  'business-expansion'=>'For expansion, separate incorporation decisions from operational requirements in the target market and verify each stage with the applicable local authority.'
 ];
 
+// Phase A pages are template-generated (same text for every country, ~1% unique). They stay reachable but are
+// noindex and out of the sitemap until rewritten with jurisdiction-specific, sourced content: remove 'noindex' per page then.
 $pages=[];
 foreach($sources as $key=>$src){
   foreach($topics as $slugTopic=>$topicName){
     $slug=$key.'/'.$slugTopic;
     $pages[$slug]=[
-      'slug'=>$slug,'jurisdiction'=>$key,'kind'=>'topic','name'=>$topicName,'title'=>$src['label'].' '.$topicName.' | INCORPSYS','h1'=>$topicName.' in '.$src['label'],
+      'slug'=>$slug,'jurisdiction'=>$key,'kind'=>'topic','noindex'=>true,'name'=>$topicName,'title'=>$src['label'].' '.$topicName.' | INCORPSYS','h1'=>$topicName.' in '.$src['label'],
       'eyebrow'=>'SOURCE-BACKED JURISDICTION GUIDE',
       'description'=>'A source-backed INCORPSYS guide to '.strtolower($topicName).' in '.$src['label'].', with official-source verification and next-step guidance.',
       'answer'=>'Use the official authority cited on this page as the controlling source for current rules in '.$src['label'].'. INCORPSYS structures the information into practical steps so requirements can be verified before submitting or paying.',
@@ -56,7 +58,7 @@ foreach($sources as $key=>$src){
   foreach($services as $serviceSlug=>$serviceName){
     $slug=$key.'/'.$serviceSlug;
     $pages[$slug]=[
-      'slug'=>$slug,'jurisdiction'=>$key,'kind'=>'service','name'=>$serviceName,'title'=>$serviceName.' in '.$src['label'].' | INCORPSYS','h1'=>$serviceName.' in '.$src['label'],
+      'slug'=>$slug,'jurisdiction'=>$key,'kind'=>'service','noindex'=>true,'name'=>$serviceName,'title'=>$serviceName.' in '.$src['label'].' | INCORPSYS','h1'=>$serviceName.' in '.$src['label'],
       'eyebrow'=>'GLOBAL BUSINESS SETUP',
       'description'=>$serviceName.' in '.$src['label'].' with official-source verification, structured workflows and practical next steps from INCORPSYS.',
       'answer'=>'Start with the official authority for '.$src['label'].' and verify which registration, licensing or compliance obligations apply to the exact structure and activity. INCORPSYS can then organize the information into an execution-ready workflow.',

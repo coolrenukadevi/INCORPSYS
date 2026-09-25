@@ -5,30 +5,63 @@ $slug=trim((string)($GLOBALS['PAGE_SLUG']??''),'/');
 $page=$pages[$slug]??null;
 if(!$page){require __DIR__.'/../404.php';return;}
 $kind=$page['kind'];$jKey=$page['jurisdiction']??null;$jLabel=$jKey?$reg['sources'][$jKey]['label']:null;
-if($kind==='legal') $noindex=true;
+if($kind==='legal'||!empty($page['noindex'])) $noindex=true;
 $crumbs=[['name'=>'Home','slug'=>'']];
 if($jKey) $crumbs[]=['name'=>$jLabel,'slug'=>$jKey];
 elseif($kind==='resource') $crumbs[]=['name'=>'Resources','slug'=>'resources'];
 $crumbs[]=['name'=>$page['name'],'slug'=>$slug];
-// Related links: the rest of this jurisdiction (plus the same topic elsewhere), or the rest of the resource library.
+// Related links: this jurisdiction's other pages, the same topic elsewhere, or the rest of the resource library.
 $related=[];$sameName=[];
 if($jKey){
   $siblings=array_filter($pages,fn($p)=>($p['jurisdiction']??null)===$jKey&&$p['slug']!==$slug);
-  foreach(['topic'=>'Guides','guide'=>'In-depth guides','service'=>'Services'] as $k=>$heading){ $list=array_filter($siblings,fn($p)=>$p['kind']===$k); if($list) $related[$heading]=$list; }
+  foreach(['guide'=>'In-depth guides','topic'=>'Topic checklists','service'=>'Services'] as $k=>$heading){ $list=array_filter($siblings,fn($p)=>$p['kind']===$k); if($list) $related[$heading]=$list; }
   $rest=substr($slug,strlen($jKey)+1);
   $sameName=array_filter($pages,fn($p)=>($p['jurisdiction']??null)!==null&&$p['jurisdiction']!==$jKey&&$p['slug']===$p['jurisdiction'].'/'.$rest);
 }elseif($kind==='resource'){
   $related['Resource guides']=array_filter($pages,fn($p)=>$p['kind']==='resource'&&$p['slug']!==$slug);
 }
+$services=require __DIR__.'/../content/services.php';
 $verified=$page['verified']??null;
+$eyebrow=$page['eyebrow']??'INCORPSYS';
 include __DIR__.'/../partials/header.php';?>
-<main id="main"><section class="page-hero"><div class="container"><nav class="breadcrumbs" aria-label="Breadcrumb"><?php foreach($crumbs as $i=>$c): ?><?php if($i>0):?> <span>›</span> <?php endif;?><?php if($i<count($crumbs)-1):?><a href="<?=e(path_url($c['slug']))?>"><?=e($c['name'])?></a><?php else:?><span aria-current="page"><?=e($c['name'])?></span><?php endif;?><?php endforeach;?></nav><div class="eyebrow"><?=e($page['eyebrow']??'INCORPSYS')?></div><h1><?=e($page['h1']??$page['title'])?></h1><p class="page-sub"><?=e($page['description']??'')?></p><?php if($verified&&in_array($kind,['guide','resource'],true)):?><div class="page-meta"><span>Official sources checked <?=e(date('j F Y',strtotime($verified)))?></span></div><?php endif;?></div></section>
-<section class="section" style="padding-top:26px"><div class="container"><div class="answer"><div class="answer-label">DIRECT ANSWER</div><div><?=e($page['answer']??'Use the official source linked on this page to verify current requirements.')?></div></div><div class="content-grid"><article class="article"><?php foreach(($page['sections']??[]) as $section): ?><section><h2><?=e($section['title'])?></h2><?php if(!empty($section['body'])):?><p><?=e($section['body'])?></p><?php endif;?><?php $bullets=array_filter($section['bullets']??[],fn($b)=>trim($b)!==''); if($bullets):?><ul><?php foreach($bullets as $b):?><li><?=e($b)?></li><?php endforeach;?></ul><?php endif;?></section><?php endforeach;?><?php if(!empty($page['faqs'])):?><section><h2>Frequently asked questions</h2><?php foreach($page['faqs'] as $faq):?><div class="faq"><div class="q"><?=e($faq['q'])?></div><div><?=e($faq['a'])?></div></div><?php endforeach;?></section><?php endif;?><section><h2>Start an enquiry</h2><p>Call <a href="<?=e(tel_url())?>"><?=e(SITE_PHONE)?></a>, email <a href="mailto:<?=e(SITE_EMAIL)?>"><?=e(SITE_EMAIL)?></a>, or <a href="<?=e(wa_url())?>" target="_blank" rel="noopener">start a WhatsApp conversation</a>.</p></section></article>
-<aside class="source"><?php if(!empty($page['source'])): $src=$page['source'];?><div class="tag">OFFICIAL SOURCE</div><h3><?=e($src['authority'])?></h3><p><strong><?=e($src['title'])?></strong></p><p><?=e($src['note'])?></p><a class="source-main" href="<?=e($src['url'])?>" target="_blank" rel="noopener noreferrer">Open official source ↗</a><?php if(!empty($src['links'])):?><div class="tag" style="margin-top:18px">SOURCE LIBRARY</div><div class="source-links"><?php foreach($src['links'] as $link):?><a href="<?=e($link['url'])?>" target="_blank" rel="noopener noreferrer"><?=e($link['title'])?> ↗</a><?php endforeach;?></div><?php endif;?><small>Source pages can change. Re-check before filing, payment or relying on a rule.</small>
-<?php elseif($kind==='resource'):?><div class="tag">OFFICIAL SOURCES BY JURISDICTION</div><h3>Find the controlling authority</h3><p>This guide applies across jurisdictions. Confirm the rules with the authority for the country you choose.</p><div class="source-links"><?php foreach($reg['sources'] as $src):?><a href="<?=e($src['url'])?>" target="_blank" rel="noopener noreferrer"><b><?=e($src['label'])?></b> · <?=e($src['authority'])?> ↗</a><?php endforeach;?></div><small>Source pages can change. Re-check before filing, payment or relying on a rule.</small>
-<?php else:?><div class="tag">CONTACT INCORPSYS</div><h3>Talk to the team</h3><div class="source-links"><a href="mailto:<?=e(SITE_EMAIL)?>"><?=e(SITE_EMAIL)?></a><a href="<?=e(tel_url())?>"><?=e(SITE_PHONE)?></a><a href="<?=e(wa_url())?>" target="_blank" rel="noopener">WhatsApp ↗</a></div><?php endif;?></aside></div></div></section>
-<?php if($related||$sameName):?><section class="section related" style="padding-top:0"><div class="container"><div class="related-grid"><div class="card"><h2><?=e($jKey?'More for '.$jLabel:'More resource guides')?></h2><?php foreach($related as $heading=>$list):?><?php if($jKey):?><h3><?=e($heading)?></h3><?php endif;?><ul class="link-list"><?php foreach($list as $p):?><li><a href="<?=e(path_url($p['slug']))?>"><?=e($p['name'])?></a></li><?php endforeach;?></ul><?php endforeach;?></div><?php if($sameName):?><div class="card"><h2><?=e($page['name'])?> in other jurisdictions</h2><ul class="link-list"><?php foreach($sameName as $p):?><li><a href="<?=e(path_url($p['slug']))?>"><?=e($reg['sources'][$p['jurisdiction']]['label'])?></a></li><?php endforeach;?></ul></div><?php elseif($kind==='resource'):?><div class="card"><h2>Guides by jurisdiction</h2><ul class="link-list"><?php foreach($reg['sources'] as $k=>$src):?><li><a href="<?=e(path_url($k))?>"><?=e($src['label'])?></a></li><?php endforeach;?></ul></div><?php endif;?></div></div></section><?php endif;?>
-<?php if($kind!=='legal'):?><section class="section" style="padding-top:0"><div class="container enquiry" id="enquiry"><div><div class="eyebrow" style="color:#8fc1ff">READY TO MOVE FORWARD?</div><h2>Turn verified information into an action plan.</h2><p>Tell us the jurisdiction, structure and business objective so the next step can be organized around the applicable source.</p></div><?php $formJurisdiction=$jLabel??'';include __DIR__.'/../partials/enquiry-form.php';?></div></section><?php endif;?></main>
-<?php if(!($noindex??false)):?><script type="application/ld+json"><?=json_encode(array_filter(['@context'=>'https://schema.org','@type'=>$kind==='contact'?'ContactPage':'WebPage','name'=>$page['title'],'description'=>$page['description'],'url'=>page_url($slug),'dateModified'=>$verified,'publisher'=>['@type'=>'Organization','name'=>'INCORPSYS','url'=>SITE_URL],'breadcrumb'=>['@type'=>'BreadcrumbList','itemListElement'=>array_map(fn($c,$i)=>['@type'=>'ListItem','position'=>$i+1,'name'=>$c['name'],'item'=>page_url($c['slug'])],$crumbs,array_keys($crumbs))]]),JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE)?></script>
-<?php if(!empty($page['faqs'])):?><script type="application/ld+json"><?=json_encode(['@context'=>'https://schema.org','@type'=>'FAQPage','mainEntity'=>array_map(fn($x)=>['@type'=>'Question','name'=>$x['q'],'acceptedAnswer'=>['@type'=>'Answer','text'=>$x['a']]],$page['faqs'])],JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE)?></script><?php endif;?><?php endif;?>
+<main id="main">
+<?=page_hero($eyebrow,$page['h1']??$page['title'],$page['description']??'',$crumbs,in_array($kind,['guide','resource'],true)?verified_badge($verified):'')?>
+<section class="content-body"><div class="container layout-aside">
+  <div class="content-main">
+    <?=answer_block($page['answer']??'Use the official source linked on this page to verify current requirements.')?>
+    <?php foreach(($page['sections']??[]) as $i=>$section): $bullets=array_filter($section['bullets']??[],fn($b)=>trim($b)!==''); ?>
+    <section class="content-section" aria-labelledby="s<?=$i?>"><h2 id="s<?=$i?>"><?=e($section['title'])?></h2><?php if(!empty($section['body'])):?><p><?=e($section['body'])?></p><?php endif;?><?php if($bullets):?><ul><?php foreach($bullets as $b):?><li><?=e($b)?></li><?php endforeach;?></ul><?php endif;?></section>
+    <?php endforeach;?>
+    <?php if($kind==='contact'):?><?php include __DIR__.'/../partials/enquiry-form.php';?><?php endif;?>
+    <?=faq_accordion($page['faqs']??[])?>
+    <?php if($kind!=='legal'):?><div class="alert alert-info"><?=icon('info')?><div><strong>How we write our guides</strong>We summarise official guidance and link to it. We do not publish fees, timelines or approval promises unless the authority does. <a href="/about/methodology/">Read our methodology</a>.</div></div><?php endif;?>
+  </div>
+  <aside class="source-rail" aria-label="Sources and contact">
+    <?php if(!empty($page['source'])):?><?=source_card($page['source'],$verified)?>
+    <?php elseif($kind==='resource'):?><div class="source-card"><span class="eyebrow">Official sources by jurisdiction</span><h2 class="mt-2">Find the controlling authority</h2><p>This guide applies across jurisdictions. Confirm the rules with the authority for the country you choose.</p><ul class="source-list"><?php foreach($reg['sources'] as $src):?><li><a href="<?=e($src['url'])?>" target="_blank" rel="noopener noreferrer"><?=e($src['label'].' — '.$src['authority'])?><?=icon('external-link')?></a></li><?php endforeach;?></ul></div>
+    <?php endif;?>
+    <?=contact_card()?>
+  </aside>
+</div></section>
+<?php if($related||$sameName):?>
+<section class="section-tight section-subtle"><div class="container related-grid">
+  <div class="card related-block"><h2><?=e($jKey?'More for '.$jLabel:'More resource guides')?></h2><?php foreach($related as $heading=>$list):?><?php if($jKey):?><h3><?=e($heading)?></h3><?php endif;?><ul class="link-list"><?php foreach($list as $p):?><li><a href="<?=e(path_url($p['slug']))?>"><?=icon('chevron-right')?><?=e($p['name'])?></a></li><?php endforeach;?></ul><?php endforeach;?></div>
+  <div class="stack">
+    <?php if($sameName):?><div class="card related-block"><h2>Compare with</h2><ul class="link-list"><?php foreach($sameName as $p):?><li><a href="<?=e(path_url($p['slug']))?>"><?=icon('chevron-right')?><?=e($p['name'].' — '.$reg['sources'][$p['jurisdiction']]['label'])?></a></li><?php endforeach;?></ul></div><?php endif;?>
+    <?php if(!$jKey):?><div class="card related-block"><h2>Guides by jurisdiction</h2><ul class="link-list"><?php foreach($reg['sources'] as $k=>$src):?><li><a href="<?=e(path_url($k))?>"><?=icon('chevron-right')?><?=e($src['label'])?></a></li><?php endforeach;?></ul></div><?php endif;?>
+    <div class="card related-block"><h2>Popular services</h2><ul class="link-list"><?php foreach(array_slice($services,0,6,true) as $sk=>$sv):?><li><a href="/services/<?=e($sk)?>/"><?=icon('chevron-right')?><?=e($sv['name'])?></a></li><?php endforeach;?></ul></div>
+    <div class="card related-block"><h2>Next steps</h2><ul class="link-list"><?php if($jKey):?><li><a href="<?=e(path_url($jKey))?>"><?=icon('chevron-right')?>All <?=e($jLabel)?> guides</a></li><?php endif;?><li><a href="/jurisdictions/"><?=icon('chevron-right')?>Compare jurisdictions</a></li><li><a href="/get-started/<?=$jKey?'?country='.e($jKey):''?>"><?=icon('chevron-right')?>Start your enquiry</a></li></ul></div>
+  </div>
+</div></section>
+<?php endif;?>
+<?php if($kind!=='legal'):?><?=cta_band($jKey??'',$jLabel??'')?><?php endif;?>
+</main>
+<?php if(!($noindex??false)):
+  $isArticle=in_array($kind,['guide','resource'],true);
+  $schema=['@context'=>'https://schema.org','@type'=>$kind==='contact'?'ContactPage':($isArticle?'Article':'WebPage'),($isArticle?'headline':'name')=>$page['h1']??$page['title'],'description'=>$page['description'],'url'=>page_url($slug),'mainEntityOfPage'=>page_url($slug),'inLanguage'=>'en','publisher'=>publisher(),'breadcrumb'=>breadcrumb_schema($crumbs)];
+  if($verified){$schema['dateModified']=$verified;}
+  if($isArticle){$schema['author']=publisher();$schema['image']=url('assets/img/og-default.png');}
+  echo json_ld($schema);
+  if(!empty($page['faqs'])) echo json_ld(faq_schema($page['faqs']));
+endif;?>
 <?php include __DIR__.'/../partials/footer.php';?>

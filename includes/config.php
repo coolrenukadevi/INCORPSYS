@@ -7,6 +7,24 @@ const SITE_PHONE = '+91 78448 19819';
 const SITE_PHONE_TEL = '+917844819819';
 const WHATSAPP_NUMBER = '917844819819';
 const MAIL_FROM = 'noreply@incorpsys.com';
+// Official social profiles: footer links and Organization schema sameAs.
+const SOCIAL_LINKS = [
+  'Facebook' => 'https://www.facebook.com/incorpsys',
+  'X' => 'https://x.com/incorpsys',
+  'Instagram' => 'https://www.instagram.com/incorpsys',
+  'LinkedIn' => 'https://in.linkedin.com/company/incorpsys',
+  'YouTube' => 'https://www.youtube.com/@incorpsys',
+];
+// Allowed answers for the setup finder, INCORPSYS Assist and the enquiry wizard (validated server-side against these keys).
+const ENQUIRY_OPTIONS = [
+  'need' => ['incorporation' => 'Company incorporation', 'licensing' => 'Business licence', 'banking' => 'Corporate banking', 'visa' => 'Visa & residency', 'compliance' => 'Compliance & documentation', 'support' => 'Ongoing corporate support', 'expansion' => 'International expansion', 'other' => 'Something else'],
+  'activity' => ['undecided' => 'Not sure yet', 'trading' => 'Trading / import-export', 'professional' => 'Professional or consulting services', 'technology' => 'Technology / software', 'ecommerce' => 'E-commerce', 'holding' => 'Holding company', 'regulated' => 'Financial or other regulated activity', 'other' => 'Something else'],
+  'structure' => ['undecided' => 'Not sure yet', 'new-company' => 'A new company', 'branch' => 'A branch of an existing company'],
+  'ownership' => ['undecided' => 'Not sure yet', 'foreign-individual' => 'Individual(s) based abroad', 'local-individual' => 'Individual(s) based in that country', 'corporate' => 'An existing company'],
+  'visa' => ['undecided' => 'Not sure yet', 'founders' => 'Yes, for founders', 'employees' => 'Yes, for employees', 'no' => 'No visa needed'],
+  'timeline' => ['asap' => 'Within a month', '1-3' => 'In 1–3 months', '3-6' => 'In 3–6 months', 'exploring' => 'Just exploring'],
+  'contact_method' => ['email' => 'Email', 'phone' => 'Phone call', 'whatsapp' => 'WhatsApp'],
+];
 const DEFAULT_TITLE = 'INCORPSYS | Global Company Incorporation';
 const DEFAULT_DESCRIPTION = 'Technology-driven global company incorporation and business setup information structured around official source material and clear next steps.';
 function e(string $value): string { return htmlspecialchars($value, ENT_QUOTES, 'UTF-8'); }
@@ -28,3 +46,14 @@ function form_secret(): string { return (string)(getenv('INCORPSYS_FORM_SECRET')
 function form_token(): string { $t=(string)time(); return $t.'.'.hash_hmac('sha256',$t,form_secret()); }
 function site_data(): array { static $d=null; return $d ??= require __DIR__.'/data.php'; }
 function site_registry(): array { static $r=null; return $r ??= require __DIR__.'/../content/registry.php'; }
+require_once __DIR__.'/../partials/icons.php';
+require_once __DIR__.'/../partials/components.php';
+require_once __DIR__.'/../content/source-registry.php';
+// Swaps <html class="no-js"> to "js" before first paint; allowed by hash in the CSP below.
+const JS_FLAG_SCRIPT = "document.documentElement.classList.replace('no-js','js')";
+function send_security_headers(): void {
+  if (PHP_SAPI === 'cli' || headers_sent()) return;
+  $hash = base64_encode(hash('sha256', JS_FLAG_SCRIPT, true));
+  header("Content-Security-Policy: default-src 'self'; script-src 'self' 'sha256-$hash'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'self'; base-uri 'self'; object-src 'none'");
+}
+send_security_headers();

@@ -9,16 +9,12 @@ function p2_make(array $src, string $slug, string $title, string $h1, string $de
   $global=!empty($src['global']);
   $sections=[
     ['title'=>$global?'Which authority applies':'Official-source position','body'=>$src['note']],
-    ['title'=>'What this page is for','body'=>$description],
     ['title'=>'Practical checklist','bullets'=>$focus],
-    ['title'=>'How to use the information','body'=>'Start with the linked official source, confirm that it applies to the exact entity, activity and applicant profile, and retain the source URL and verification date in the working file.'],
-    ['title'=>'What not to assume','body'=>'Do not treat third-party pricing, timing, approval promises or provider-specific document requests as statutory requirements unless the competent authority expressly supports them.'],
   ];
   foreach($extraSections as $s){ $sections[]=$s; }
   $faqs=[
     ['q'=>'Which authority controls this topic?','a'=>$global?'It depends on the jurisdiction. Use the official source directory on this page to find the registry or government authority for your jurisdiction, and use its current guidance before acting.':$src['authority'].' is the primary authority linked on this page; use its current service or guidance page before acting.'],
-    ['q'=>'Can requirements change?','a'=>'Yes. Forms, fees, processing routes and eligibility can change. Re-check the official source immediately before filing or payment.'],
-    ['q'=>'Can INCORPSYS help organize the next step?','a'=>'Yes. Use the enquiry, email, phone or WhatsApp options to request a structured, source-backed workflow.'],
+
   ];
   foreach($extraFaqs as $f){ $faqs[]=$f; }
   return [
