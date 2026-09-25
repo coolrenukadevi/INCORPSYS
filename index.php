@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__.'/includes/config.php';
-$page=['slug'=>'','title'=>'INCORPSYS | Global Company Incorporation & Business Setup','description'=>'Company incorporation, licensing, banking and compliance support in the UAE, Singapore, Hong Kong, the UK, the USA and Malaysia, built on official sources.'];
+$page=['slug'=>'','title'=>'INCORPSYS | Launch Your Global Business With Confidence','description'=>'Company incorporation, licensing, banking and compliance support in the UAE, Singapore, Hong Kong, the UK, the USA and Malaysia, built on official sources.'];
 $reg=site_registry();$pages=site_data();$services=require __DIR__.'/content/services.php';
 $guideCount=fn($k)=>count(array_filter($pages,fn($p)=>($p['jurisdiction']??null)===$k&&$p['kind']==='guide'));
 $codes=['uae'=>'AE','singapore'=>'SG','hong-kong'=>'HK','uk'=>'UK','usa'=>'US','malaysia'=>'MY'];
@@ -17,19 +17,18 @@ include __DIR__.'/partials/header.php';?>
 <section class="hero"><div class="container hero-grid">
   <div>
     <p class="eyebrow">Global company incorporation</p>
-    <h1>Build your business <span>beyond borders.</span></h1>
-    <p class="lead">Company incorporation, licensing, banking readiness and compliance in six jurisdictions — every step mapped to the official authority that controls it.</p>
-    <div class="hero-actions"><a class="btn btn-primary btn-lg" href="/get-started/">Get started<?=icon('arrow-right')?></a><a class="btn btn-secondary btn-lg" href="/jurisdictions/">Compare jurisdictions</a></div>
-    <ul class="hero-trust"><li><?=icon('check')?>Official sources on every guide</li><li><?=icon('check')?>No invented fees or timelines</li><li><?=icon('check')?>WhatsApp, call or email</li></ul>
+    <h1>Launch Your Global Business <span>With Confidence.</span></h1>
+    <p class="lead">Incorporation, licensing, banking readiness and ongoing corporate support across six major jurisdictions — with each step mapped to the official authority that controls it.</p>
+    <div class="hero-actions"><a class="btn btn-cta btn-lg" href="/get-started/">Launch Your Entity<?=icon('arrow-right')?></a><a class="btn btn-secondary btn-lg" href="/jurisdictions/">Compare Jurisdictions</a></div>
+    <ul class="hero-trust" aria-label="How we work"><li><?=icon('check')?>Source-first</li><li><?=icon('check')?>Authority-linked guidance</li><li><?=icon('check')?>Fee sources shown when verified</li><li><?=icon('check')?>Human support</li></ul>
   </div>
   <div class="selector" id="setup-finder">
-    <h2>Find the right setup</h2>
-    <p>Four questions. You get a setup path built from the official guidance for your country.</p>
+    <div class="selector-head"><div><h2>Find the right setup</h2><p>Four questions. A setup path from official guidance.</p></div><span class="selector-step">No sign-up</span></div>
     <form action="/explore/" method="get">
-      <div class="field"><label for="sf-country">Country</label><select class="select" id="sf-country" name="country" required><option value="">Choose a jurisdiction</option><?php foreach($reg['sources'] as $k=>$s):?><option value="<?=e($k)?>"><?=e($s['label'])?></option><?php endforeach;?></select></div>
-      <div class="field"><label for="sf-activity">Business activity</label><select class="select" id="sf-activity" name="activity"><?php foreach(ENQUIRY_OPTIONS['activity'] as $k=>$v):?><option value="<?=e($k)?>"><?=e($v)?></option><?php endforeach;?></select></div>
+      <div class="field"><label for="sf-country">Country</label><select class="select" id="sf-country" name="country" required><option value="">Select country</option><?php foreach($reg['sources'] as $k=>$s):?><option value="<?=e($k)?>"><?=e($s['label'])?></option><?php endforeach;?></select></div>
+      <div class="field"><label for="sf-activity">Activity</label><select class="select" id="sf-activity" name="activity"><?php foreach(ENQUIRY_OPTIONS['activity'] as $k=>$v):?><option value="<?=e($k)?>"><?=e($v)?></option><?php endforeach;?></select></div>
       <div class="field"><label for="sf-ownership">Ownership</label><select class="select" id="sf-ownership" name="ownership"><?php foreach(ENQUIRY_OPTIONS['ownership'] as $k=>$v):?><option value="<?=e($k)?>"><?=e($v)?></option><?php endforeach;?></select></div>
-      <div class="field"><label for="sf-visa">Visa requirement</label><select class="select" id="sf-visa" name="visa"><?php foreach(ENQUIRY_OPTIONS['visa'] as $k=>$v):?><option value="<?=e($k)?>"><?=e($v)?></option><?php endforeach;?></select></div>
+      <div class="field"><label for="sf-visa">Visa</label><select class="select" id="sf-visa" name="visa"><?php foreach(ENQUIRY_OPTIONS['visa'] as $k=>$v):?><option value="<?=e($k)?>"><?=e($v)?></option><?php endforeach;?></select></div>
       <button class="btn btn-primary btn-block" type="submit">Explore options<?=icon('arrow-right')?></button>
       <p class="selector-note"><?=icon('lock')?>No contact details needed for this step.</p>
     </form>

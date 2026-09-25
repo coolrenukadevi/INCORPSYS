@@ -30,7 +30,7 @@ include __DIR__.'/../partials/header.php';?>
     <?php if($extras):?><section class="content-section"><h2>Recommended for your answers</h2><ul class="link-list"><?php foreach($extras as $s=>$p):?><li><a href="<?=e(path_url($s))?>"><?=icon('chevron-right')?><?=e($p['name'])?></a></li><?php endforeach;?></ul></section><?php endif;?>
     <?=price_table($country,$src['authority'])?>
   </div>
-  <aside class="source-rail"><?=source_card($src,$src['verified']??null)?><div class="source-card"><span class="eyebrow">Ready for the next step?</span><h2 class="mt-2">Get a structured plan</h2><p>We will pre-fill the enquiry with your answers.</p><p class="mt-4"><a class="btn btn-primary btn-block" href="/get-started/?<?=e($prefill)?>">Continue to enquiry<?=icon('arrow-right')?></a></p></div></aside>
+  <aside class="source-rail"><?=source_card($src,$src['verified']??null)?><div class="source-card"><span class="eyebrow">Ready for the next step?</span><h2 class="mt-2">Get a structured plan</h2><p>We will pre-fill the enquiry with your answers.</p><p class="mt-4"><a class="btn btn-cta btn-block" href="/get-started/?<?=e($prefill)?>">Continue to enquiry<?=icon('arrow-right')?></a></p></div></aside>
 </div></section>
 <?php endif;?>
 </main>

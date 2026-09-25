@@ -46,7 +46,7 @@ include __DIR__.'/../partials/header.php';?>
       <label class="check-field mt-6"><input type="checkbox" name="consent" value="1" required><span>I agree that INCORPSYS may use these details to reply to my enquiry, as described in the <a href="/legal/privacy/">privacy policy</a>.</span></label>
     </fieldset>
 
-    <div class="wizard-nav"><button class="btn btn-secondary" type="button" data-wizard-back hidden><?=icon('chevron-right','flip')?>Back</button><button class="btn btn-primary" type="button" data-wizard-next>Continue<?=icon('arrow-right')?></button><button class="btn btn-primary" type="submit" data-wizard-submit hidden>Send enquiry<?=icon('send')?></button></div>
+    <div class="wizard-nav"><button class="btn btn-secondary" type="button" data-wizard-back hidden><?=icon('chevron-right','flip')?>Back</button><button class="btn btn-primary" type="button" data-wizard-next>Continue<?=icon('arrow-right')?></button><button class="btn btn-cta" type="submit" data-wizard-submit hidden>Send enquiry<?=icon('send')?></button></div>
     <div class="no-js-only mt-8"><button class="btn btn-primary btn-lg" type="submit">Send enquiry</button></div>
     <p class="wizard-preparing" role="status"><span class="spinner" aria-hidden="true"></span>Your enquiry is being prepared…</p>
   </form>

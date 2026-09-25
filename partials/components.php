@@ -81,7 +81,7 @@ function cta_band(string $countryKey = '', string $countryLabel = '', string $he
   $heading = $heading !== '' ? $heading : ($countryLabel !== '' ? 'Planning a company in '.$countryLabel.'?' : 'Ready to plan your company setup?');
   return '<section class="section-tight"><div class="container"><div class="cta-band on-dark"><div><p class="eyebrow">Next step</p><h2>'.e($heading).'</h2>'
     .'<p>Answer a few questions about your activity, ownership and timeline. We map each step to the authority that controls it and reply with a structured plan.</p>'
-    .'<div class="cluster mt-6"><a class="btn btn-primary btn-lg" href="'.e($url).'">Get started'.icon('arrow-right').'</a><a class="btn btn-on-dark btn-lg" href="/jurisdictions/">Compare jurisdictions</a></div></div>'
+    .'<div class="cluster mt-6"><a class="btn btn-cta btn-lg" href="'.e($url).'">Launch your entity'.icon('arrow-right').'</a><a class="btn btn-on-dark btn-lg" href="/jurisdictions/">Compare jurisdictions</a></div></div>'
     .'<ul class="cta-contact">'
     .'<li><a href="'.e(wa_url()).'" target="_blank" rel="noopener">'.icon('message-circle').'<span>WhatsApp<small>Chat with the team</small></span></a></li>'
     .'<li><a href="/contact/">'.icon('send').'<span>Contact us<small>Send a message</small></span></a></li>'

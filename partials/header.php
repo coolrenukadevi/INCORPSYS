@@ -46,11 +46,11 @@ $current=path_url($page['slug']??'');
         <?php endforeach;?>
       </ul>
       <div class="nav-mobile-only">
-        <a class="btn btn-primary btn-block" href="/get-started/">Get Started<?=icon('arrow-right')?></a>
+        <a class="btn btn-cta btn-block" href="/get-started/">Get Started<?=icon('arrow-right')?></a>
       </div>
     </nav>
     <div class="header-actions">
-      <a class="btn btn-primary btn-sm" href="/get-started/">Get Started<?=icon('arrow-right')?></a>
+      <a class="btn btn-cta btn-sm" href="/get-started/">Get Started<?=icon('arrow-right')?></a>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav"><span class="icon-open"><?=icon('menu')?></span><span class="icon-close"><?=icon('x')?></span><span class="visually-hidden">Menu</span></button>
     </div>
   </div></div>
