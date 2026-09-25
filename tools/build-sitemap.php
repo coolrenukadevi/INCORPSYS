@@ -3,7 +3,7 @@
 declare(strict_types=1);
 if (PHP_SAPI !== 'cli') { http_response_code(404); exit; }
 require_once __DIR__.'/../includes/config.php';
-$entries = [[page_url(''), 'weekly', '1.0']];
+$entries = [[page_url(''), 'weekly', '1.0'], [page_url('about'), 'monthly', '0.7']];
 foreach (site_registry()['sources'] as $key => $src) { $entries[] = [page_url($key), 'monthly', '0.9']; }
 foreach (site_data() as $slug => $page) { $entries[] = [page_url($slug), 'monthly', '0.8']; }
 $xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n";
