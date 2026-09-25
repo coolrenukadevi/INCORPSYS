@@ -9,7 +9,7 @@
           <li><a href="<?=e(wa_url())?>" target="_blank" rel="noopener"><?=icon('message-circle')?>WhatsApp</a></li>
           <li><a href="/contact/"><?=icon('send')?>Contact us</a></li>
         </ul>
-        <ul class="footer-social" aria-label="INCORPSYS on social media"><?php foreach(SOCIAL_LINKS as $name=>$href):?><li><a href="<?=e($href)?>" target="_blank" rel="noopener me"><?=e($name)?></a></li><?php endforeach;?></ul>
+        <ul class="footer-social" aria-label="INCORPSYS on social media"><?php foreach(SOCIAL_LINKS as $name=>$href):?><li><a href="<?=e($href)?>" target="_blank" rel="noopener me" aria-label="INCORPSYS on <?=e($name)?> (opens in a new tab)" title="<?=e($name)?>"><?=social_icon($name)?></a></li><?php endforeach;?></ul>
       </div>
       <div class="footer-cols">
         <div><h2>Company</h2><ul><li><a href="/about/">About Us</a></li><li><a href="/about/why-choose-us/">Why Choose Us?</a></li><li><a href="/about/vision-mission/">Vision &amp; Mission</a></li><li><a href="/about/leadership/">Leadership</a></li><li><a href="/careers/">Careers</a></li><li><a href="/contact/">Contact</a></li></ul></div>
