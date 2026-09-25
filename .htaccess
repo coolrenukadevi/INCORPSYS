@@ -1,5 +1,6 @@
 Options -Indexes
 DirectoryIndex index.php
+AddType application/manifest+json .webmanifest
 ErrorDocument 403 /404.php
 ErrorDocument 404 /404.php
 RewriteEngine On
@@ -20,7 +21,7 @@ RewriteBase /
 </IfModule>
 
 # Internal files and folders are not public.
-RewriteRule ^(includes|partials|content|tools|phase-b-reserved)(/|$) - [R=404,L]
+RewriteRule ^(includes|partials|content|tools|docs|phase-b-reserved)(/|$) - [R=404,L]
 RewriteRule (^|/)\.(?!well-known/) - [R=404,L]
 RewriteRule ^pages/_ - [R=404,L]
 RewriteRule (^|/)(README[^/]*\.md|[^/]+\.csv)$ - [R=404,L]

@@ -1,0 +1,25 @@
+# INCORPSYS
+
+INCORPSYS (Incorporation System) provides company incorporation and business setup guides and enquiry support for the UAE, Singapore, Hong Kong, the UK, the USA and Malaysia. Every guide links to the official government or registry source.
+
+## Jurisdiction guides
+- UAE: https://www.incorpsys.com/uae/
+- Singapore: https://www.incorpsys.com/singapore/
+- Hong Kong: https://www.incorpsys.com/hong-kong/
+- UK: https://www.incorpsys.com/uk/
+- USA: https://www.incorpsys.com/usa/
+- Malaysia: https://www.incorpsys.com/malaysia/
+
+## Resources
+- Resource library: https://www.incorpsys.com/resources/
+- Source-first research method: https://www.incorpsys.com/resources/source-first-research/
+- Official source directory: https://www.incorpsys.com/resources/official-sources-directory/
+- Company incorporation FAQ: https://www.incorpsys.com/resources/company-incorporation-faq/
+
+## Company
+- About: https://www.incorpsys.com/about/
+- Contact: https://www.incorpsys.com/contact/
+- Sitemap: https://www.incorpsys.com/sitemap.xml
+
+## Source policy
+Regulatory and filing claims should be verified against the linked official government or registry source immediately before action. INCORPSYS pages are informational guides and enquiry pathways, not substitutes for official authority instructions or professional advice.
