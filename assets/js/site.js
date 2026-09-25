@@ -128,6 +128,41 @@
   }
   doc.addEventListener('keydown', function (e) { if (e.key === 'Escape') { closeMenus(); if (nav && nav.classList.contains('open')) { setMobileNav(false); toggle.focus(); } } });
 
+  /* ---- Cookie consent and consent-gated Google Analytics ---- */
+  var banner = $('#cookie-banner');
+  if (banner) {
+    var gaId = banner.getAttribute('data-ga') || '';
+    var readConsent = function () { var m = doc.cookie.match(/(?:^|; )incorpsys_consent=(all|essential)/); return m ? m[1] : null; };
+    var loadGA = function () {
+      if (!gaId || window.gtag) return;
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = function () { window.dataLayer.push(arguments); };
+      window.gtag('consent', 'default', { ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied', analytics_storage: 'granted' });
+      window.gtag('js', new Date());
+      window.gtag('config', gaId);
+      var sc = doc.createElement('script'); sc.async = true; sc.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(gaId); doc.head.appendChild(sc);
+    };
+    var clearGA = function () {
+      if (window.gtag) window.gtag('consent', 'update', { analytics_storage: 'denied' });
+      doc.cookie.split('; ').forEach(function (c) {
+        var name = c.split('=')[0]; if (name.indexOf('_ga') !== 0) return;
+        var host = location.hostname.split('.');
+        for (var i = 0; i < host.length - 1; i++) { var d = host.slice(i).join('.'); doc.cookie = name + '=; Max-Age=0; Path=/; Domain=.' + d; }
+        doc.cookie = name + '=; Max-Age=0; Path=/';
+      });
+    };
+    var setBanner = function (open) { banner.hidden = !open; doc.body.classList.toggle('cookie-open', open); };
+    var choose = function (value) {
+      doc.cookie = 'incorpsys_consent=' + value + '; Max-Age=15552000; Path=/; SameSite=Lax' + (location.protocol === 'https:' ? '; Secure' : '');
+      setBanner(false);
+      if (value === 'all') loadGA(); else clearGA();
+    };
+    $$('[data-consent]', banner).forEach(function (b) { b.addEventListener('click', function () { choose(b.getAttribute('data-consent')); }); });
+    $$('[data-cookie-settings]').forEach(function (b) { b.addEventListener('click', function () { setBanner(true); var f = $('[data-consent]', banner); f && f.focus(); }); });
+    var consent = readConsent();
+    if (consent === 'all') loadGA(); else if (!consent) setBanner(true);
+  }
+
   /* ---- Multi-step enquiry wizard ---- */
   var wizard = $('[data-wizard]');
   if (wizard) {

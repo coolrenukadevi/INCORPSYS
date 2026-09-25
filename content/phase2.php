@@ -145,12 +145,26 @@ $phase2['legal/privacy']=[
   'description'=>'INCORPSYS privacy policy page for the public website.','answer'=>'This page describes the categories of information that may be collected through the website and the principles applied to its handling; final legal text should be reviewed and approved before production publication.',
   'sections'=>[
     ['title'=>'Page purpose','body'=>'INCORPSYS privacy policy page for the public website.'],
-    ['title'=>'Key information','bullets'=>['Contact-form information may include name, email, phone and enquiry details.','Website technical logs may be processed for security and operations.','Sensitive financial data should not be submitted through public forms.','Requests about personal data can be directed to INCORPSYS.']],
+    ['title'=>'Key information','bullets'=>['Contact-form information may include name, email, phone and enquiry details.','Website technical logs may be processed for security and operations.','With your consent, Google Analytics is used to measure website traffic. See the Cookie Policy.','Sensitive financial data should not be submitted through public forms.','Requests about personal data can be directed to INCORPSYS.']],
   ],
   'faqs'=>[
     ['q'=>'Where can I get the latest official or business information?','a'=>'For regulatory rules, use the relevant government or registry source. For INCORPSYS service enquiries, use the website contact options.'],
     ['q'=>'Can this page replace legal advice?','a'=>'No. It is informational website content and should not be treated as a substitute for professional advice.'],
     ['q'=>'How do I start an enquiry?','a'=>'Use the Enquiry Now button or contact hello@incorpsys.com or +91 78448 19819.'],
+  ],
+  'source'=>null,'verified'=>'2026-09-25'
+];
+$phase2['legal/cookies']=[
+  'slug'=>'legal/cookies','jurisdiction'=>null,'kind'=>'legal','name'=>'Cookie Policy','title'=>'Cookie Policy | INCORPSYS','h1'=>'Cookie Policy','eyebrow'=>'LEGAL',
+  'description'=>'How the INCORPSYS website uses essential cookies and, with your consent, Google Analytics cookies to measure traffic.','answer'=>'We use one essential cookie to remember your cookie choice. With your consent, Google Analytics sets cookies to measure how the site is used. You can browse the site either way and change your choice at any time using "Cookie settings" in the footer.',
+  'sections'=>[
+    ['title'=>'Essential cookies','body'=>'The cookie "incorpsys_consent" records whether you accepted or declined analytics cookies, so we do not ask again on every page. It is kept for up to 180 days and is not used for tracking.'],
+    ['title'=>'Analytics cookies (only with your consent)','body'=>'If you choose "Accept analytics", we load Google Analytics to measure traffic, such as which pages are visited and how visitors arrive. Google Analytics sets its own cookies for this. If you choose "Essential only", Google Analytics is not loaded and no analytics cookies are set.'],
+    ['title'=>'Google\'s use of cookies','body'=>'Google explains how it uses information from sites that use its services, including the cookies Google Analytics sets and how long they last, in its own documentation: https://policies.google.com/technologies/cookies'],
+    ['title'=>'Changing your choice','bullets'=>['Use "Cookie settings" in the website footer to change your choice at any time.','You can also delete cookies in your browser settings.','Declining analytics does not affect your use of the website.']],
+  ],
+  'faqs'=>[
+    ['q'=>'Can I use the website without accepting analytics cookies?','a'=>'Yes. You can browse the site either way. Only the essential consent cookie is set if you choose "Essential only".'],
   ],
   'source'=>null,'verified'=>'2026-09-25'
 ];

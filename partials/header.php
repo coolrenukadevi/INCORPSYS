@@ -22,9 +22,9 @@ $current=path_url($page['slug']??'');
   <div class="utility"><div class="container utility-in">
     <p class="utility-context"><?=icon('map-pin')?> Company setup in UAE · Singapore · Hong Kong · UK · USA · Malaysia</p>
     <ul class="utility-links">
-      <li><a href="<?=e(tel_url())?>"><?=icon('phone')?><span class="label-long"><?=e(SITE_PHONE)?></span><span class="visually-hidden">Call INCORPSYS</span></a></li>
       <li><a href="<?=e(wa_url())?>" target="_blank" rel="noopener"><?=icon('message-circle')?>WhatsApp</a></li>
-      <li><a href="mailto:<?=e(SITE_EMAIL)?>"><?=icon('mail')?><span class="label-long"><?=e(SITE_EMAIL)?></span><span class="visually-hidden">Email INCORPSYS</span></a></li>
+      <li><a href="/login/"<?=$current==='/login/'?' aria-current="page"':''?>><?=icon('log-in')?>Login</a></li>
+      <li><a class="utility-cta" href="/signup/"<?=$current==='/signup/'?' aria-current="page"':''?>>Sign Up</a></li>
     </ul>
   </div></div>
   <div class="masthead"><div class="container masthead-in">
@@ -34,9 +34,9 @@ $current=path_url($page['slug']??'');
         <?php foreach($nav as $id=>$menu): $cols=count($menu['cols']);?>
         <li class="nav-item">
           <button class="nav-trigger" type="button" aria-expanded="false" aria-controls="mega-<?=e($id)?>"><?=e($menu['label'])?><?=icon('chevron-down')?></button>
-          <div class="mega" id="mega-<?=e($id)?>"><div class="container mega-in mega-cols-<?=$cols?>">
+          <div class="mega" id="mega-<?=e($id)?>"><div class="container mega-intro"><p><b><?=e($menu['label'])?></b><span><?=e($menu['intro'])?></span></p></div><div class="container mega-in mega-cols-<?=$cols?>">
             <?php foreach($menu['cols'] as $col):?><div>
-              <p class="mega-title"><?=$col['title']?></p>
+              <p class="mega-title"><?=e($col['title'])?></p>
               <ul class="mega-list"><?php foreach($col['links'] as $l):?><li><a href="<?=e($l['url'])?>"<?=$current===$l['url']?' aria-current="page"':''?>><?=icon($col['icon'])?><span><b><?=e($l['label'])?></b><small><?=e($l['desc'])?></small></span></a></li><?php endforeach;?></ul>
               <?php if(!empty($menu['all'])&&$col===end($menu['cols'])):?><a class="mega-all" href="<?=e($menu['all']['url'])?>"><?=e($menu['all']['label'])?><?=icon('arrow-right')?></a><?php endif;?>
             </div><?php endforeach;?>
@@ -47,13 +47,10 @@ $current=path_url($page['slug']??'');
       </ul>
       <div class="nav-mobile-only">
         <a class="btn btn-primary btn-block" href="/get-started/">Get Started<?=icon('arrow-right')?></a>
-        <div class="grid grid-2 gap-3"><a class="btn btn-secondary" href="/login/">Login</a><a class="btn btn-secondary" href="/signup/">Sign Up</a></div>
       </div>
     </nav>
     <div class="header-actions">
-      <a class="btn btn-ghost btn-sm hide-tablet" href="/login/">Login</a>
-      <a class="btn btn-secondary btn-sm hide-tablet" href="/signup/">Sign Up</a>
-      <a class="btn btn-primary btn-sm" href="/get-started/">Get Started</a>
+      <a class="btn btn-primary btn-sm" href="/get-started/">Get Started<?=icon('arrow-right')?></a>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav"><span class="icon-open"><?=icon('menu')?></span><span class="icon-close"><?=icon('x')?></span><span class="visually-hidden">Menu</span></button>
     </div>
   </div></div>

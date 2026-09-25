@@ -4,7 +4,8 @@ Premium, source-backed PHP website for **INCORPSYS — Global Company Incorporat
 
 ### Included
 - Design system: CSS tokens and components (buttons, cards, forms, tables, tabs, accordions, alerts, badges, breadcrumbs, modal, tooltip); self-hosted Inter; Lucide icons as inline SVG.
-- Header: utility bar, mega menu (Company Setup, Business Structures, Services, Resources, About), Login / Sign Up / Get Started, mobile drawer.
+- Header: utility bar (WhatsApp, Login, Sign Up), mega menus on every tab (Company Setup, Business Structures, Services, Resources, About), Get Started, mobile drawer.
+- Cookie consent banner; Google Analytics loads only after the visitor accepts analytics cookies.
 - Homepage: setup finder, jurisdiction comparison, services, process, structures, resources, FAQ.
 - `/get-started/`: 8-step enquiry (works without JavaScript), with server-side validation, spam protection and lead priority.
 - INCORPSYS Assist: guided chat flow that hands off to the enquiry or WhatsApp.
@@ -20,9 +21,9 @@ Premium, source-backed PHP website for **INCORPSYS — Global Company Incorporat
 | In-depth jurisdiction guides | `/singapore/name-reservation-120-days/` | 60 | yes |
 | Resource library and guides | `/resources/`, `/resources/fee-verification/` | 36 | yes |
 | Services | `/services/`, `/services/company-incorporation/` | 11 | yes |
-| About, trust pages, Contact | `/about/`, `/about/methodology/` … `/contact/` | 5 | yes |
+| About, company and trust pages, Contact | `/about/`, `/about/why-choose-us/`, `/about/vision-mission/`, `/about/leadership/`, `/about/methodology/`, `/about/source-policy/`, `/about/editorial-policy/`, `/careers/`, `/support/`, `/contact/` | 10 | yes |
 | Phase A topic and service pages | `/uae/company-registration/` | 100 | **no** — template text, noindex until rewritten |
-| Legal | `/legal/privacy/` | 3 | no — until final text is approved |
+| Legal | `/legal/privacy/`, `/legal/cookies/`, `/legal/terms/`, `/legal/disclaimer/` | 4 | no — until final text is approved |
 | Utility | `/explore/`, `/search/`, `/login/`, `/signup/`, `/account/` | 5 | no |
 
 ### Content files
@@ -49,14 +50,16 @@ It writes the page stub files, regenerates `sitemap.xml` and `docs/source-regist
 
 **Adding a verified fee:** add a line to `content/pricing.php` with every field. Lines older than 90 days are hidden automatically until they are re-checked.
 
+**Vision & Mission:** the text in `about/vision-mission/index.php` is drafted from the approved About text; confirm or replace it.
+
 **Team photos:** add square images to `assets/img/team/` named `anisha-bharti`, `renuka-devi` and `vk-anand` (`.webp`, `.jpg` or `.png`). The About page uses them automatically; initials show until then.
 
 ### Deployment
 1. PHP 8.1+ on Apache/cPanel with `mod_rewrite` (and ideally `mod_headers`, `mod_deflate`).
 2. Point `www.incorpsys.com` to the web root.
-3. Set the `INCORPSYS_FORM_SECRET` environment variable to a long random string.
+3. Set the `INCORPSYS_FORM_SECRET` environment variable to a long random string. To enable Google Analytics, set `INCORPSYS_GA_ID` to your GA4 measurement ID (for example `G-XXXXXXXXXX`); it loads only for visitors who accept analytics cookies.
 4. Replace `mail()` with authenticated SMTP or a CRM webhook, and add SPF/DKIM for incorpsys.com.
-5. Review the legal text in `content/phase2.php`. Once approved, remove the legal `noindex` rule in `pages/_page_template.php` and the legal skip in `tools/build.php`.
+5. Review the legal text (Privacy, Cookie Policy, Terms, Disclaimer) in `content/phase2.php`. Once approved, remove the legal `noindex` rule in `pages/_page_template.php` and the legal skip in `tools/build.php`.
 6. Serve over HTTPS and add `Strict-Transport-Security` at the server or CDN.
 7. Submit `/sitemap.xml` to Google Search Console and Bing Webmaster Tools.
 8. Re-check official sources before relying on time-sensitive regulatory information.

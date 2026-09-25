@@ -51,9 +51,16 @@ require_once __DIR__.'/../partials/components.php';
 require_once __DIR__.'/../content/source-registry.php';
 // Swaps <html class="no-js"> to "js" before first paint; allowed by hash in the CSP below.
 const JS_FLAG_SCRIPT = "document.documentElement.classList.replace('no-js','js')";
+// Google Analytics 4 measurement ID (e.g. G-XXXXXXXXXX), set in the server environment. Empty = analytics off.
+// Analytics loads only after the visitor accepts analytics cookies in the consent banner.
+function ga_id(): string { $id = (string)(getenv('INCORPSYS_GA_ID') ?: ''); return preg_match('/^G-[A-Z0-9]{4,20}$/', $id) ? $id : ''; }
 function send_security_headers(): void {
   if (PHP_SAPI === 'cli' || headers_sent()) return;
   $hash = base64_encode(hash('sha256', JS_FLAG_SCRIPT, true));
-  header("Content-Security-Policy: default-src 'self'; script-src 'self' 'sha256-$hash'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'self'; base-uri 'self'; object-src 'none'");
+  $ga = ga_id() !== '';
+  $script = "'self' 'sha256-$hash'".($ga ? ' https://www.googletagmanager.com' : '');
+  $connect = "'self'".($ga ? ' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com' : '');
+  $img = "'self' data:".($ga ? ' https://*.google-analytics.com https://*.googletagmanager.com' : '');
+  header("Content-Security-Policy: default-src 'self'; script-src $script; style-src 'self'; img-src $img; font-src 'self'; connect-src $connect; form-action 'self'; frame-ancestors 'self'; base-uri 'self'; object-src 'none'");
 }
 send_security_headers();

@@ -149,3 +149,19 @@ function price_table(string $jurisdiction, string $authority): string {
   if (count($currencies) === 1) $h .= '<tr><th scope="row">Total</th><td colspan="3"><strong>'.e($currencies[0].' '.number_format($total, 2)).'</strong></td></tr>';
   return $h.'</tbody></table></div>';
 }
+
+/** Leadership cards (About and Leadership pages). */
+function team_grid(): string {
+  $h = '<ul class="team-grid">';
+  foreach (require __DIR__.'/../content/team.php' as $m) {
+    $img = null;
+    foreach (['webp', 'jpg', 'png'] as $ext) { if (is_file(__DIR__."/../assets/img/team/{$m['slug']}.$ext")) { $img = asset("img/team/{$m['slug']}.$ext"); break; } }
+    $initials = implode('', array_map(fn($w) => $w[0], array_slice(preg_split('/[\s.]+/', $m['name'], -1, PREG_SPLIT_NO_EMPTY), 0, 2)));
+    $h .= '<li class="team-card">'.($img ? '<img src="'.e($img).'" alt="'.e($m['name']).'" width="320" height="320" loading="lazy">' : '<span class="team-initials" aria-hidden="true">'.e($initials).'</span>')
+      .'<h3>'.e($m['name']).'</h3><p>'.e($m['role']).'</p></li>';
+  }
+  return $h.'</ul>';
+}
+function team_schema(): array {
+  return array_map(fn($m) => ['@type' => 'Person', 'name' => $m['name'], 'jobTitle' => $m['role'], 'worksFor' => ['@id' => SITE_URL.'/#organization']], require __DIR__.'/../content/team.php');
+}

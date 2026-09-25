@@ -219,3 +219,18 @@ QA tools (axe-core, html-validate, Lighthouse, Playwright) were used outside the
 4. Populate the pricing engine with official fee schedules, and add the INCORPSYS service fees once approved.
 5. Connect enquiries to a CRM and build the client portal backend (accounts, documents, progress), then enable the Login and Sign Up forms.
 6. Add Search Console monitoring and a quarterly source-freshness review.
+
+## Addendum — header, About menu and cookie consent
+
+- **Header:**
+  - WhatsApp, Login and Sign Up moved into the utility bar; phone number and email removed from the header.
+  - Every tab opens a mega menu with an intro line, headed columns and higher-contrast text.
+  - The About tab holds About Us, Why Choose Us?, Vision & Mission, Leadership, Careers, Support, plus Methodology, Source policy and Contact.
+- **New indexable pages:** `/about/why-choose-us/`, `/about/vision-mission/`, `/about/leadership/`, `/careers/`, `/support/`. The sitemap now has 126 URLs. Vision & Mission is drafted from the approved About text and needs sign-off.
+- **Cookie consent:**
+  - The banner uses the approved wording, with "Essential only" and "Accept analytics".
+  - One essential cookie (`incorpsys_consent`, 180 days) stores the choice.
+  - Google Analytics 4 loads only after acceptance and only if `INCORPSYS_GA_ID` is set; the CSP adds Google's domains only in that case.
+  - Withdrawing consent through "Cookie settings" in the footer deletes the `_ga` cookies.
+  - New `/legal/cookies/` page (noindex until legal approval); the Privacy Policy draft mentions analytics.
+- **QA:** 254 pages crawled with 0 broken; html-validate clean; no overflow at 320–1920px on 26 page types; axe 0 violations; consent tested with and without an analytics ID; enquiry flow re-tested.
