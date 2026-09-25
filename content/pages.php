@@ -1,20 +1,6 @@
 <?php
 declare(strict_types=1);
-$sources=require __DIR__.'/sources.php';
-$topics=[
-  'company-incorporation-overview'=> 'Company Incorporation Overview',
-  'company-registration'=> 'Company Registration',
-  'business-name-approval'=> 'Business Name & Name Approval',
-  'legal-structures'=> 'Legal Structures',
-  'licensing-permits'=> 'Licensing & Permits',
-  'registered-office'=> 'Registered Office & Business Address',
-  'directors-governance'=> 'Directors, Owners & Governance',
-  'documents-checklist'=> 'Documents & Filing Checklist',
-  'post-incorporation'=> 'Post-Incorporation Requirements',
-  'official-sources'=> 'Official Sources & Verification'
-];
-$services=[
- 'company-incorporation'=>'Company Incorporation','business-licensing'=>'Business Licensing','corporate-banking'=>'Corporate Banking Support','compliance-documentation'=>'Compliance & Documentation','visa-residency'=>'Visa & Residency Support','ongoing-support'=>'Ongoing Corporate Support','registered-office-solutions'=>'Registered Office Solutions','tax-registration'=>'Tax Registration & Setup','due-diligence'=>'Corporate Due Diligence','business-expansion'=>'International Business Expansion'];
+['sources'=>$sources,'topics'=>$topics,'services'=>$services]=require __DIR__.'/registry.php';
 $topicLenses=[
  'company-incorporation-overview'=>'Use this page to establish the official starting point, identify the responsible authority, and map the incorporation route before selecting a service provider.',
  'company-registration'=>'Focus on the actual registration workflow, the information the registry asks for, and the official channel used to submit the application.',
@@ -45,7 +31,7 @@ foreach($sources as $key=>$src){
   foreach($topics as $slugTopic=>$topicName){
     $slug=$key.'/'.$slugTopic;
     $pages[$slug]=[
-      'slug'=>$slug,'jurisdiction'=>$key,'title'=>$src['label'].' '.$topicName.' | INCORPSYS','h1'=>$topicName.' in '.$src['label'],
+      'slug'=>$slug,'jurisdiction'=>$key,'kind'=>'topic','name'=>$topicName,'title'=>$src['label'].' '.$topicName.' | INCORPSYS','h1'=>$topicName.' in '.$src['label'],
       'eyebrow'=>'SOURCE-BACKED JURISDICTION GUIDE',
       'description'=>'A source-backed INCORPSYS guide to '.strtolower($topicName).' in '.$src['label'].', with official-source verification and next-step guidance.',
       'answer'=>'Use the official authority cited on this page as the controlling source for current rules in '.$src['label'].'. INCORPSYS structures the information into practical steps so requirements can be verified before submitting or paying.',
@@ -65,10 +51,12 @@ foreach($sources as $key=>$src){
       ]
     ];
   }
+  // Service pages for jurisdictions marked 'services'=>false are reserved for Phase B and not published.
+  if(($src['services']??true)===false) continue;
   foreach($services as $serviceSlug=>$serviceName){
     $slug=$key.'/'.$serviceSlug;
     $pages[$slug]=[
-      'slug'=>$slug,'jurisdiction'=>$key,'title'=>$serviceName.' in '.$src['label'].' | INCORPSYS','h1'=>$serviceName.' in '.$src['label'],
+      'slug'=>$slug,'jurisdiction'=>$key,'kind'=>'service','name'=>$serviceName,'title'=>$serviceName.' in '.$src['label'].' | INCORPSYS','h1'=>$serviceName.' in '.$src['label'],
       'eyebrow'=>'GLOBAL BUSINESS SETUP',
       'description'=>$serviceName.' in '.$src['label'].' with official-source verification, structured workflows and practical next steps from INCORPSYS.',
       'answer'=>'Start with the official authority for '.$src['label'].' and verify which registration, licensing or compliance obligations apply to the exact structure and activity. INCORPSYS can then organize the information into an execution-ready workflow.',
