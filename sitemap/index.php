@@ -5,8 +5,8 @@ $crumbs=[['name'=>'Home','slug'=>''],['name'=>'Sitemap','slug'=>'sitemap']];
 $reg=site_registry();$pages=site_data();$services=require __DIR__.'/../content/services.php';
 $link=fn(string $url,string $label)=>'<li><a href="'.e($url).'">'.icon('chevron-right').e($label).'</a></li>';
 $list=fn(array $items)=>'<ul class="link-list">'.implode('',$items).'</ul>';
-$main=[$link('/','Home'),$link('/get-started/','Get started'),$link('/jurisdictions/','Compare jurisdictions'),$link('/search/','Search'),$link('/contact/','Contact')];
-$company=[$link('/about/','About Us'),$link('/about/why-choose-us/','Why Choose Us?'),$link('/about/vision-mission/','Vision & Mission'),$link('/about/leadership/','Leadership'),$link('/careers/','Careers'),$link('/support/','Support'),$link('/about/methodology/','Methodology'),$link('/about/source-policy/','Source policy'),$link('/about/editorial-policy/','Editorial policy')];
+$main=[$link('/','Home'),$link('/get-started/','Get started'),$link('/jurisdictions/','Compare jurisdictions'),$link('/search/','Search'),$link('/support/','Support'),$link('/contact/','Contact')];
+$company=[$link('/about/','About Us'),$link('/about/why-choose-us/','Why Choose Us?'),$link('/about/vision-mission/','Vision & Mission'),$link('/about/leadership/','Leadership'),$link('/careers/','Careers'),$link('/about/methodology/','Methodology'),$link('/about/source-policy/','Source policy'),$link('/about/editorial-policy/','Editorial policy')];
 $serv=[$link('/services/','All services')];foreach($services as $k=>$s)$serv[]=$link('/services/'.$k.'/',$s['name']);
 $res=[$link('/resources/','Resource library')];foreach($pages as $p){if($p['kind']==='resource')$res[]=$link(path_url($p['slug']),$p['name']);}
 $legal=[];foreach($pages as $p){if($p['kind']==='legal')$legal[]=$link(path_url($p['slug']),$p['name']);}

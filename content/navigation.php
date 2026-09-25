@@ -88,7 +88,6 @@ return [
       ['title' => 'People', 'icon' => 'user-round', 'links' => [
         ['label' => 'Leadership', 'desc' => 'The team behind INCORPSYS', 'url' => '/about/leadership/'],
         ['label' => 'Careers', 'desc' => 'We are hiring — work with INCORPSYS', 'url' => '/careers/'],
-        ['label' => 'Support', 'desc' => 'Help for clients and visitors', 'url' => '/support/'],
       ]],
       ['title' => 'Trust', 'icon' => 'badge-check', 'links' => [
         ['label' => 'Methodology', 'desc' => 'How our guides are built', 'url' => '/about/methodology/'],
