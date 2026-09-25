@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__.'/../includes/config.php';
-$page=['slug'=>'about','title'=>'About INCORPSYS | Incorporation System','description'=>'INCORPSYS (Incorporation System) is a modern corporate infrastructure platform that replaces complex, manual registration processes with an intelligent, end-to-end digital workflow.'];
+$page=['slug'=>'about','title'=>'About INCORPSYS | Incorporation System','description'=>'INCORPSYS (Incorporation System) replaces complex, manual company registration with an intelligent, end-to-end digital workflow. Meet the leadership team.'];
 $crumbs=[['name'=>'Home','slug'=>''],['name'=>'About','slug'=>'about']];
 // Leadership. Photos load from assets/img/team/{slug}.webp (or .jpg/.png) when added; initials are shown until then.
 $team=[

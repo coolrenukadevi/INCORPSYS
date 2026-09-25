@@ -1,25 +1,35 @@
 # INCORPSYS
 
-INCORPSYS (Incorporation System) provides company incorporation and business setup guides and enquiry support for the UAE, Singapore, Hong Kong, the UK, the USA and Malaysia. Every guide links to the official government or registry source.
+INCORPSYS (Incorporation System) provides company incorporation, business licensing, corporate banking readiness, compliance and visa-routing support for the UAE, Singapore, Hong Kong, the UK, the USA and Malaysia. Every jurisdiction guide cites the official government or registry source and shows when it was last checked.
 
-## Jurisdiction guides
-- UAE: https://www.incorpsys.com/uae/
-- Singapore: https://www.incorpsys.com/singapore/
-- Hong Kong: https://www.incorpsys.com/hong-kong/
-- UK: https://www.incorpsys.com/uk/
-- USA: https://www.incorpsys.com/usa/
-- Malaysia: https://www.incorpsys.com/malaysia/
+## Jurisdictions
+- [Compare all six](https://www.incorpsys.com/jurisdictions/)
+- [UAE](https://www.incorpsys.com/uae/)
+- [Singapore](https://www.incorpsys.com/singapore/)
+- [Hong Kong](https://www.incorpsys.com/hong-kong/)
+- [UK](https://www.incorpsys.com/uk/)
+- [USA](https://www.incorpsys.com/usa/)
+- [Malaysia](https://www.incorpsys.com/malaysia/)
+
+## Services
+- [All services](https://www.incorpsys.com/services/)
+- [Company incorporation](https://www.incorpsys.com/services/company-incorporation/)
+- [Business licensing](https://www.incorpsys.com/services/business-licensing/)
+- [Corporate banking](https://www.incorpsys.com/services/corporate-banking/)
+- [Visa and residency](https://www.incorpsys.com/services/visa-residency/)
 
 ## Resources
-- Resource library: https://www.incorpsys.com/resources/
-- Source-first research method: https://www.incorpsys.com/resources/source-first-research/
-- Official source directory: https://www.incorpsys.com/resources/official-sources-directory/
-- Company incorporation FAQ: https://www.incorpsys.com/resources/company-incorporation-faq/
+- [Resource library](https://www.incorpsys.com/resources/)
+- [Company incorporation FAQ](https://www.incorpsys.com/resources/company-incorporation-faq/)
+- [Official source directory](https://www.incorpsys.com/resources/official-sources-directory/)
 
-## Company
-- About: https://www.incorpsys.com/about/
-- Contact: https://www.incorpsys.com/contact/
-- Sitemap: https://www.incorpsys.com/sitemap.xml
+## Company and trust
+- [About and leadership](https://www.incorpsys.com/about/)
+- [Methodology](https://www.incorpsys.com/about/methodology/)
+- [Source policy](https://www.incorpsys.com/about/source-policy/)
+- [Editorial policy](https://www.incorpsys.com/about/editorial-policy/)
+- [Contact](https://www.incorpsys.com/contact/)
+- [Sitemap](https://www.incorpsys.com/sitemap.xml)
 
 ## Source policy
-Regulatory and filing claims should be verified against the linked official government or registry source immediately before action. INCORPSYS pages are informational guides and enquiry pathways, not substitutes for official authority instructions or professional advice.
+INCORPSYS pages summarise official guidance and link to it. They do not publish fees, timelines or approval promises that the authority has not published; unverified values are marked "Verify". Pages are informational and not legal, tax or immigration advice.

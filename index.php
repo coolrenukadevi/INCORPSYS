@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__.'/includes/config.php';
-$page=['slug'=>'','title'=>'INCORPSYS | Global Company Incorporation & Business Setup','description'=>'Company incorporation, licensing, banking readiness and compliance support for the UAE, Singapore, Hong Kong, the UK, the USA and Malaysia, built on official government sources.'];
+$page=['slug'=>'','title'=>'INCORPSYS | Global Company Incorporation & Business Setup','description'=>'Company incorporation, licensing, banking and compliance support in the UAE, Singapore, Hong Kong, the UK, the USA and Malaysia, built on official sources.'];
 $reg=site_registry();$pages=site_data();$services=require __DIR__.'/content/services.php';
 $guideCount=fn($k)=>count(array_filter($pages,fn($p)=>($p['jurisdiction']??null)===$k&&$p['kind']==='guide'));
 $codes=['uae'=>'AE','singapore'=>'SG','hong-kong'=>'HK','uk'=>'UK','usa'=>'US','malaysia'=>'MY'];
