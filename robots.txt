@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /login/
+Disallow: /signup/
+Disallow: /enquiry/
+Sitemap: https://www.incorpsys.com/sitemap.xml
