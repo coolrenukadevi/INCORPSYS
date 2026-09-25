@@ -627,3 +627,5 @@ label.choice{display:block}
 .content-section .source-card{margin-top:var(--sp-4)}
 .content-section>ul.source-list{padding:0}
 @media (max-width:980px){.toc{display:none}}
+/* Footer paragraphs: justified, with hyphenation to avoid wide gaps on narrow screens */
+.footer-brand p,.footer-notice{text-align:justify;text-justify:inter-word;hyphens:auto;-webkit-hyphens:auto}
