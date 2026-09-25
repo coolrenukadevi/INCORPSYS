@@ -22,6 +22,7 @@ Premium, source-backed PHP website for **INCORPSYS — Global Company Incorporat
 | Resource library and guides | `/resources/`, `/resources/fee-verification/` | 36 | yes |
 | Services | `/services/`, `/services/company-incorporation/` | 11 | yes |
 | About, company and trust pages, Contact | `/about/`, `/about/why-choose-us/`, `/about/vision-mission/`, `/about/leadership/`, `/about/methodology/`, `/about/source-policy/`, `/about/editorial-policy/`, `/careers/`, `/support/`, `/contact/` | 10 | yes |
+| Sitemap page (the XML sitemap is styled for browsers via `assets/sitemap.xsl`) | `/sitemap/` | 1 | yes |
 | Phase A topic and service pages | `/uae/company-registration/` | 100 | **no** — template text, noindex until rewritten |
 | Legal | `/legal/privacy/`, `/legal/cookies/`, `/legal/terms/`, `/legal/disclaimer/` | 4 | no — until final text is approved |
 | Utility | `/explore/`, `/search/`, `/login/`, `/signup/`, `/account/` | 5 | no |

@@ -33,14 +33,14 @@ foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator("$root/pag
 
 // Sitemap: indexable pages only (legal pages and Phase A topic/service pages are noindex).
 $entries = [[page_url(''), null, 'weekly', '1.0'], [page_url('jurisdictions'), null, 'monthly', '0.9'], [page_url('get-started'), null, 'monthly', '0.8'], [page_url('services'), null, 'monthly', '0.8']];
-foreach (['about', 'about/why-choose-us', 'about/vision-mission', 'about/leadership', 'about/methodology', 'about/source-policy', 'about/editorial-policy', 'careers', 'support'] as $p) { $entries[] = [page_url($p), null, 'monthly', '0.6']; }
+foreach (['about', 'about/why-choose-us', 'about/vision-mission', 'about/leadership', 'about/methodology', 'about/source-policy', 'about/editorial-policy', 'careers', 'support', 'sitemap'] as $p) { $entries[] = [page_url($p), null, 'monthly', '0.6']; }
 foreach ($hubs as $hub) { $entries[] = [page_url($hub), site_registry()['sources'][$hub]['verified'] ?? null, 'monthly', '0.9']; }
 foreach (array_keys($services) as $sk) { $entries[] = [page_url('services/'.$sk), null, 'monthly', '0.8']; }
 foreach ($pages as $slug => $page) {
   if ($page['kind'] === 'legal' || !empty($page['noindex'])) continue;
   $entries[] = [page_url($slug), $page['verified'] ?? null, 'monthly', '0.8'];
 }
-$xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n";
+$xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<?xml-stylesheet type=\"text/xsl\" href=\"/assets/sitemap.xsl\"?>\n<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n";
 foreach ($entries as [$loc, $lastmod, $freq, $prio]) {
   $xml .= '<url><loc>'.e($loc).'</loc>'.($lastmod ? "<lastmod>$lastmod</lastmod>" : '')."<changefreq>$freq</changefreq><priority>$prio</priority></url>\n";
 }

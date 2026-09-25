@@ -22,7 +22,7 @@
     <p class="footer-notice"><strong>Official source methodology.</strong> INCORPSYS guides summarise official government and registry guidance and link to it. They are not legal, tax or immigration advice and do not replace the competent authority. Fees, timelines and requirements change: verify them with the authority before filing or payment. INCORPSYS does not guarantee incorporation, licensing, banking or visa outcomes. <a href="/about/methodology/">How we build our guides</a>.</p>
     <div class="footer-bottom">
       <span>© <?=date('Y')?> INCORPSYS. All rights reserved.</span>
-      <ul aria-label="Legal"><li><a href="/legal/privacy/">Privacy Policy</a></li><li><a href="/legal/cookies/">Cookie Policy</a></li><li><a href="/legal/terms/">Terms</a></li><li><a href="/legal/disclaimer/">Disclaimer</a></li><li><button class="footer-link-btn" type="button" data-cookie-settings>Cookie settings</button></li></ul>
+      <ul aria-label="Legal"><li><a href="/legal/privacy/">Privacy Policy</a></li><li><a href="/legal/cookies/">Cookie Policy</a></li><li><a href="/legal/terms/">Terms</a></li><li><a href="/legal/disclaimer/">Disclaimer</a></li><li><a href="/sitemap/">Sitemap</a></li><li><button class="footer-link-btn" type="button" data-cookie-settings>Cookie settings</button></li></ul>
     </div>
   </div>
 </footer>

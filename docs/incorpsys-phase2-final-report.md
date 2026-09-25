@@ -234,3 +234,4 @@ QA tools (axe-core, html-validate, Lighthouse, Playwright) were used outside the
   - Withdrawing consent through "Cookie settings" in the footer deletes the `_ga` cookies.
   - New `/legal/cookies/` page (noindex until legal approval); the Privacy Policy draft mentions analytics.
 - **QA:** 254 pages crawled with 0 broken; html-validate clean; no overflow at 320–1920px on 26 page types; axe 0 violations; consent tested with and without an analytics ID; enquiry flow re-tested.
+- **Sitemap:** new visitor sitemap page at `/sitemap/`, linked from the footer and grouped by section. `sitemap.xml` now renders as a styled table in browsers (`assets/sitemap.xsl`) and stays standard XML for search engines. The sitemap now has 127 URLs.

@@ -648,3 +648,6 @@ label.choice{display:block}
 
 .content-section p,.prose p{overflow-wrap:anywhere}
 @media (max-width:640px){.masthead-in{gap:var(--sp-3)}.header-actions .btn .icon{display:none}}
+.sitemap-page .card .link-list{grid-template-columns:1fr;margin-top:var(--sp-4)}
+.sitemap-page .card h3 a{color:var(--navy-900)}
+.sitemap-page .card h3 a:hover{color:var(--blue-700)}
