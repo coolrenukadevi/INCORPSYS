@@ -4,6 +4,7 @@ $pages=site_data();$reg=site_registry();
 $slug=trim((string)($GLOBALS['PAGE_SLUG']??''),'/');
 $page=$pages[$slug]??null;
 if(!$page){require __DIR__.'/../404.php';return;}
+if(in_array($page['kind'],['topic','service'],true)){require_once __DIR__.'/../includes/phase-a.php';$page=phase_a_enrich($page);}
 $kind=$page['kind'];$jKey=$page['jurisdiction']??null;$jLabel=$jKey?$reg['sources'][$jKey]['label']:null;
 if($kind==='legal'||!empty($page['noindex'])) $noindex=true;
 $crumbs=[['name'=>'Home','slug'=>'']];
@@ -34,7 +35,7 @@ include __DIR__.'/../partials/header.php';?>
     <?php if($kind==='legal'):?><div class="alert alert-warning"><?=icon('triangle-alert')?><div><strong>Draft — pending legal review</strong>This policy is being finalised. Items marked <mark class="tbc">[To be confirmed]</mark> will be completed before the policy takes effect. Questions: <a href="/contact/">contact us</a>.</div></div><?php endif;?>
     <?=answer_block($page['answer']??'Use the official source linked on this page to verify current requirements.')?>
     <?php foreach(($page['sections']??[]) as $i=>$section): $bullets=array_filter($section['bullets']??[],fn($b)=>trim($b)!==''); ?>
-    <section class="content-section" aria-labelledby="s<?=$i?>"><h2 id="s<?=$i?>"><?=e($section['title'])?></h2><?php if(!empty($section['body'])):?><p><?=rich_text($section['body'])?></p><?php endif;?><?php if($bullets):?><ul><?php foreach($bullets as $b):?><li><?=rich_text($b)?></li><?php endforeach;?></ul><?php endif;?></section>
+    <section class="content-section" aria-labelledby="s<?=$i?>"><h2 id="s<?=$i?>"><?=e($section['title'])?></h2><?php if(!empty($section['body'])):?><p><?=rich_text($section['body'])?></p><?php endif;?><?php if(!empty($section['html'])):?><?=$section['html']?><?php endif;?><?php if($bullets):?><ul><?php foreach($bullets as $b):?><li><?=rich_text($b)?></li><?php endforeach;?></ul><?php endif;?></section>
     <?php endforeach;?>
     <?php if($kind==='contact'):?><?php include __DIR__.'/../partials/enquiry-form.php';?><?php endif;?>
     <?=faq_accordion($page['faqs']??[])?>

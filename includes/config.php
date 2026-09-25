@@ -41,8 +41,10 @@ function asset(string $path): string {
 function path_url(string $slug): string { $slug=trim($slug,'/'); return '/'.($slug===''?'':$slug.'/'); }
 function tel_url(): string { return 'tel:'.SITE_PHONE_TEL; }
 function wa_url(string $message='Hello INCORPSYS, I would like to discuss company incorporation.'): string { return 'https://wa.me/'.WHATSAPP_NUMBER.'?text='.rawurlencode($message); }
-// Shared secret for signing enquiry-form tokens. Set INCORPSYS_FORM_SECRET in the server environment.
-function form_secret(): string { return (string)(getenv('INCORPSYS_FORM_SECRET') ?: hash('sha256', __DIR__.php_uname())); }
+// Optional per-server settings (not in version control): copy includes/secrets.example.php to includes/secrets.php.
+if (is_file(__DIR__.'/secrets.php')) require_once __DIR__.'/secrets.php';
+// Shared secret for signing enquiry-form tokens: INCORPSYS_FORM_SECRET (environment) or FORM_SECRET (secrets.php).
+function form_secret(): string { return (string)(getenv('INCORPSYS_FORM_SECRET') ?: (defined('FORM_SECRET') ? FORM_SECRET : hash('sha256', __DIR__.php_uname()))); }
 function form_token(): string { $t=(string)time(); return $t.'.'.hash_hmac('sha256',$t,form_secret()); }
 function site_data(): array { static $d=null; return $d ??= require __DIR__.'/data.php'; }
 function site_registry(): array { static $r=null; return $r ??= require __DIR__.'/../content/registry.php'; }
@@ -53,7 +55,7 @@ require_once __DIR__.'/../content/source-registry.php';
 const JS_FLAG_SCRIPT = "document.documentElement.classList.replace('no-js','js')";
 // Google Analytics 4 measurement ID (e.g. G-XXXXXXXXXX), set in the server environment. Empty = analytics off.
 // Analytics loads only after the visitor accepts analytics cookies in the consent banner.
-function ga_id(): string { $id = (string)(getenv('INCORPSYS_GA_ID') ?: ''); return preg_match('/^G-[A-Z0-9]{4,20}$/', $id) ? $id : ''; }
+function ga_id(): string { $id = (string)(getenv('INCORPSYS_GA_ID') ?: (defined('GA_MEASUREMENT_ID') ? GA_MEASUREMENT_ID : '')); return preg_match('/^G-[A-Z0-9]{4,20}$/', $id) ? $id : ''; }
 function send_security_headers(): void {
   if (PHP_SAPI === 'cli' || headers_sent()) return;
   $hash = base64_encode(hash('sha256', JS_FLAG_SCRIPT, true));

@@ -24,14 +24,16 @@ Premium, source-backed PHP website for **INCORPSYS — Global Company Incorporat
 | About, company and trust pages, Contact | `/about/`, `/about/why-choose-us/`, `/about/vision-mission/`, `/about/leadership/`, `/about/methodology/`, `/about/source-policy/`, `/about/editorial-policy/`, `/careers/`, `/support/`, `/contact/` | 10 | yes |
 | Sitemap page (the XML sitemap is styled for browsers via `assets/sitemap.xsl`) | `/sitemap/` | 1 | yes |
 | Phase A topic and service pages | `/uae/company-registration/` | 100 | **no** — template text, noindex until rewritten |
-| Legal | `/legal/privacy/`, `/legal/cookies/`, `/legal/terms/`, `/legal/disclaimer/` | 4 | no — until final text is approved |
+| Legal & Support hub | `/legal/` | 1 | yes |
+| Policies: Privacy, Data, Payment, Refund, Cancellation, Hiring, Cookie, Terms, Disclaimer, Grievance Redressal | `/legal/privacy/` … | 10 | no — drafts with `[To be confirmed]` items until legal approval |
 | Utility | `/explore/`, `/search/`, `/login/`, `/signup/`, `/account/` | 5 | no |
 
 ### Content files
 | File | What it holds |
 |---|---|
 | `content/sources.php` | Official authority, source links and verification date per jurisdiction |
-| `content/pages.php` | Phase A pages (set `'noindex'` per page; remove it once a page is rewritten with sourced content) |
+| `content/pages.php` | Phase A pages (built at render time by `includes/phase-a.php` from sourced guide statements; set `'noindex'` per page) |
+| `content/legal.php` | Legal & Support policies (drafts; search for `[To be confirmed` to find open items) |
 | `content/phase2.php` | In-depth guides, resource guides, Contact and legal text |
 | `content/jurisdiction-profiles.php` | Jurisdiction guide sections, FAQs and common mistakes |
 | `content/services.php` | Service hub content |
@@ -58,7 +60,7 @@ It writes the page stub files, regenerates `sitemap.xml` and `docs/source-regist
 ### Deployment
 1. PHP 8.1+ on Apache/cPanel with `mod_rewrite` (and ideally `mod_headers`, `mod_deflate`).
 2. Point `www.incorpsys.com` to the web root.
-3. Set the `INCORPSYS_FORM_SECRET` environment variable to a long random string. To enable Google Analytics, set `INCORPSYS_GA_ID` to your GA4 measurement ID (for example `G-XXXXXXXXXX`); it loads only for visitors who accept analytics cookies.
+3. Settings: copy `includes/secrets.example.php` to `includes/secrets.php` and set `FORM_SECRET` (a long random string) and, optionally, `GA_MEASUREMENT_ID`. Alternatively set the `INCORPSYS_FORM_SECRET` and `INCORPSYS_GA_ID` environment variables. To enable Google Analytics, set `INCORPSYS_GA_ID` to your GA4 measurement ID (for example `G-XXXXXXXXXX`); it loads only for visitors who accept analytics cookies.
 4. Replace `mail()` with authenticated SMTP or a CRM webhook, and add SPF/DKIM for incorpsys.com.
 5. Review the legal text (Privacy, Cookie Policy, Terms, Disclaimer) in `content/phase2.php`. Once approved, remove the legal `noindex` rule in `pages/_page_template.php` and the legal skip in `tools/build.php`.
 6. Serve over HTTPS and add `Strict-Transport-Security` at the server or CDN.

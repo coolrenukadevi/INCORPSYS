@@ -235,3 +235,12 @@ QA tools (axe-core, html-validate, Lighthouse, Playwright) were used outside the
   - New `/legal/cookies/` page (noindex until legal approval); the Privacy Policy draft mentions analytics.
 - **QA:** 254 pages crawled with 0 broken; html-validate clean; no overflow at 320–1920px on 26 page types; axe 0 violations; consent tested with and without an analytics ID; enquiry flow re-tested.
 - **Sitemap:** new visitor sitemap page at `/sitemap/`, linked from the footer and grouped by section. `sitemap.xml` now renders as a styled table in browsers (`assets/sitemap.xsl`) and stays standard XML for search engines. The sitemap now has 127 URLs.
+- **Legal & Support:**
+  - Hub at `/legal/`.
+  - New Data, Payment, Refund, Cancellation and Hiring policies and Grievance Redressal; the Privacy Policy is expanded.
+  - Business terms (amounts, timelines, grievance officer details, governing entity) are highlighted `[To be confirmed]` placeholders. All policies are noindex drafts until legal approval.
+- **Phase A pages rebuilt** (`includes/phase-a.php`):
+  - Each country topic or service page now shows that country's sourced statements, a checklist drawn from its guides, and the authority's source library.
+  - Overlap between countries fell from 60–82% to 18–28% for topic pages.
+  - The pages remain noindex because their statements repeat the in-depth guides.
+- **Hosting:** optional `includes/secrets.php` for the form secret and GA ID, for cPanel hosts without environment variables.

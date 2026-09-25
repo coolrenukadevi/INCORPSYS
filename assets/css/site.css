@@ -652,3 +652,6 @@ label.choice{display:block}
 .sitemap-page .card h3 a{color:var(--navy-900)}
 .sitemap-page .card h3 a:hover{color:var(--blue-700)}
 .tbc{background:var(--warning-bg);color:var(--warning);padding:0 4px;border-radius:4px;font-weight:var(--fw-semibold)}
+.content-section ul.link-list,.content-section ul.check-list,.content-section ul.source-list,.content-section ul.fact-list{padding-left:0}
+.content-section ul.link-list li+li,.content-section ul.check-list li+li{margin-top:0}
+.content-section .link-list li::marker{content:none}
