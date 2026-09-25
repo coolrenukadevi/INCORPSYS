@@ -6,9 +6,8 @@
         <a class="footer-logo" href="/" aria-label="INCORPSYS home"><picture><source type="image/webp" srcset="<?=e(asset('img/logo-reverse-96.webp'))?> 1x, <?=e(asset('img/logo-reverse-144.webp'))?> 1.5x"><img src="<?=e(asset('img/logo-reverse-96.png'))?>" alt="INCORPSYS — Global Company Incorporation" width="240" height="48" loading="lazy"></picture></a>
         <p>Company incorporation, licensing, banking readiness and compliance support for the UAE, Singapore, Hong Kong, the UK, the USA and Malaysia — organized around official government sources.</p>
         <ul class="footer-contact">
-          <li><a href="mailto:<?=e(SITE_EMAIL)?>"><?=icon('mail')?><?=e(SITE_EMAIL)?></a></li>
-          <li><a href="<?=e(tel_url())?>"><?=icon('phone')?><?=e(SITE_PHONE)?></a></li>
           <li><a href="<?=e(wa_url())?>" target="_blank" rel="noopener"><?=icon('message-circle')?>WhatsApp</a></li>
+          <li><a href="/contact/"><?=icon('send')?>Contact us</a></li>
         </ul>
         <ul class="footer-social" aria-label="INCORPSYS on social media"><?php foreach(SOCIAL_LINKS as $name=>$href):?><li><a href="<?=e($href)?>" target="_blank" rel="noopener me"><?=e($name)?></a></li><?php endforeach;?></ul>
       </div>
@@ -46,7 +45,7 @@
         <a class="assist-option" href="/contact/">Speak to an expert<?=icon('chevron-right')?></a>
       </div>
     </div>
-    <div class="assist-foot"><a href="<?=e(wa_url())?>" target="_blank" rel="noopener"><?=icon('message-circle')?>WhatsApp</a><a href="<?=e(tel_url())?>"><?=icon('phone')?>Call</a><a href="mailto:<?=e(SITE_EMAIL)?>"><?=icon('mail')?>Email</a></div>
+    <div class="assist-foot"><a href="<?=e(wa_url())?>" target="_blank" rel="noopener"><?=icon('message-circle')?>WhatsApp</a><a href="/contact/"><?=icon('send')?>Contact us</a></div>
   </div>
 </div>
 <script src="<?=e(asset('js/site.js'))?>" defer></script>

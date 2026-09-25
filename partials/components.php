@@ -71,9 +71,8 @@ function source_card(array $src, ?string $verified = null): string {
 
 function contact_card(): string {
   return '<div class="source-card"><span class="eyebrow">Talk to INCORPSYS</span><h2 class="mt-2">Questions about your setup?</h2><ul class="source-list">'
-    .'<li><a href="'.e(wa_url()).'" target="_blank" rel="noopener">WhatsApp '.e(SITE_PHONE).icon('message-circle').'</a></li>'
-    .'<li><a href="'.e(tel_url()).'">Call '.e(SITE_PHONE).icon('phone').'</a></li>'
-    .'<li><a href="mailto:'.e(SITE_EMAIL).'">'.e(SITE_EMAIL).icon('mail').'</a></li></ul></div>';
+    .'<li><a href="'.e(wa_url()).'" target="_blank" rel="noopener">WhatsApp'.icon('message-circle').'</a></li>'
+    .'<li><a href="/contact/">Contact us'.icon('send').'</a></li></ul></div>';
 }
 
 /** Final call-to-action band. Optional jurisdiction pre-fills the enquiry. */
@@ -84,9 +83,8 @@ function cta_band(string $countryKey = '', string $countryLabel = '', string $he
     .'<p>Answer a few questions about your activity, ownership and timeline. We map each step to the authority that controls it and reply with a structured plan.</p>'
     .'<div class="cluster mt-6"><a class="btn btn-primary btn-lg" href="'.e($url).'">Get started'.icon('arrow-right').'</a><a class="btn btn-on-dark btn-lg" href="/jurisdictions/">Compare jurisdictions</a></div></div>'
     .'<ul class="cta-contact">'
-    .'<li><a href="'.e(wa_url()).'" target="_blank" rel="noopener">'.icon('message-circle').'<span>WhatsApp<small>'.e(SITE_PHONE).'</small></span></a></li>'
-    .'<li><a href="'.e(tel_url()).'">'.icon('phone').'<span>Call<small>'.e(SITE_PHONE).'</small></span></a></li>'
-    .'<li><a href="mailto:'.e(SITE_EMAIL).'">'.icon('mail').'<span>Email<small>'.e(SITE_EMAIL).'</small></span></a></li>'
+    .'<li><a href="'.e(wa_url()).'" target="_blank" rel="noopener">'.icon('message-circle').'<span>WhatsApp<small>Chat with the team</small></span></a></li>'
+    .'<li><a href="/contact/">'.icon('send').'<span>Contact us<small>Send a message</small></span></a></li>'
     .'</ul></div></div></section>';
 }
 
