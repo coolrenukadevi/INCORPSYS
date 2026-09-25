@@ -10,5 +10,5 @@ ob_start();?>
 <ul><li>Official sources first — accuracy matters more than speed alone.</li><li>Clear, honest communication with clients.</li><li>Structured, well-documented workflows.</li></ul>
 <h2>How to apply</h2>
 <p>Open positions are not listed on this page. If you would like to be considered, email your CV and a short note about the role and area you are interested in to <a href="mailto:<?=e(SITE_EMAIL)?>?subject=<?=rawurlencode('Careers at INCORPSYS')?>"><?=e(SITE_EMAIL)?></a> with the subject "Careers at INCORPSYS".</p>
-<p class="small">Please do not send passport copies or other identity documents at this stage.</p>
+<p class="small">Please do not send passport copies or other identity documents at this stage. INCORPSYS never asks candidates for any fee. See our <a href="/legal/hiring-policy/">Hiring Policy</a>.</p>
 <?php $body=ob_get_clean(); include __DIR__.'/../partials/simple-page.php';

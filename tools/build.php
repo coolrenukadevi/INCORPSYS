@@ -33,7 +33,7 @@ foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator("$root/pag
 
 // Sitemap: indexable pages only (legal pages and Phase A topic/service pages are noindex).
 $entries = [[page_url(''), null, 'weekly', '1.0'], [page_url('jurisdictions'), null, 'monthly', '0.9'], [page_url('get-started'), null, 'monthly', '0.8'], [page_url('services'), null, 'monthly', '0.8']];
-foreach (['about', 'about/why-choose-us', 'about/vision-mission', 'about/leadership', 'about/methodology', 'about/source-policy', 'about/editorial-policy', 'careers', 'support', 'sitemap'] as $p) { $entries[] = [page_url($p), null, 'monthly', '0.6']; }
+foreach (['about', 'about/why-choose-us', 'about/vision-mission', 'about/leadership', 'about/methodology', 'about/source-policy', 'about/editorial-policy', 'careers', 'support', 'sitemap', 'legal'] as $p) { $entries[] = [page_url($p), null, 'monthly', '0.6']; }
 foreach ($hubs as $hub) { $entries[] = [page_url($hub), site_registry()['sources'][$hub]['verified'] ?? null, 'monthly', '0.9']; }
 foreach (array_keys($services) as $sk) { $entries[] = [page_url('services/'.$sk), null, 'monthly', '0.8']; }
 foreach ($pages as $slug => $page) {

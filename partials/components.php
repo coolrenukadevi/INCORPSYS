@@ -163,3 +163,16 @@ function team_grid(): string {
 function team_schema(): array {
   return array_map(fn($m) => ['@type' => 'Person', 'name' => $m['name'], 'jobTitle' => $m['role'], 'worksFor' => ['@id' => SITE_URL.'/#organization']], require __DIR__.'/../content/team.php');
 }
+
+/** Escape text and highlight "[To be confirmed: ...]" placeholders in draft policies. */
+function rich_text(string $text): string {
+  return preg_replace('/\[To be confirmed:[^\]]*\]/', '<mark class="tbc">$0</mark>', e($text));
+}
+/** Legal & Support navigation list. */
+function legal_links(string $current = ''): array {
+  $items = [];
+  foreach (site_data() as $slug => $p) { if ($p['kind'] === 'legal') $items[$slug] = $p['name']; }
+  $items['support'] = 'Support';
+  unset($items[$current]);
+  return $items;
+}

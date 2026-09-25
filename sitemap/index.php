@@ -9,7 +9,7 @@ $main=[$link('/','Home'),$link('/get-started/','Get started'),$link('/jurisdicti
 $company=[$link('/about/','About Us'),$link('/about/why-choose-us/','Why Choose Us?'),$link('/about/vision-mission/','Vision & Mission'),$link('/about/leadership/','Leadership'),$link('/careers/','Careers'),$link('/about/methodology/','Methodology'),$link('/about/source-policy/','Source policy'),$link('/about/editorial-policy/','Editorial policy')];
 $serv=[$link('/services/','All services')];foreach($services as $k=>$s)$serv[]=$link('/services/'.$k.'/',$s['name']);
 $res=[$link('/resources/','Resource library')];foreach($pages as $p){if($p['kind']==='resource')$res[]=$link(path_url($p['slug']),$p['name']);}
-$legal=[];foreach($pages as $p){if($p['kind']==='legal')$legal[]=$link(path_url($p['slug']),$p['name']);}
+$legal=[$link('/legal/','Legal & Support')];foreach($pages as $p){if($p['kind']==='legal')$legal[]=$link(path_url($p['slug']),$p['name']);}$legal[]=$link('/support/','Support');
 include __DIR__.'/../partials/header.php';?>
 <main id="main">
 <?=page_hero('Sitemap','Sitemap','Every page on the INCORPSYS website, grouped by section.',$crumbs)?>
@@ -25,7 +25,7 @@ include __DIR__.'/../partials/header.php';?>
   <?php endforeach;?></div>
   <div class="grid grid-2 mt-10">
     <section class="card" aria-labelledby="sm-res"><h2 id="sm-res" class="h3">Resources</h2><?=$list($res)?></section>
-    <section class="card" aria-labelledby="sm-legal"><h2 id="sm-legal" class="h3">Legal</h2><?=$list($legal)?><p class="small muted mt-6">Search engines: see the <a href="/sitemap.xml">XML sitemap</a>.</p></section>
+    <section class="card" aria-labelledby="sm-legal"><h2 id="sm-legal" class="h3">Legal &amp; Support</h2><?=$list($legal)?><p class="small muted mt-6">Search engines: see the <a href="/sitemap.xml">XML sitemap</a>.</p></section>
   </div>
 </div></section>
 </main>
