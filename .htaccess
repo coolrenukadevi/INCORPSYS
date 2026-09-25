@@ -1,4 +1,8 @@
 Options -Indexes
+DirectoryIndex index.php
+AddType application/manifest+json .webmanifest
+ErrorDocument 403 /404.php
+ErrorDocument 404 /404.php
 RewriteEngine On
 RewriteBase /
 
@@ -10,16 +14,36 @@ RewriteBase /
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
   Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
   Header always set X-Frame-Options SAMEORIGIN
+  # Long-lived cache is safe because asset() appends ?v=<file mtime> to every asset URL.
+  <FilesMatch "\.(css|js|png|jpg|jpeg|webp|svg|ico|woff2)$">
+    Header set Cache-Control "public, max-age=2592000, immutable"
+  </FilesMatch>
 </IfModule>
-<FilesMatch "\.(css|js|png|jpg|jpeg|webp|svg|ico|woff2)$">
-  Header set Cache-Control "public, max-age=2592000, immutable"
-</FilesMatch>
+
+# Internal files and folders are not public.
+RewriteRule ^(includes|partials|content|tools|docs|phase-b-reserved)(/|$) - [R=404,L]
+RewriteRule (^|/)\.(?!well-known/) - [R=404,L]
+RewriteRule ^pages/_ - [R=404,L]
+RewriteRule (^|/)(README[^/]*\.md|[^/]+\.csv)$ - [R=404,L]
+RewriteRule ^enquiry/?$ - [R=404,L]
+
+# Direct /pages/... requests redirect to their clean URL (only the original request, not internal rewrites).
+RewriteCond %{THE_REQUEST} \s/pages/([^/.\s?]+)/([^/.\s?]+)/(index\.php)?[\s?]
+RewriteRule ^ /%1/%2/ [R=301,L]
+RewriteCond %{THE_REQUEST} \s/pages/([^/.\s?]+)/(index\.php)?[\s?]
+RewriteRule ^ /%1/ [R=301,L]
 
 # Never rewrite real files/directories.
 RewriteCond %{REQUEST_FILENAME} -f [OR]
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^ - [L]
 
-# Clean content URLs: /uae/company-registration/
-RewriteRule ^([^/.]+)/([^/.]+)/?$ pages/$1/$2/index.php [L,QSA]
-RewriteRule ^([^/.]+)/?$ pages/$1/index.php [L,QSA]
+# Add the trailing slash used by canonical URLs.
+RewriteRule ^([^/.]+)/([^/.]+)$ /$1/$2/ [R=301,L]
+RewriteRule ^([^/.]+)$ /$1/ [R=301,L]
+
+# Clean content URLs: /uae/ and /uae/company-registration/ (only when the page file exists).
+RewriteCond %{DOCUMENT_ROOT}/pages/$1/$2/index.php -f
+RewriteRule ^([^/.]+)/([^/.]+)/$ pages/$1/$2/index.php [L,QSA]
+RewriteCond %{DOCUMENT_ROOT}/pages/$1/index.php -f
+RewriteRule ^([^/.]+)/$ pages/$1/index.php [L,QSA]
