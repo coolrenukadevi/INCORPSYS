@@ -21,7 +21,7 @@
     </div>
     <p class="footer-notice"><strong>Official source methodology.</strong> INCORPSYS guides summarise official government and registry guidance and link to it. They are not legal, tax or immigration advice and do not replace the competent authority. Fees, timelines and requirements change: verify them with the authority before filing or payment. INCORPSYS does not guarantee incorporation, licensing, banking or visa outcomes. <a href="/about/methodology/">How we build our guides</a>.</p>
     <div class="footer-bottom">
-      <span>© <?=date('Y')?> INCORPSYS. All rights reserved.<?php if(is_provided(LEGAL_ENTITY_NAME)):?> INCORPSYS is operated by <?=e(LEGAL_ENTITY_NAME)?>.<?php endif;?></span>
+      <span>© <?=date('Y')?> INCORPSYS. All rights reserved.<?php if(is_provided(LEGAL_ENTITY_NAME)):?> INCORPSYS is operated by <?=e(LEGAL_ENTITY_NAME)?>.<?php endif;?><?php if(is_provided(REGISTRATION_NUMBER)):?> CIN: <?=e(REGISTRATION_NUMBER)?>.<?php endif;?><?php if(is_provided(TAX_ID)):?> GSTIN: <?=e(TAX_ID)?>.<?php endif;?></span>
       <ul aria-label="Legal"><li><a href="/legal/terms/">Terms of Use</a></li><li><a href="/legal/service-terms/">Service Terms</a></li><li><a href="/legal/disclaimer/">Disclaimer</a></li><li><a href="/legal/cookies/">Cookie Policy</a></li><li><a href="/sitemap/">Sitemap</a></li><li><button class="footer-link-btn" type="button" data-cookie-settings>Cookie settings</button></li></ul>
     </div>
   </div>

@@ -17,7 +17,7 @@ $legal = function (string $slug, string $name, string $description, string $answ
     'eyebrow' => 'LEGAL & SUPPORT', 'description' => $description, 'answer' => $answer, 'sections' => $sections, 'faqs' => $faqs, 'source' => null, 'verified' => null];
 };
 $contact = 'Contact INCORPSYS through the Contact page or email '.SITE_EMAIL.'.';
-$entity = 'Legal entity: '.LEGAL_ENTITY_NAME.'. Registration number: '.REGISTRATION_NUMBER.'. Registered address: '.REGISTERED_ADDRESS.'. Head office: '.HEAD_OFFICE_ADDRESS.'.';
+$entity = 'Legal entity: '.LEGAL_ENTITY_NAME.'. CIN: '.REGISTRATION_NUMBER.'. GSTIN: '.TAX_ID.'. Registered address: '.REGISTERED_ADDRESS.'. Head office: '.HEAD_OFFICE_ADDRESS.'.';
 
 return [
   'legal/privacy' => $legal('privacy', 'Privacy Policy',
@@ -58,7 +58,7 @@ return [
     'Every quote separates government fees, which are set by the authority and shown with their official source, from INCORPSYS service fees. Work starts once the agreed payment is received.',
     [
       ['title' => 'Quotes', 'bullets' => ['We quote after confirming your jurisdiction, structure, activity and scope.', 'Government and authority fees are listed separately, with the official source and the date they were checked.', 'INCORPSYS service fees are listed separately and never presented as government charges.', 'Quote validity: '.$tbc('number of days').'.']],
-      ['title' => 'Invoices and currency', 'body' => 'Invoices are issued in '.$tbc('invoice currency or currencies').'. Applicable taxes: '.$tbc('taxes charged, e.g. GST, and registration details').'.'],
+      ['title' => 'Invoices and currency', 'body' => 'Invoices are issued in '.$tbc('invoice currency or currencies').'. Applicable taxes: '.$tbc('taxes charged, e.g. GST rate').'. GSTIN: '.TAX_ID.'.'],
       ['title' => 'Payment methods', 'body' => 'Accepted methods: '.$tbc('bank transfer, card, payment gateway, etc.').'. INCORPSYS will never ask you to pay into a personal account or through a website form.'],
       ['title' => 'When payment is due', 'body' => 'Payment terms: '.$tbc('e.g. advance, milestone-based, or on invoice').'. Government fees are usually collected before filing because they are paid to the authority when the application is submitted.'],
       ['title' => 'Changes in government fees', 'body' => 'Authorities can change their fees without notice. If an official fee changes before it is paid, we will show you the new official figure before proceeding.'],
@@ -150,7 +150,7 @@ return [
     'The terms that apply to INCORPSYS company incorporation, business setup and related professional support services.',
     'INCORPSYS provides company incorporation, business setup and related support within the scope you select. Authorities, regulators, banks and licensing bodies make their own decisions, so INCORPSYS cannot guarantee approvals, account opening, visas, licences or processing times. Fees, refunds, exclusions and deliverables are set out in your quotation or service order.',
     [
-      ['title' => 'Our services', 'body' => 'INCORPSYS provides company incorporation, business setup and related professional support services based on the scope selected by the client. Service provider: '.LEGAL_ENTITY_NAME.' (registration number '.REGISTRATION_NUMBER.').'],
+      ['title' => 'Our services', 'body' => 'INCORPSYS provides company incorporation, business setup and related professional support services based on the scope selected by the client. Service provider: '.LEGAL_ENTITY_NAME.' (CIN '.REGISTRATION_NUMBER.', GSTIN '.TAX_ID.').'],
       ['title' => 'Decisions by authorities and institutions', 'body' => 'Government, regulatory, banking and licensing decisions remain subject to the relevant authority or institution. INCORPSYS cannot guarantee approval, account opening, visa issuance, licensing or a specific processing time where such decisions are outside our control.'],
       ['title' => 'Your responsibilities', 'body' => 'Clients are responsible for providing accurate, complete and valid information and documentation, and for telling us promptly about any change that affects an application.'],
       ['title' => 'Quotation and service order', 'body' => 'Specific services, fees, refunds, exclusions and deliverables will be governed by the applicable quotation, engagement confirmation or service order. Government and authority fees are shown separately from INCORPSYS professional fees, with their official source.'],

@@ -33,9 +33,9 @@ const HEAD_OFFICE = ['street' => 'Flat 203, Sharda Mansion Apartment, Kailashpur
 // REGISTERED_ADDRESS is the registered office on record; it may differ from the head office above.
 const PLACEHOLDER = '[TO BE PROVIDED]';
 const LEGAL_ENTITY_NAME = 'Paynancial Technology Private Limited';
-const REGISTRATION_NUMBER = PLACEHOLDER;
+const REGISTRATION_NUMBER = 'U66190BR2024PTC067929';   // CIN (Corporate Identification Number)
 const REGISTERED_ADDRESS = PLACEHOLDER;
-const TAX_ID = PLACEHOLDER;
+const TAX_ID = '10AAOCP5173C1ZO';                      // GSTIN
 const LEGAL_JURISDICTION = PLACEHOLDER;
 
 // Grievance Officer (Grievance Redressal policy)

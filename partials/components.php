@@ -154,7 +154,8 @@ function organization_schema(): array {
     // Legal details are added only once supplied in includes/settings.php.
     + (is_provided(LEGAL_ENTITY_NAME) ? ['legalName' => LEGAL_ENTITY_NAME] : [])
     + ['address' => ['@type' => 'PostalAddress', 'streetAddress' => HEAD_OFFICE['street'], 'addressLocality' => HEAD_OFFICE['locality'], 'addressRegion' => HEAD_OFFICE['region'], 'postalCode' => HEAD_OFFICE['postcode'], 'addressCountry' => HEAD_OFFICE['country']]]
-    + (is_provided(TAX_ID) ? ['taxID' => TAX_ID] : []);
+    + (is_provided(TAX_ID) ? ['taxID' => TAX_ID] : [])
+    + (is_provided(REGISTRATION_NUMBER) ? ['identifier' => ['@type' => 'PropertyValue', 'propertyID' => 'CIN', 'value' => REGISTRATION_NUMBER]] : []);
 }
 
 /** ItemList of published (indexable) jurisdiction guides, for the homepage and comparison page. */
