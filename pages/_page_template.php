@@ -6,7 +6,8 @@ $page=$pages[$slug]??null;
 if(!$page){require __DIR__.'/../404.php';return;}
 if(in_array($page['kind'],['topic','service'],true)){require_once __DIR__.'/../includes/phase-a.php';$page=phase_a_enrich($page);}
 $kind=$page['kind'];$jKey=$page['jurisdiction']??null;$jLabel=$jKey?$reg['sources'][$jKey]['label']:null;
-if($kind==='legal'||!empty($page['noindex'])) $noindex=true;
+$draftPolicy=$kind==='legal'&&POLICIES_EFFECTIVE_DATE==='';
+if($draftPolicy||!empty($page['noindex'])) $noindex=true;
 $crumbs=[['name'=>'Home','slug'=>'']];
 if($jKey) $crumbs[]=['name'=>$jLabel,'slug'=>$jKey];
 elseif($kind==='resource') $crumbs[]=['name'=>'Knowledge Hub','slug'=>'resources'];
@@ -32,7 +33,8 @@ include __DIR__.'/../partials/header.php';?>
 <?=page_hero($eyebrow,$page['h1']??$page['title'],$page['description']??'',$crumbs,in_array($kind,['guide','resource'],true)?verified_badge($verified):'')?>
 <section class="content-body"><div class="container layout-aside">
   <div class="content-main">
-    <?php if($kind==='legal'):?><div class="alert alert-warning"><?=icon('triangle-alert')?><div><strong>Draft — subject to legal review</strong>This policy is being finalised and has not yet been approved by legal counsel. Items marked <mark class="tbc">[To be confirmed]</mark> or <mark class="tbc">[TO BE PROVIDED]</mark> will be completed before the policy takes effect. Questions: <a href="/contact/">contact us</a>.</div></div><?php endif;?>
+    <?php if($kind==='legal'&&!$draftPolicy):?><p class="policy-meta"><?=icon('badge-check')?>Effective <?=e(fmt_date(POLICIES_EFFECTIVE_DATE))?>. Questions about this policy: <a href="/contact/">contact us</a>.</p><?php if(str_contains(json_encode($page['sections']),'[To be confirmed')||str_contains(json_encode($page['sections']),PLACEHOLDER)):?><p class="policy-meta policy-pending"><mark class="tbc">Highlighted</mark> details are being finalised and will be added to this page.</p><?php endif;?><?php endif;?>
+    <?php if($draftPolicy):?><div class="alert alert-warning"><?=icon('triangle-alert')?><div><strong>Draft — subject to legal review</strong>This policy is being finalised and has not yet been approved by legal counsel. Items marked <mark class="tbc">[To be confirmed]</mark> or <mark class="tbc">[TO BE PROVIDED]</mark> will be completed before the policy takes effect. Questions: <a href="/contact/">contact us</a>.</div></div><?php endif;?>
     <?=answer_block($page['answer']??'Use the official source linked on this page to verify current requirements.')?>
     <?php foreach(($page['sections']??[]) as $i=>$section): $bullets=array_filter($section['bullets']??[],fn($b)=>trim($b)!==''); ?>
     <section class="content-section" aria-labelledby="s<?=$i?>"><h2 id="s<?=$i?>"><?=e($section['title'])?></h2><?php if(!empty($section['body'])):?><p><?=rich_text($section['body'])?></p><?php endif;?><?php if(!empty($section['html'])):?><?=$section['html']?><?php endif;?><?php if($bullets):?><ul><?php foreach($bullets as $b):?><li><?=rich_text($b)?></li><?php endforeach;?></ul><?php endif;?></section>

@@ -235,7 +235,7 @@ function price_table(string $jurisdiction, string $authority): string {
   $lines = array_filter($data[$jurisdiction] ?? [], fn($l) => isset($l['amount'], $l['currency'], $l['url'], $l['verified'])
     && (time() - strtotime($l['verified'])) <= PRICE_MAX_AGE_DAYS * 86400);
   if (!$lines) {
-    return '<div class="alert alert-warning">'.icon('triangle-alert').'<div><strong>Fees vary — verify with the authority</strong>Fees vary by authority, activity, structure and selected services. Verify current charges with '.e($authority).' before payment. INCORPSYS quotes only after confirming your requirements, and shows the official source for every government fee.</div></div>';
+    return '<div class="alert alert-warning">'.icon('triangle-alert').'<div><strong>Fees vary — verify with the authority</strong>Fees vary by authority, activity, structure and selected services. Verify current charges with '.e($authority).' before payment. INCORPSYS shows the official source for every government fee. INCORPSYS service fee: <a href="/get-started/">contact for service fee</a>.</div></div>';
   }
   $h = '<div class="table-wrap"><table class="table"><thead><tr><th scope="col">Item</th><th scope="col">Amount</th><th scope="col">Source</th><th scope="col">Verified</th></tr></thead><tbody>';
   $currencies = array_unique(array_column($lines, 'currency')); $total = 0;

@@ -5,7 +5,7 @@ declare(strict_types=1);
  *
  * Values shown as "[TO BE PROVIDED]" have not been supplied yet. They are never replaced with invented
  * or another company's details. Pages check is_provided() before using a value publicly (schema, footer);
- * the draft policy pages show the placeholder, highlighted, until it is filled in.
+ * the policy pages show the placeholder, highlighted, until it is filled in.
  *
  * Secrets (the form-signing key) do not belong here: see includes/secrets.example.php.
  */
@@ -25,13 +25,18 @@ const SITE_PHONE_TEL = '+917844819819';
 const WHATSAPP_NUMBER = '917844819819';
 const MAIL_FROM = 'noreply@incorpsys.com';
 
-// Legal entity — SUBJECT TO LEGAL REVIEW. Supply the registered details; do not guess them.
+// Legal entity. Supply the registered details; do not guess them.
 const PLACEHOLDER = '[TO BE PROVIDED]';
-const LEGAL_ENTITY_NAME = PLACEHOLDER;
+const LEGAL_ENTITY_NAME = 'Paynancial Technology Private Limited';
 const REGISTRATION_NUMBER = PLACEHOLDER;
 const REGISTERED_ADDRESS = PLACEHOLDER;
 const TAX_ID = PLACEHOLDER;
 const LEGAL_JURISDICTION = PLACEHOLDER;
+
+// Policies: date the approved policies take effect. Set = policies are published (indexable, in the sitemap,
+// no draft notice). Empty = policies revert to drafts (noindex, "subject to legal review" notice).
+// Approved for publication by INCORPSYS on 26 September 2026.
+const POLICIES_EFFECTIVE_DATE = '2026-09-26';
 
 // Analytics: Google Analytics 4 measurement ID, e.g. 'G-XXXXXXXXXX'. Empty = GA never loads.
 // It also loads only after a visitor accepts analytics cookies. The INCORPSYS_GA_ID environment variable overrides this.

@@ -26,7 +26,7 @@ Premium, source-backed PHP website for **INCORPSYS — Global Company Incorporat
 | Sitemap page (the XML sitemap is styled for browsers via `assets/sitemap.xsl`) | `/sitemap/` | 1 | yes |
 | Phase A topic and service pages | `/uae/company-registration/` | 100 | **no** — template text, noindex until rewritten |
 | Legal & Support hub | `/legal/` | 1 | yes |
-| Policies: Privacy, Data, Payment, Refund, Cancellation, Hiring, Cookie, Terms of Use, Service Terms, Filing Quality Commitment, Disclaimer, Grievance Redressal | `/legal/privacy/` … | 12 | no — drafts with `[To be confirmed]` items until legal approval |
+| Policies: Privacy, Data, Payment, Refund, Cancellation, Hiring, Cookie, Terms of Use, Service Terms, Filing Quality Commitment, Disclaimer, Grievance Redressal | `/legal/privacy/` … | 12 | yes — approved, effective 26 September 2026 |
 | Utility | `/explore/`, `/search/`, `/login/`, `/signup/`, `/account/` | 5 | no |
 
 ### Content files
@@ -58,24 +58,23 @@ It writes the page stub files, regenerates `sitemap.xml` and `docs/source-regist
 
 **Vision & Mission:** the text in `about/vision-mission/index.php` is drafted from the approved About text; confirm or replace it.
 
-**Team photos:** add square images to `assets/img/team/` named `anisha-bharti`, `renuka-devi` and `vk-anand` (`.webp`, `.jpg` or `.png`). The About page uses them automatically; initials show until then.
+**Team photos:** square images in `assets/img/team/`, referenced from `content/team.php` (`photo`). Replace a file to update a photo.
 
 ### Settings (update in one place)
 `includes/settings.php` holds the domain, contact details, legal entity fields, GA4 ID and brand lines.
 - Legal entity: `LEGAL_ENTITY_NAME`, `REGISTRATION_NUMBER`, `REGISTERED_ADDRESS`, `TAX_ID`, `LEGAL_JURISDICTION` read `[TO BE PROVIDED]` until supplied. They appear in the draft policies and, once provided, in the Organization schema.
 - Analytics: set `GA4_MEASUREMENT_ID` (for example `G-XXXXXXXXXX`). While it is empty, Google Analytics never loads; when set, it loads only after a visitor accepts analytics cookies.
 - Leadership: `content/team.php` (name, designation, bio, photo, LinkedIn, display order). Empty fields are not shown.
-- Policies: `content/legal.php` — all drafts, subject to legal review, noindex until approved.
+- Policies: `content/legal.php`. `POLICIES_EFFECTIVE_DATE` in settings publishes them (approved 26 September 2026); clear it to return them to draft (noindex + notice). `[To be confirmed]` items stay highlighted until supplied.
 
 ### Deployment
 1. PHP 8.1+ on Apache/cPanel with `mod_rewrite` (and ideally `mod_headers`, `mod_deflate`).
 2. Point `incorpsys.com` and `www.incorpsys.com` to the web root. `.htaccess` redirects www → `https://incorpsys.com` and HTTP → HTTPS on the live domain; canonicals, sitemap and schema use `https://incorpsys.com`.
 3. Copy `includes/secrets.example.php` to `includes/secrets.php` and set `FORM_SECRET` (a long random string), or set the `INCORPSYS_FORM_SECRET` environment variable. The cPanel zip already contains a generated one.
 4. Replace `mail()` with authenticated SMTP or a CRM webhook, and add SPF/DKIM for incorpsys.com.
-5. After legal approval of a policy, remove the legal `noindex` rule in `pages/_page_template.php` and the legal skip in `tools/build.php`.
-6. Serve over HTTPS and add `Strict-Transport-Security` at the server or CDN.
-7. Submit `https://incorpsys.com/sitemap.xml` to Google Search Console and Bing Webmaster Tools.
-8. Re-check official sources before relying on time-sensitive regulatory information.
+5. Serve over HTTPS and add `Strict-Transport-Security` at the server or CDN.
+6. Submit `https://incorpsys.com/sitemap.xml` to Google Search Console and Bing Webmaster Tools.
+7. Re-check official sources before relying on time-sensitive regulatory information.
 
 ### QA commands
 ```

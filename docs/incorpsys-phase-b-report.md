@@ -189,3 +189,23 @@ Nothing has been deployed.
 - Rollback: re-upload `incorpsys-cpanel-upload-v3.zip`.
 
 **Waiting for your approval before any production deployment.**
+
+## Addendum — business inputs received (26 September 2026)
+
+| Input | Applied |
+|---|---|
+| Legal entity: Paynancial Technology Private Limited | `LEGAL_ENTITY_NAME` in `includes/settings.php`. Shown in the policies, in the footer ("INCORPSYS is operated by …") and as `legalName` in the Organization schema. Registration number, address, tax ID and governing-law jurisdiction remain `[TO BE PROVIDED]` |
+| Service fees | Not published, as instructed. Service pages show a "Contact for Service Fee" panel, and cost notices link to the enquiry. The figure 2500 is not used because no currency or scope was given |
+| Legal sign-off: policies approved | `POLICIES_EFFECTIVE_DATE = '2026-09-26'`. All 12 policies are now indexable and in the sitemap, with no draft notice. Each shows "Effective 26 September 2026", and "Last updated" dates are filled in. Items still marked `[To be confirmed]` remain highlighted with a note (for example retention periods, refund percentages, grievance officer) |
+| GA4 ID: not applicable | `GA4_MEASUREMENT_ID` stays empty; no analytics loads |
+| Leadership photos and LinkedIn | Square 480 px WebP photos (EXIF stripped) in `assets/img/team/`; LinkedIn links on the cards and as Person `sameAs` in schema. Biographies were not supplied and are not shown |
+| SMTP / CRM | To be added manually; enquiries use PHP `mail()` until then (`enquiry/submit.php`) |
+
+Assumptions to confirm:
+- **Photo assignment:** photo 2 (red and green saree) is Anisha Bharti, as stated; the woman in the third image is Renuka Devi (by elimination); the man is V.K Anand.
+- **LinkedIn URLs:** reconstructed from the message as `linkedin.com/in/coolanishabharti/` and `linkedin.com/in/vikashkranand/` (the second was given without `/in/`).
+
+Quality gate after these changes (`php tools/qa.php`):
+- 140 indexable pages, 140 in the sitemap, 0 failures, 0 warnings.
+- No overflow at 11 widths and 0 axe violations on 34 key pages; html-validate clean.
+- Leadership page Lighthouse mobile: 97 performance, 100 in every other category, CLS 0.

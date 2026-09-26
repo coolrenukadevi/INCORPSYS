@@ -33,6 +33,17 @@
 <url><loc>https://incorpsys.com/services/tax-registration/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
 <url><loc>https://incorpsys.com/services/due-diligence/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
 <url><loc>https://incorpsys.com/services/business-expansion/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+<url><loc>https://incorpsys.com/legal/privacy/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+<url><loc>https://incorpsys.com/legal/data-policy/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+<url><loc>https://incorpsys.com/legal/payment-policy/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+<url><loc>https://incorpsys.com/legal/refund-policy/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+<url><loc>https://incorpsys.com/legal/cancellation-policy/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+<url><loc>https://incorpsys.com/legal/hiring-policy/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+<url><loc>https://incorpsys.com/legal/grievance-redressal/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+<url><loc>https://incorpsys.com/legal/terms/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+<url><loc>https://incorpsys.com/legal/service-terms/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+<url><loc>https://incorpsys.com/legal/filing-quality-commitment/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+<url><loc>https://incorpsys.com/legal/disclaimer/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
 <url><loc>https://incorpsys.com/uae/business-activity-selection/</loc><lastmod>2026-09-25</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
 <url><loc>https://incorpsys.com/uae/legal-form-selection/</loc><lastmod>2026-09-25</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
 <url><loc>https://incorpsys.com/uae/trade-licence-categories/</loc><lastmod>2026-09-25</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
@@ -129,4 +140,5 @@
 <url><loc>https://incorpsys.com/resources/enquiry-preparation/</loc><lastmod>2026-09-25</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
 <url><loc>https://incorpsys.com/contact/</loc><lastmod>2026-09-25</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
 <url><loc>https://incorpsys.com/resources/official-sources-directory/</loc><lastmod>2026-09-25</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+<url><loc>https://incorpsys.com/legal/cookies/</loc><lastmod>2026-09-25</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
 </urlset>

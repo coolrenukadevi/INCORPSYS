@@ -33,13 +33,13 @@ foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator("$root/pag
   if ($f->getFilename() === 'index.php' && !in_array($dir, $expected, true)) $orphans[] = $dir;
 }
 
-// Sitemap: indexable pages only (legal pages and Phase A topic/service pages are noindex).
+// Sitemap: indexable pages only (Phase A topic/service pages are noindex; policies only once POLICIES_EFFECTIVE_DATE is set).
 $entries = [[page_url(''), null, 'weekly', '1.0'], [page_url('jurisdictions'), null, 'monthly', '0.9'], [page_url('get-started'), null, 'monthly', '0.8'], [page_url('services'), null, 'monthly', '0.8']];
 foreach (['about', 'about/why-choose-us', 'about/vision-mission', 'about/leadership', 'about/methodology', 'about/source-policy', 'about/editorial-policy', 'careers', 'support', 'sitemap', 'legal'] as $p) { $entries[] = [page_url($p), null, 'monthly', '0.6']; }
 foreach ($hubs as $hub) { $entries[] = [page_url($hub), site_registry()['sources'][$hub]['verified'] ?? null, 'monthly', '0.9']; }
 foreach (array_keys($services) as $sk) { $entries[] = [page_url('services/'.$sk), null, 'monthly', '0.8']; }
 foreach ($pages as $slug => $page) {
-  if ($page['kind'] === 'legal' || !empty($page['noindex'])) continue;
+  if (($page['kind'] === 'legal' && POLICIES_EFFECTIVE_DATE === '') || !empty($page['noindex'])) continue;
   $entries[] = [page_url($slug), $page['verified'] ?? null, 'monthly', '0.8'];
 }
 $xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<?xml-stylesheet type=\"text/xsl\" href=\"/assets/sitemap.xsl\"?>\n<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n";

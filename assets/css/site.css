@@ -928,3 +928,6 @@ a.chip{text-decoration:none}
 /* One scrollable row: height does not depend on the web font (prevents a layout shift when Inter loads). */
 .hub-filter{flex-wrap:nowrap;overflow-x:auto;padding-bottom:6px;scrollbar-width:thin;-webkit-overflow-scrolling:touch}
 .hub-filter .chip{flex:none}
+.team-card img{border:1px solid var(--border);background:var(--white)}
+.policy-meta{display:flex;align-items:center;gap:var(--sp-2);font-size:var(--fs-sm);color:var(--ink-600)}.policy-meta .icon{width:16px;height:16px;color:var(--emerald-700)}.policy-pending{margin-top:var(--sp-2)}
+.fee-contact{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--sp-4);margin-top:var(--sp-4);padding:var(--sp-5);border:1px solid var(--border);border-radius:var(--r-lg);background:var(--bg-subtle)}.fee-contact p{margin:4px 0 0;font-size:var(--fs-sm);color:var(--ink-600)}

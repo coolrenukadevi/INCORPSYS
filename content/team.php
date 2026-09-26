@@ -11,7 +11,7 @@ declare(strict_types=1);
  *   order               display order (ascending)
  */
 return [
-  ['name' => 'Anisha Bharti', 'designation' => 'Director', 'slug' => 'anisha-bharti', 'bio' => '', 'photo' => '', 'linkedin' => '', 'order' => 1],
-  ['name' => 'Renuka Devi', 'designation' => 'Director', 'slug' => 'renuka-devi', 'bio' => '', 'photo' => '', 'linkedin' => '', 'order' => 2],
-  ['name' => 'V.K Anand', 'designation' => 'Chief Executive Officer', 'slug' => 'vk-anand', 'bio' => '', 'photo' => '', 'linkedin' => '', 'order' => 3],
+  ['name' => 'Anisha Bharti', 'designation' => 'Director', 'slug' => 'anisha-bharti', 'bio' => '', 'photo' => 'team/anisha-bharti.webp', 'linkedin' => 'https://www.linkedin.com/in/coolanishabharti/', 'order' => 1],
+  ['name' => 'Renuka Devi', 'designation' => 'Director', 'slug' => 'renuka-devi', 'bio' => '', 'photo' => 'team/renuka-devi.webp', 'linkedin' => 'https://www.linkedin.com/in/coolrenukadevi/', 'order' => 2],
+  ['name' => 'V.K Anand', 'designation' => 'Chief Executive Officer', 'slug' => 'vk-anand', 'bio' => '', 'photo' => 'team/vk-anand.webp', 'linkedin' => 'https://www.linkedin.com/in/vikashkranand/', 'order' => 3],
 ];
