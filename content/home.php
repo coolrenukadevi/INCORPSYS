@@ -92,6 +92,27 @@ return [
     ['q' => 'What costs are government fees versus professional fees?', 'a' => 'Government fees are charged by the registry or authority and are shown only with their official source. INCORPSYS professional fees cover preparation and coordination and are quoted separately. Third-party costs, such as a registered agent or company secretary, are listed separately too.', 'guide' => 'resources/fee-verification'],
   ],
 
+  // "Compare Jurisdictions" key-comparison panel. Tabs → comparison columns (content/comparisons.php).
+  // Short cell labels paraphrase the sourced registry value for that jurisdiction and column (full value and
+  // source guide are linked from each cell). A cell with no registry value shows "Not yet verified".
+  'keycompare' => [
+    'tabs' => [
+      'key' => ['Key Comparison', ['route' => ['Company Setup', 'briefcase-business'], 'officers' => ['Directors', 'user-round'], 'local' => ['Local Agent / Secretary', 'id-card'], 'tax' => ['Tax Registration', 'calculator'], 'timeline' => ['Processing Time', 'list-checks']]],
+      'tax' => ['Tax Overview', ['tax' => ['Tax Registration', 'calculator'], 'fees' => ['Government Fees', 'banknote']]],
+      'visa' => ['Visa Options', ['visa' => ['Visa & Residency', 'id-card']]],
+      'banking' => ['Banking', ['banking' => ['Corporate Banking', 'landmark']]],
+      'compliance' => ['Compliance', ['compliance' => ['Ongoing Compliance', 'shield-check'], 'office' => ['Registered Office', 'map-pin'], 'name' => ['Company Name', 'file-text']]],
+    ],
+    'short' => [
+      'uae' => ['route' => 'Emirate authority', 'name' => 'Trade name step', 'local' => 'Service agent (some forms)', 'office' => 'Local premises rules', 'compliance' => 'Specialised approvals'],
+      'singapore' => ['route' => 'Bizfile', 'name' => '120-day reservation', 'officers' => 'Residency rules', 'local' => 'Service provider (some cases)', 'office' => 'No P.O. Box', 'visa' => 'Work pass separate', 'compliance' => 'Post-registration steps'],
+      'hong-kong' => ['route' => 'e-Services / hard copy', 'name' => 'Name index check', 'officers' => 'Director + secretary', 'office' => 'Office in Hong Kong', 'compliance' => 'Registry e-services'],
+      'uk' => ['route' => 'Online via GOV.UK', 'name' => 'Name + trademark check', 'officers' => '1+ director', 'office' => 'Office + SIC code', 'tax' => 'Set up at registration', 'compliance' => 'Post-registration steps'],
+      'usa' => ['route' => 'State filing', 'local' => 'Registered agent', 'office' => 'Location-dependent', 'tax' => 'Federal + state IDs', 'compliance' => 'State reports'],
+      'malaysia' => ['route' => 'MyCoID', 'name' => '30-day window', 'officers' => 'Resident director', 'local' => 'Company secretary', 'office' => 'Office in Malaysia', 'compliance' => 'Annual return'],
+    ],
+  ],
+
   // Testimonials: real clients only, published with their approval (quote approved by the client, 26 September 2026).
   'testimonials' => [
     ['quote' => 'INCORPSYS made our incorporation journey smooth and transparent. Their team provided clear guidance with official sources, which gave us confidence.', 'name' => 'Mr. Prem Giri', 'org' => 'M/S P. Prakash Consultancy FZE LLC', 'photo' => 'img/testimonials/prem-giri.webp'],

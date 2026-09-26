@@ -28,7 +28,8 @@ include __DIR__.'/partials/home/knowledge.php';
     <?php foreach($home['faqs'] as $i=>$f):?><details<?=$i===0?' open':''?>><summary><?=e($f['q'])?><?=icon('chevron-down')?></summary><div class="accordion-body"><p><?=e($f['a'])?></p><?php if($f['guide']&&isset($pages[$f['guide']])):?><p class="faq-src"><a class="link-arrow" href="<?=e(path_url($f['guide']))?>">Source guide: <?=e($pages[$f['guide']]['name'])?><?=icon('arrow-right')?></a></p><?php elseif(!$f['guide']):?><p class="faq-src"><a class="link-arrow" href="/legal/filing-quality-commitment/">Filing Quality Commitment<?=icon('arrow-right')?></a></p><?php endif;?></div></details><?php endforeach;?>
   </div>
 </div></section>
-<?php include __DIR__.'/partials/home/proof.php';
+<?php include __DIR__.'/partials/home/keycompare.php';
+include __DIR__.'/partials/home/proof.php';
 include __DIR__.'/partials/home/cta.php';?>
 </main>
 <?=json_ld(['@context'=>'https://schema.org','@graph'=>[organization_schema(),['@type'=>'WebSite','@id'=>SITE_URL.'/#website','url'=>SITE_URL,'name'=>'INCORPSYS','publisher'=>['@id'=>SITE_URL.'/#organization'],'inLanguage'=>'en','potentialAction'=>['@type'=>'SearchAction','target'=>['@type'=>'EntryPoint','urlTemplate'=>url('search/').'?q={search_term_string}'],'query-input'=>'required name=search_term_string']],jurisdiction_item_list()]])?>

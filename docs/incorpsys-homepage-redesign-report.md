@@ -211,3 +211,25 @@ The closing CTA (`partials/home/cta.php`) now follows the supplied banner design
   - axe on the open panel: 0 violations at 390 and 1440.
   - `tools/qa.php`: 0 failures.
   - No console errors.
+
+## Addendum — "Compare Jurisdictions" key-comparison panel (26 September 2026)
+- **Placement:** new section `partials/home/keycompare.php`, directly above "Trusted by Global Entrepreneurs", following the supplied reference.
+- **Tabs:** Key Comparison · Tax Overview · Visa Options · Banking · Compliance (WAI-ARIA tabs with arrow / Home / End keys). Without JavaScript all rows show.
+- **Table:**
+  - Features × six jurisdictions, with the supplied city photos as round avatars.
+  - Each verified cell shows a short label paraphrasing the registry statement (`content/home.php` → `keycompare.short`) and links to the source guide; the full statement is in the link title and in screen-reader text.
+  - Cells with no registry value read "Not yet verified". Processing time reads "State-dependent" (USA) and "Emirate-dependent" (UAE).
+- **Not copied from the reference (data integrity):** the corporate tax rates (0%/9%, 17%, 16.5%, 24%), the processing times (1–7 days) and the foreign-ownership / local-director marks. None of them is in the source registry yet, so they appear as "Not yet verified" until checked against the official sources. The row is labelled "Tax Registration", which is what the registry covers.
+- **Setup Cost Breakdown:**
+  - Three equal segments labelled "categories, not to scale": Government / Registry Fees, INCORPSYS Service Fees, Third-Party Costs.
+  - Statuses come from `content/home.php` → `costs` (Not yet verified / Contact for service fee / Provider-dependent).
+  - The reference's example proportions were not used.
+- **Buttons:** "Compare in Detail" → `/jurisdictions/`; "View Full Comparison Guide" → `/resources/choose-jurisdiction-framework/`.
+- **Overlap:** the homepage's earlier comparison matrix (`#compare`, "What each authority publishes, side by side") is still in place. The two overlap and one can be removed if preferred.
+- **Phones:** the tabs become a swipeable strip; the table scrolls inside its frame with the feature column pinned; the cost ring stacks above its legend.
+- **QA:**
+  - `tools/qa.php`: 0 failures.
+  - html-validate: 0 errors.
+  - axe: 0 violations at 390 / 768 / 1440.
+  - No overflow at 320–1440; no console errors.
+  - Lighthouse: desktop 100 (LCP 0.5 s), mobile 98 (LCP 2.2 s, TBT 70 ms); CLS 0 on both.

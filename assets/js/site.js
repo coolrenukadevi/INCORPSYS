@@ -133,6 +133,26 @@
   }
   doc.addEventListener('keydown', function (e) { if (e.key === 'Escape') { closeMenus(); if (nav && nav.classList.contains('open')) { setMobileNav(false); toggle.focus(); } } });
 
+  /* ---- Homepage key comparison: topic tabs (WAI-ARIA tabs, arrow keys) ---- */
+  var kc = $('[data-kc]');
+  if (kc) {
+    var kcTabs = Array.prototype.slice.call(doc.querySelectorAll('[data-kc-tab]'));
+    var kcShow = function (tab, focus) {
+      kcTabs.forEach(function (t) { var on = t === tab; t.setAttribute('aria-selected', String(on)); t.tabIndex = on ? 0 : -1; });
+      Array.prototype.forEach.call(kc.querySelectorAll('[data-kc-row]'), function (r) { r.classList.toggle('kc-off', r.getAttribute('data-kc-row') !== tab.getAttribute('data-kc-tab')); });
+      kc.setAttribute('aria-labelledby', tab.id);
+      if (focus) tab.focus();
+    };
+    kcTabs.forEach(function (t, i) {
+      t.tabIndex = t.getAttribute('aria-selected') === 'true' ? 0 : -1;
+      t.addEventListener('click', function () { kcShow(t); });
+      t.addEventListener('keydown', function (e) {
+        var n = e.key === 'ArrowRight' ? i + 1 : e.key === 'ArrowLeft' ? i - 1 : e.key === 'Home' ? 0 : e.key === 'End' ? kcTabs.length - 1 : null;
+        if (n === null) return; e.preventDefault(); kcShow(kcTabs[(n + kcTabs.length) % kcTabs.length], true);
+      });
+    });
+  }
+
   /* ---- Cookie consent and consent-gated Google Analytics ---- */
   var banner = $('#cookie-banner');
   if (banner) {
