@@ -33,6 +33,11 @@ const REGISTERED_ADDRESS = PLACEHOLDER;
 const TAX_ID = PLACEHOLDER;
 const LEGAL_JURISDICTION = PLACEHOLDER;
 
+// Grievance Officer (Grievance Redressal policy)
+const GRIEVANCE_OFFICER_NAME = 'Mrs. Anjali Sharma';
+const GRIEVANCE_OFFICER_EMAIL = 'gro@incorpsys.com';
+const GRIEVANCE_OFFICER_PHONE = '+91 78448 19819';
+
 // Policies: date the approved policies take effect. Set = policies are published (indexable, in the sitemap,
 // no draft notice). Empty = policies revert to drafts (noindex, "subject to legal review" notice).
 // Approved for publication by INCORPSYS on 26 September 2026.

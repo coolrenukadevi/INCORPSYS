@@ -68,15 +68,16 @@ return [
 
   'legal/refund-policy' => $legal('refund-policy', 'Refund Policy',
     'When INCORPSYS can refund payments, how government fees are treated, and how to request a refund.',
-    'Government fees paid to an authority can be refunded only if that authority refunds them. Refunds of INCORPSYS service fees depend on how much work has been completed, as set out below.',
+    'Government fees paid to an authority can be refunded only if that authority refunds them. INCORPSYS service fees are non-refundable (0% refund) at every stage.',
     [
       ['title' => 'Government and authority fees', 'body' => 'Once a government or authority fee has been paid on your behalf, INCORPSYS cannot refund it; any refund depends on the authority\'s own rules. If an authority refunds a fee to us, we pass it on to you.'],
-      ['title' => 'INCORPSYS service fees', 'bullets' => ['Before any work starts: '.$tbc('refund amount or percentage').'.', 'After work has started but before filing: '.$tbc('refund amount or percentage').'.', 'After a filing has been submitted: '.$tbc('refund position').'.']],
-      ['title' => 'Outcomes decided by authorities or banks', 'body' => 'Registries, licensing authorities, banks and immigration authorities make their own decisions. A rejection by an authority or bank is handled under this policy as follows: '.$tbc('position on refunds after a rejection').'.'],
+      ['title' => 'INCORPSYS service fees', 'bullets' => ['Before any work starts: 0% refund (non-refundable).', 'After work has started but before filing: 0% refund (non-refundable).', 'After a filing has been submitted: 0% refund (non-refundable).']],
+      ['title' => 'Outcomes decided by authorities or banks', 'body' => 'Registries, licensing authorities, banks and immigration authorities make their own decisions. INCORPSYS service fees are not refunded (0%) if an application is rejected by an authority or bank. Any refund of a government fee depends on that authority\'s own rules.'],
       ['title' => 'How to request a refund', 'body' => 'Email '.SITE_EMAIL.' with your name, invoice number and the reason for the request. We acknowledge requests within '.$tbc('number of working days').' and process approved refunds within '.$tbc('number of working days').' to the original payment method.'],
       ['title' => 'Related policies', 'body' => 'See the Cancellation Policy for how to cancel an engagement, and Grievance Redressal if you disagree with a refund decision.'],
     ],
     [
+      ['q' => 'Are INCORPSYS service fees refundable?', 'a' => 'No. INCORPSYS service fees are non-refundable (0% refund) at every stage, including when an authority or bank rejects an application.'],
       ['q' => 'Are government fees refundable?', 'a' => 'Only if the authority refunds them. Once a government fee has been paid on your behalf, INCORPSYS cannot refund it; if an authority refunds a fee to us, we pass it on to you.'],
       ['q' => 'How do I request a refund?', 'a' => 'Email hello@incorpsys.com with your name, invoice number and the reason for the request.'],
       ['q' => 'What if I disagree with a refund decision?', 'a' => 'Use our Grievance Redressal process.']
@@ -117,14 +118,14 @@ return [
     'How to raise a complaint with INCORPSYS, who handles it, and how it is escalated and resolved.',
     'Raise a complaint by email with your details and reference number. The Grievance Officer acknowledges it, investigates and replies with a resolution, and you can escalate if you are not satisfied.',
     [
-      ['title' => 'Grievance Officer', 'bullets' => ['Name: '.$tbc('name'), 'Designation: '.$tbc('designation'), 'Email: '.$tbc('grievance email address'), 'Address: '.$tbc('postal address'), 'Working hours: '.$tbc('days and hours')]],
-      ['title' => 'How to raise a grievance', 'bullets' => ['Email the Grievance Officer with your name, contact details, invoice or reference number, and a clear description of the issue.', 'Attach any relevant correspondence. Do not send passwords or payment card details.', 'Complaints about this website\'s content can also be raised with the page address and the official source you are relying on.']],
+      ['title' => 'Grievance Officer', 'bullets' => ['Name: '.GRIEVANCE_OFFICER_NAME, 'Designation: Grievance Officer', 'Email: '.GRIEVANCE_OFFICER_EMAIL, 'Phone: '.GRIEVANCE_OFFICER_PHONE, 'Address: '.$tbc('postal address'), 'Working hours: '.$tbc('days and hours')]],
+      ['title' => 'How to raise a grievance', 'bullets' => ['Email the Grievance Officer at '.GRIEVANCE_OFFICER_EMAIL.' with your name, contact details, invoice or reference number, and a clear description of the issue.', 'Attach any relevant correspondence. Do not send passwords or payment card details.', 'Complaints about this website\'s content can also be raised with the page address and the official source you are relying on.']],
       ['title' => 'What happens next', 'bullets' => ['Acknowledgement within '.$tbc('timeframe, e.g. 48 hours').'.', 'Investigation and a written response within '.$tbc('timeframe').'.', 'If more time is needed, we tell you why and when to expect a reply.']],
       ['title' => 'Escalation', 'body' => 'If you are not satisfied with the response, escalate to '.$tbc('escalation contact, e.g. a Director').'. You may also have the right to approach the relevant consumer or regulatory forum under applicable law.'],
       ['title' => 'What is covered', 'body' => 'Service quality, billing and refunds, data and privacy concerns, website content, and conduct of anyone acting for INCORPSYS.'],
     ],
     [
-      ['q' => 'How do I raise a grievance?', 'a' => 'Email the Grievance Officer with your name, contact details, invoice or reference number and a clear description of the issue, with any relevant correspondence.'],
+      ['q' => 'How do I raise a grievance?', 'a' => 'Email the Grievance Officer at '.GRIEVANCE_OFFICER_EMAIL.' with your name, contact details, invoice or reference number and a clear description of the issue, with any relevant correspondence.'],
       ['q' => 'What does the grievance process cover?', 'a' => 'Service quality, billing and refunds, data and privacy concerns, website content, and the conduct of anyone acting for INCORPSYS.'],
       ['q' => 'What if I am not satisfied with the response?', 'a' => 'You can escalate it as described on this page, and you may also have the right to approach the relevant consumer or regulatory forum under applicable law.']
     ]),
