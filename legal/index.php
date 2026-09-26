@@ -1,11 +1,13 @@
 <?php
 require_once __DIR__.'/../includes/config.php';
-$page=['slug'=>'legal','title'=>'Legal & Support | INCORPSYS','description'=>'INCORPSYS policies and support in one place: privacy, data, payments, refunds, cancellations, hiring, cookies, terms and grievance redressal.'];
+$page=['slug'=>'legal','title'=>'Legal & Support | INCORPSYS','description'=>'INCORPSYS policies and support in one place: privacy, data, payments, refunds, cancellations, service terms, filing quality, hiring, cookies, terms and grievance redressal.'];
 $crumbs=[['name'=>'Home','slug'=>''],['name'=>'Legal & Support','slug'=>'legal']];
 $pages=site_data();
+$faqs=[['q'=>'Are these policies final?','a'=>'No. They are drafts subject to legal review. Items marked [To be confirmed] or [TO BE PROVIDED] will be completed before the policies take effect.'],['q'=>'How do I raise a complaint?','a'=>'Use the Grievance Redressal process, which explains who handles complaints and how they are escalated.'],['q'=>'Where are the terms for INCORPSYS services?','a'=>'In the Service Terms and your quotation or service order. The Filing Quality Commitment explains how we prepare and check filings.']];
 $groups=[
   'Privacy and data'=>[['legal/privacy','shield-check'],['legal/data-policy','lock'],['legal/cookies','info']],
   'Payments and engagements'=>[['legal/payment-policy','banknote'],['legal/refund-policy','banknote'],['legal/cancellation-policy','x']],
+  'Services'=>[['legal/service-terms','briefcase-business'],['legal/filing-quality-commitment','badge-check']],
   'Website and people'=>[['legal/terms','file-text'],['legal/disclaimer','triangle-alert'],['legal/hiring-policy','user-round']],
 ];
 include __DIR__.'/../partials/header.php';?>
@@ -21,7 +23,9 @@ include __DIR__.'/../partials/header.php';?>
   <div class="grid grid-3 mt-6"><?php foreach($items as [$s,$ic]): if(!isset($pages[$s])) continue; $p=$pages[$s];?><a class="card card-link" href="<?=e(path_url($s))?>"><span class="card-icon"><?=icon($ic)?></span><h3><?=e($p['name'])?></h3><p><?=e($p['description'])?></p></a><?php endforeach;?></div>
   <?php endforeach;?>
   <div class="alert alert-info mt-10"><?=icon('info')?><div><strong>Policies under review</strong>These policies are drafts pending legal review. Questions about any policy: <a href="/contact/">contact us</a>.</div></div>
+<div class="container-narrow mt-10"><?=faq_accordion($faqs)?></div>
 </div></section>
 </main>
 <?=json_ld(['@context'=>'https://schema.org','@type'=>'CollectionPage','name'=>$page['title'],'description'=>$page['description'],'url'=>page_url('legal'),'publisher'=>publisher(),'breadcrumb'=>breadcrumb_schema($crumbs)])?>
+<?=json_ld(faq_schema($faqs))?>
 <?php include __DIR__.'/../partials/footer.php';?>

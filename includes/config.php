@@ -1,12 +1,6 @@
 <?php
 declare(strict_types=1);
-const SITE_NAME = 'INCORPSYS';
-const SITE_URL = 'https://www.incorpsys.com';
-const SITE_EMAIL = 'hello@incorpsys.com';
-const SITE_PHONE = '+91 78448 19819';
-const SITE_PHONE_TEL = '+917844819819';
-const WHATSAPP_NUMBER = '917844819819';
-const MAIL_FROM = 'noreply@incorpsys.com';
+require_once __DIR__.'/settings.php';
 // Official social profiles: footer links and Organization schema sameAs.
 const SOCIAL_LINKS = [
   'Facebook' => 'https://www.facebook.com/incorpsys',
@@ -56,9 +50,9 @@ require_once __DIR__.'/../partials/components.php';
 require_once __DIR__.'/../content/source-registry.php';
 // Swaps <html class="no-js"> to "js" before first paint; allowed by hash in the CSP below.
 const JS_FLAG_SCRIPT = "document.documentElement.classList.replace('no-js','js')";
-// Google Analytics 4 measurement ID (e.g. G-XXXXXXXXXX), set in the server environment. Empty = analytics off.
+// Google Analytics 4 measurement ID from includes/settings.php (GA4_MEASUREMENT_ID) or the INCORPSYS_GA_ID environment variable. Empty = analytics off.
 // Analytics loads only after the visitor accepts analytics cookies in the consent banner.
-function ga_id(): string { $id = (string)(getenv('INCORPSYS_GA_ID') ?: (defined('GA_MEASUREMENT_ID') ? GA_MEASUREMENT_ID : '')); return preg_match('/^G-[A-Z0-9]{4,20}$/', $id) ? $id : ''; }
+function ga_id(): string { $id = (string)(getenv('INCORPSYS_GA_ID') ?: GA4_MEASUREMENT_ID ?: (defined('GA_MEASUREMENT_ID') ? GA_MEASUREMENT_ID : '')); return preg_match('/^G-[A-Z0-9]{4,20}$/', $id) ? $id : ''; }
 function send_security_headers(): void {
   if (PHP_SAPI === 'cli' || headers_sent()) return;
   $hash = base64_encode(hash('sha256', JS_FLAG_SCRIPT, true));

@@ -5,7 +5,34 @@ declare(strict_types=1);
 function fmt_date(?string $ymd): string { return $ymd ? date('j F Y', strtotime($ymd)) : ''; }
 
 function json_ld(array $data): string {
+  ld_record($data);
   return '<script type="application/ld+json">'.json_encode($data, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_HEX_TAG).'</script>';
+}
+
+/** Remembers which schema.org types a page has emitted, so site_schema() can add only what is missing. */
+function ld_record(array $data): void {
+  $GLOBALS['LD_TYPES'] ??= [];
+  array_walk_recursive($data, function ($v, $k) { if ($k === '@type' && is_string($v)) $GLOBALS['LD_TYPES'][$v] = true; });
+}
+
+/**
+ * Site-wide structured data, printed once per page from the footer: Organization and WebSite on every page,
+ * plus a WebPage (with BreadcrumbList) when the template has not already emitted a page-level type.
+ */
+function site_schema(array $page, ?array $crumbs): string {
+  $types = $GLOBALS['LD_TYPES'] ?? [];
+  $graph = [];
+  if (empty($types['Organization'])) $graph[] = organization_schema();
+  if (empty($types['WebSite'])) $graph[] = ['@type' => 'WebSite', '@id' => SITE_URL.'/#website', 'url' => SITE_URL.'/', 'name' => SITE_NAME, 'publisher' => ['@id' => SITE_URL.'/#organization'], 'inLanguage' => 'en'];
+  $pageTypes = ['WebPage', 'CollectionPage', 'AboutPage', 'ContactPage', 'SearchResultsPage', 'ItemPage', 'ProfilePage'];
+  if (!array_intersect_key($types, array_flip($pageTypes))) {
+    $slug = $page['slug'] ?? '';
+    $crumbs ??= $slug === '' ? null : [['name' => 'Home', 'slug' => ''], ['name' => $page['h1'] ?? preg_replace('/\s*\|.*$/', '', $page['title'] ?? SITE_NAME), 'slug' => $slug]];
+    $graph[] = ['@type' => 'WebPage', '@id' => page_url($slug).'#webpage', 'url' => page_url($slug), 'name' => $page['title'] ?? DEFAULT_TITLE, 'description' => $page['description'] ?? DEFAULT_DESCRIPTION,
+      'isPartOf' => ['@id' => SITE_URL.'/#website'], 'publisher' => ['@id' => SITE_URL.'/#organization'], 'inLanguage' => 'en']
+      + ($crumbs && empty($types['BreadcrumbList']) ? ['breadcrumb' => breadcrumb_schema($crumbs)] : []);
+  }
+  return $graph ? json_ld(['@context' => 'https://schema.org', '@graph' => $graph]) : '';
 }
 
 /** @param array<int,array{name:string,slug:string}> $crumbs */
@@ -123,7 +150,11 @@ function cta_band(string $countryKey = '', string $countryLabel = '', string $he
 function publisher(): array { return ['@type' => 'Organization', '@id' => SITE_URL.'/#organization', 'name' => 'INCORPSYS', 'url' => SITE_URL]; }
 function organization_schema(): array {
   return ['@type' => 'Organization', '@id' => SITE_URL.'/#organization', 'name' => 'INCORPSYS', 'alternateName' => 'Incorporation System', 'url' => SITE_URL,
-    'logo' => url('assets/img/logo-144.png'), 'email' => SITE_EMAIL, 'telephone' => SITE_PHONE, 'sameAs' => array_values(SOCIAL_LINKS)];
+    'logo' => url('assets/img/logo-144.png'), 'slogan' => SITE_POSITIONING, 'description' => SITE_TAGLINE, 'email' => SITE_EMAIL, 'telephone' => SITE_PHONE, 'sameAs' => array_values(SOCIAL_LINKS)]
+    // Legal details are added only once supplied in includes/settings.php.
+    + (is_provided(LEGAL_ENTITY_NAME) ? ['legalName' => LEGAL_ENTITY_NAME] : [])
+    + (is_provided(REGISTERED_ADDRESS) ? ['address' => REGISTERED_ADDRESS] : [])
+    + (is_provided(TAX_ID) ? ['taxID' => TAX_ID] : []);
 }
 
 /** ItemList of published (indexable) jurisdiction guides, for the homepage and comparison page. */
@@ -216,25 +247,36 @@ function price_table(string $jurisdiction, string $authority): string {
   return $h.'</tbody></table></div>';
 }
 
-/** Leadership cards (About and Leadership pages). */
+/** Leadership members from content/team.php, sorted by display order. */
+function team_members(): array {
+  $team = require __DIR__.'/../content/team.php';
+  usort($team, fn($a, $b) => ($a['order'] ?? 99) <=> ($b['order'] ?? 99));
+  return $team;
+}
+/** Leadership cards (About and Leadership pages). Optional fields (photo, bio, LinkedIn) render only when supplied. */
 function team_grid(): string {
   $h = '<ul class="team-grid">';
-  foreach (require __DIR__.'/../content/team.php' as $m) {
+  foreach (team_members() as $m) {
     $img = null;
-    foreach (['webp', 'jpg', 'png'] as $ext) { if (is_file(__DIR__."/../assets/img/team/{$m['slug']}.$ext")) { $img = asset("img/team/{$m['slug']}.$ext"); break; } }
+    if (!empty($m['photo']) && is_file(__DIR__.'/../assets/img/'.$m['photo'])) $img = asset('img/'.$m['photo']);
+    else foreach (['webp', 'jpg', 'png'] as $ext) { if (is_file(__DIR__."/../assets/img/team/{$m['slug']}.$ext")) { $img = asset("img/team/{$m['slug']}.$ext"); break; } }
     $initials = implode('', array_map(fn($w) => $w[0], array_slice(preg_split('/[\s.]+/', $m['name'], -1, PREG_SPLIT_NO_EMPTY), 0, 2)));
     $h .= '<li class="team-card">'.($img ? '<img src="'.e($img).'" alt="'.e($m['name']).'" width="320" height="320" loading="lazy">' : '<span class="team-initials" aria-hidden="true">'.e($initials).'</span>')
-      .'<h3>'.e($m['name']).'</h3><p>'.e($m['role']).'</p></li>';
+      .'<h3>'.e($m['name']).'</h3><p>'.e($m['designation']).'</p>'
+      .(!empty($m['bio']) ? '<p class="team-bio">'.e($m['bio']).'</p>' : '')
+      .(!empty($m['linkedin']) ? '<a class="team-link" href="'.e($m['linkedin']).'" target="_blank" rel="noopener">'.social_icon('LinkedIn').'<span class="visually-hidden">'.e($m['name']).' on LinkedIn (opens in a new tab)</span></a>' : '')
+      .'</li>';
   }
   return $h.'</ul>';
 }
 function team_schema(): array {
-  return array_map(fn($m) => ['@type' => 'Person', 'name' => $m['name'], 'jobTitle' => $m['role'], 'worksFor' => ['@id' => SITE_URL.'/#organization']], require __DIR__.'/../content/team.php');
+  return array_map(fn($m) => ['@type' => 'Person', 'name' => $m['name'], 'jobTitle' => $m['designation'], 'worksFor' => ['@id' => SITE_URL.'/#organization']]
+    + (!empty($m['linkedin']) ? ['sameAs' => [$m['linkedin']]] : []) + (!empty($m['bio']) ? ['description' => $m['bio']] : []), team_members());
 }
 
-/** Escape text and highlight "[To be confirmed: ...]" placeholders in draft policies. */
+/** Escape text and highlight "[To be confirmed: ...]" and "[TO BE PROVIDED]" placeholders in draft policies. */
 function rich_text(string $text): string {
-  return preg_replace('/\[To be confirmed:[^\]]*\]/', '<mark class="tbc">$0</mark>', e($text));
+  return preg_replace('/\[To be confirmed:[^\]]*\]|\[TO BE PROVIDED\]/', '<mark class="tbc">$0</mark>', e($text));
 }
 /** Legal & Support navigation list. */
 function legal_links(string $current = ''): array {

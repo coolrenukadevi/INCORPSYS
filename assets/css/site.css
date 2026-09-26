@@ -884,7 +884,8 @@ label.choice{display:block}
   .mobile-cta .btn{min-height:46px;padding-inline:var(--sp-3)}
   body:has(.mobile-cta){padding-bottom:calc(68px + env(safe-area-inset-bottom))}
   body:has(.mobile-cta) .assist{bottom:calc(80px + env(safe-area-inset-bottom))}
-  .menu-open .mobile-cta,.cookie-open .mobile-cta{display:none}
+  .menu-open .mobile-cta,.cookie-open .mobile-cta,.assist-open .mobile-cta{display:none}
+  .assist-open .assist{bottom:14px}
 }
 @media print{.mobile-cta{display:none}}
 
@@ -910,3 +911,20 @@ a.chip{text-decoration:none}
 .verify-status-link,.compare .table tbody th a,.alert a{display:inline-flex;align-items:center;min-height:24px}
 .cell-source{display:inline-flex;align-items:center;min-height:24px}
 .card h3>a,.table td>a:not(.cell-source){display:inline-flex;align-items:center;min-height:24px}
+
+/* Utility bar: account left, positioning centre, contact right */
+.utility-account{gap:var(--sp-4)}
+.utility-context{font-size:var(--fs-xs);letter-spacing:.04em}
+
+/* INCORPSYS Assist contact system */
+.assist-contact{list-style:none;display:grid;grid-template-columns:repeat(4,1fr);gap:var(--sp-2);padding:var(--sp-3) var(--sp-4);border-top:1px solid var(--border);background:var(--bg-subtle)}
+.assist-contact a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:56px;padding:6px 4px;border:1px solid var(--border);border-radius:var(--r-md);background:var(--white);font-size:var(--fs-xs);font-weight:var(--fw-semibold);color:var(--ink-700);text-align:center;transition:border-color .15s,color .15s}
+.assist-contact a:hover{border-color:var(--blue-500);color:var(--blue-700)}
+.assist-contact .icon{width:18px;height:18px;color:var(--blue-600)}
+.assist-contact .assist-contact-primary{background:var(--cta);border-color:var(--cta);color:var(--white)}
+.assist-contact .assist-contact-primary .icon{color:var(--white)}
+.assist-contact .assist-contact-primary:hover{background:var(--cta-hover);color:var(--white)}
+.team-bio{margin-top:var(--sp-2);font-size:var(--fs-sm);color:var(--ink-600)}.team-link{display:inline-flex;margin-top:var(--sp-2);color:var(--blue-700);min-height:24px;align-items:center}
+/* One scrollable row: height does not depend on the web font (prevents a layout shift when Inter loads). */
+.hub-filter{flex-wrap:nowrap;overflow-x:auto;padding-bottom:6px;scrollbar-width:thin;-webkit-overflow-scrolling:touch}
+.hub-filter .chip{flex:none}

@@ -5,6 +5,10 @@ declare(strict_types=1);
  * Business-specific terms (amounts, timelines, officer details, governing law) are marked "[To be confirmed: …]"
  * and must be supplied by INCORPSYS — never invented. Search for "[To be confirmed" to find every open item.
  * Entries here override same-slug entries in content/phase2.php.
+ *
+ * SUBJECT TO LEGAL REVIEW: every policy below is a draft. Do not remove the draft notice or make these pages
+ * indexable until qualified counsel has approved the final text. Legal entity details come from
+ * includes/settings.php and read "[TO BE PROVIDED]" until supplied.
  */
 $tbc = fn(string $what) => '[To be confirmed: '.$what.']';
 $legal = function (string $slug, string $name, string $description, string $answer, array $sections, array $faqs = []) {
@@ -12,13 +16,14 @@ $legal = function (string $slug, string $name, string $description, string $answ
     'eyebrow' => 'LEGAL & SUPPORT', 'description' => $description, 'answer' => $answer, 'sections' => $sections, 'faqs' => $faqs, 'source' => null, 'verified' => null];
 };
 $contact = 'Contact INCORPSYS through the Contact page or email '.SITE_EMAIL.'.';
+$entity = 'Legal entity: '.LEGAL_ENTITY_NAME.'. Registration number: '.REGISTRATION_NUMBER.'. Registered address: '.REGISTERED_ADDRESS.'.';
 
 return [
   'legal/privacy' => $legal('privacy', 'Privacy Policy',
     'How INCORPSYS collects, uses, shares and protects personal information submitted through its website and services.',
     'We collect only the information needed to respond to enquiries and deliver our services, we do not sell personal information, and you can ask us to access, correct or delete your information.',
     [
-      ['title' => 'Who we are', 'body' => 'INCORPSYS (Incorporation System) operates this website. Legal entity name and registered address: '.$tbc('legal entity name and registered address').'.'],
+      ['title' => 'Who we are', 'body' => 'INCORPSYS (Incorporation System) operates this website. '.$entity],
       ['title' => 'Information we collect', 'bullets' => ['Enquiry details you submit: name, email, phone or WhatsApp number, company name, jurisdiction, business activity, ownership, visa needs, timeline and your message.', 'Documents you share with us during an engagement, only when a specific step requires them.', 'Technical information such as server logs, used for security and to operate the site.', 'With your consent only: website usage measured by Google Analytics (see the Cookie Policy).']],
       ['title' => 'How we use it', 'bullets' => ['To reply to your enquiry and prepare a quote or plan.', 'To deliver the services you engage us for, including preparing filings with the relevant authorities.', 'To meet legal, accounting and record-keeping obligations.', 'To keep the website secure and prevent abuse.']],
       ['title' => 'Who we share it with', 'bullets' => ['Government registries, licensing, tax or immigration authorities, when a filing you asked for requires it.', 'Service providers that help us operate (for example email and hosting), under confidentiality obligations.', 'Professional advisers or partners in the relevant jurisdiction, only when needed for your engagement and with your knowledge.', 'We do not sell personal information.']],
@@ -97,4 +102,56 @@ return [
       ['title' => 'Escalation', 'body' => 'If you are not satisfied with the response, escalate to '.$tbc('escalation contact, e.g. a Director').'. You may also have the right to approach the relevant consumer or regulatory forum under applicable law.'],
       ['title' => 'What is covered', 'body' => 'Service quality, billing and refunds, data and privacy concerns, website content, and conduct of anyone acting for INCORPSYS.'],
     ]),
+  'legal/terms' => $legal('terms', 'Terms of Use',
+    'The terms that apply when you use the INCORPSYS website: informational content, enquiries, intellectual property, third-party links and acceptable use.',
+    'The INCORPSYS website provides information and enquiry pathways. It is not legal, tax or immigration advice, official sources control over our summaries, and INCORPSYS services are governed separately by our Service Terms and your quotation.',
+    [
+      ['title' => 'About these terms', 'body' => 'These terms apply to your use of this website, operated by INCORPSYS (Incorporation System). '.$entity.' By using the website you agree to these terms.'],
+      ['title' => 'Information, not advice', 'bullets' => ['Content on this website summarises official government and registry guidance and links to it. It is general information, not legal, tax, accounting or immigration advice.', 'Official sources control. Requirements, fees, processing times and eligibility can change without notice; verify them with the competent authority before acting.', 'Where a value is marked "Not yet verified" or "Verification required", we have not confirmed it from an official source.']],
+      ['title' => 'Enquiries and accounts', 'bullets' => ['Information you submit must be accurate and yours to share.', 'Sending an enquiry does not create a client engagement. Services start only under a quotation or engagement confirmation, governed by our Service Terms.', 'Keep any account credentials confidential.']],
+      ['title' => 'Intellectual property', 'body' => 'Website text, design and the INCORPSYS name and logo belong to INCORPSYS unless stated otherwise. Official source material belongs to the relevant authority. You may link to our pages and quote short extracts with attribution.'],
+      ['title' => 'Third-party websites', 'body' => 'Links to government, registry and other websites are provided for reference. Those websites have their own terms and INCORPSYS is not responsible for their content or availability.'],
+      ['title' => 'Acceptable use', 'bullets' => ['Do not misuse the website, attempt to gain unauthorised access, or interfere with its operation.', 'Do not submit false, misleading or unlawful information through the enquiry forms.', 'Do not use automated tools in a way that places an unreasonable load on the website.']],
+      ['title' => 'Liability', 'body' => 'To the extent permitted by law, INCORPSYS is not liable for decisions made on the basis of website content without verifying current requirements with the competent authority. '.$tbc('liability wording to be approved by legal counsel').'.'],
+      ['title' => 'Changes and governing law', 'body' => 'We may update these terms; the current version is always on this page. Governing law and jurisdiction: '.LEGAL_JURISDICTION.'. Last updated: '.$tbc('effective date').'.'],
+    ],
+    [['q' => 'Is website content legal advice?', 'a' => 'No. It is general information that summarises official guidance and links to it. Verify current requirements with the competent authority, or ask us to confirm them for your case.'],
+     ['q' => 'Does sending an enquiry make me a client?', 'a' => 'No. Services start only under a quotation or engagement confirmation, governed by our Service Terms.']]),
+
+  'legal/service-terms' => $legal('service-terms', 'Service Terms',
+    'The terms that apply to INCORPSYS company incorporation, business setup and related professional support services.',
+    'INCORPSYS provides company incorporation, business setup and related support within the scope you select. Authorities, regulators, banks and licensing bodies make their own decisions, so INCORPSYS cannot guarantee approvals, account opening, visas, licences or processing times. Fees, refunds, exclusions and deliverables are set out in your quotation or service order.',
+    [
+      ['title' => 'Our services', 'body' => 'INCORPSYS provides company incorporation, business setup and related professional support services based on the scope selected by the client. Service provider: '.LEGAL_ENTITY_NAME.' (registration number '.REGISTRATION_NUMBER.').'],
+      ['title' => 'Decisions by authorities and institutions', 'body' => 'Government, regulatory, banking and licensing decisions remain subject to the relevant authority or institution. INCORPSYS cannot guarantee approval, account opening, visa issuance, licensing or a specific processing time where such decisions are outside our control.'],
+      ['title' => 'Your responsibilities', 'body' => 'Clients are responsible for providing accurate, complete and valid information and documentation, and for telling us promptly about any change that affects an application.'],
+      ['title' => 'Quotation and service order', 'body' => 'Specific services, fees, refunds, exclusions and deliverables will be governed by the applicable quotation, engagement confirmation or service order. Government and authority fees are shown separately from INCORPSYS professional fees, with their official source.'],
+      ['title' => 'Related policies', 'bullets' => ['Filing Quality Commitment — how we prepare and check filings.', 'Payment, Refund and Cancellation policies.', 'Privacy Policy and Data Policy — how we handle your information and documents.']],
+      ['title' => 'Governing law', 'body' => 'Governing law and jurisdiction: '.LEGAL_JURISDICTION.'. Last updated: '.$tbc('effective date').'.'],
+    ],
+    [['q' => 'Can INCORPSYS guarantee my company, licence, bank account or visa?', 'a' => 'No. Those decisions belong to the relevant authority, bank or institution. We prepare applications carefully against their published requirements.'],
+     ['q' => 'Where are my fees and deliverables set out?', 'a' => 'In your quotation, engagement confirmation or service order. INCORPSYS service fees are quoted after we confirm your requirements.']]),
+
+  'legal/filing-quality-commitment' => $legal('filing-quality-commitment', 'Filing Quality Commitment',
+    'How INCORPSYS prepares incorporation and business setup documentation: document checks, completeness reviews and coordination of the filing requirements for your jurisdiction.',
+    'INCORPSYS is committed to preparing incorporation and business setup documentation carefully and systematically, based on the information and documents you provide. Approval remains at the discretion of the relevant authority, regulator, bank or licensing body.',
+    [
+      ['title' => 'Our commitment', 'body' => 'INCORPSYS is committed to preparing incorporation and business setup documentation carefully and systematically based on the information and documents provided by the client. Our process includes document checks, completeness reviews and coordination of filing requirements applicable to the selected jurisdiction.'],
+      ['title' => 'What the process includes', 'bullets' => ['Document checks against the requirements applicable to the selected jurisdiction.', 'Completeness reviews before submission.', 'Coordination of the filing requirements with you and, where relevant, the authority.']],
+      ['title' => 'What we cannot guarantee', 'body' => 'INCORPSYS does not guarantee approval where approval is subject to the discretion of a government authority, regulator, bank, licensing authority or other third party.'],
+      ['title' => 'Changes to requirements', 'body' => 'Requirements, government fees, processing timelines and eligibility criteria may change without prior notice. We re-check the official source before filing.'],
+    ],
+    [['q' => 'Does the Filing Quality Commitment guarantee approval?', 'a' => 'No. It describes how we prepare and check documentation. Approval remains at the discretion of the relevant authority or institution.']]),
+
+  'legal/disclaimer' => $legal('disclaimer', 'Website Disclaimer',
+    'Important limits on the information published by INCORPSYS: not the government authority, not legal advice, requirements and fees change, and no outcome is guaranteed.',
+    'INCORPSYS is not a government authority. Our guides summarise official sources and link to them, but requirements, fees, processing times and eligibility change; verify current information with the competent authority before filing, payment or operation. No incorporation, licensing, banking or visa outcome is guaranteed.',
+    [
+      ['title' => 'Not the authority', 'body' => 'INCORPSYS is a private service provider. It is not a government registry, regulator, licensing, tax or immigration authority, and does not act on behalf of one. Authorities make the final decisions.'],
+      ['title' => 'Not legal, tax or immigration advice', 'body' => 'Website content is general information. For advice on your circumstances, consult a qualified professional or ask us to confirm the official requirements for your case.'],
+      ['title' => 'Sources and verification', 'bullets' => ['Jurisdiction content cites the official source and the date it was last checked.', 'Official pages change; re-check the authority immediately before filing or payment.', 'Values marked "Not yet verified" or "Verification required" have not been confirmed from an official source.']],
+      ['title' => 'Fees and timelines', 'body' => 'We show a government fee or processing time only when it comes from the official source. INCORPSYS professional fees are quoted separately after we confirm your requirements.'],
+      ['title' => 'No guaranteed outcomes', 'body' => 'INCORPSYS does not guarantee incorporation, licensing, bank account opening, visa issuance or any processing time.'],
+    ],
+    [['q' => 'Is INCORPSYS a government agency?', 'a' => 'No. INCORPSYS is a private service provider. We link to the official authority for every rule we summarise.']]),
 ];

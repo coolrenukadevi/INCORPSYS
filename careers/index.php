@@ -3,6 +3,7 @@ require_once __DIR__.'/../includes/config.php';
 $page=['slug'=>'careers','h1'=>'Careers at INCORPSYS','title'=>'Careers | INCORPSYS','description'=>'Work with INCORPSYS on company incorporation, compliance, client support and technology for founders building businesses across six jurisdictions.'];
 $crumbs=[['name'=>'Home','slug'=>''],['name'=>'Careers','slug'=>'careers']];
 $eyebrow='We\'re hiring';$lead='Help founders build their business beyond borders.';
+$faqs=[['q'=>'Are there open positions listed?','a'=>'Open positions are not listed on this page. Email your CV and a short note about the role and area you are interested in, with the subject "Careers at INCORPSYS".'],['q'=>'Does INCORPSYS charge candidates a fee?','a'=>'No. INCORPSYS never asks candidates for any fee. If anyone asks you to pay to apply or to be hired, do not pay and report it to us.'],['q'=>'Should I send identity documents with my application?','a'=>'No. Please do not send passport copies or other identity documents at this stage. See our Hiring Policy for how candidate information is handled.']];
 ob_start();?>
 <h2>Work with us</h2>
 <p>INCORPSYS helps founders and companies set up and run businesses in the UAE, Singapore, Hong Kong, the UK, the USA and Malaysia. Our work spans company formation, licensing, compliance, client support and the technology behind our digital workflow.</p>

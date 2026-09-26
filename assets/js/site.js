@@ -26,6 +26,7 @@
   toggle && toggle.addEventListener('click', function () { setMobileNav(!nav.classList.contains('open')); });
   $$('.nav-item').forEach(function (item) {
     var trigger = $('.nav-trigger', item), timer;
+    if (!trigger) return; // plain links (Contact) have no mega menu
     trigger.addEventListener('click', function () {
       var open = !item.classList.contains('open');
       closeMenus(item);
@@ -120,6 +121,7 @@
     function setAssist(open) {
       panel.hidden = !open;
       aToggle.setAttribute('aria-expanded', String(open));
+      doc.body.classList.toggle('assist-open', open);
       if (open) { if (!assist.dataset.started) { assist.dataset.started = '1'; start(); } var f = $('.assist-option', panel); f && f.focus({ preventScroll: true }); }
     }
     aToggle.addEventListener('click', function () { setAssist(panel.hidden); });

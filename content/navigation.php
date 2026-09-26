@@ -12,34 +12,26 @@ foreach (site_registry()['pending'] as $key => $src) {
 }
 $pick = fn(array $keys) => array_values(array_intersect_key($jur, array_flip($keys)));
 return [
-  'setup' => [
-    'label' => 'Company Setup',
-    'intro' => 'Set up a company across the Middle East, Asia, Europe and the Americas, each step guided by its official authority.',
-    'cols' => [
-      ['title' => 'Middle East', 'links' => $pick(['uae', 'saudi-arabia']), 'icon' => 'map-pin'],
-      ['title' => 'Asia', 'links' => $pick(['singapore', 'hong-kong', 'malaysia', 'philippines', 'thailand']), 'icon' => 'map-pin'],
-      ['title' => 'Europe & Americas', 'links' => $pick(['uk', 'usa']), 'icon' => 'map-pin'],
-    ],
-    'all' => ['label' => 'Compare all jurisdictions', 'url' => '/jurisdictions/'],
-    'feature' => ['title' => 'Not sure where to start?', 'text' => 'Answer four questions and get a setup path built from the official guidance for your country.', 'cta' => 'Find the right setup', 'url' => '/#setup-finder'],
-  ],
-  'structures' => [
-    'label' => 'Business Structures',
-    'intro' => 'Compare legal structures before you register — and check the local rules.',
+  'company' => [
+    'label' => 'Company',
+    'intro' => 'Plan and form your company: structures, requirements and the obligations that follow registration.',
     'cols' => [
       ['title' => 'Choosing a structure', 'icon' => 'layers', 'links' => [
         ['label' => 'Legal form decision framework', 'desc' => 'Compare structures without assumptions', 'url' => '/resources/legal-form-decision/'],
         ['label' => 'Branch vs subsidiary', 'desc' => 'Questions to verify before choosing', 'url' => '/resources/branch-vs-subsidiary/'],
         ['label' => 'Local agent requirements', 'desc' => 'Resident agents and representatives', 'url' => '/resources/local-agent-concepts/'],
       ]],
-      ['title' => 'UAE, UK & USA', 'icon' => 'building-2', 'links' => [
-        ['label' => 'UAE mainland legal forms', 'desc' => 'Legal form selection', 'url' => '/uae/legal-form-selection/'],
-        ['label' => 'UK private limited company', 'desc' => 'Company types', 'url' => '/uk/private-limited-company-type/'],
-        ['label' => 'USA business structures', 'desc' => 'Structures described by the SBA', 'url' => '/usa/business-structure/'],
+      ['title' => 'Forming your company', 'icon' => 'file-text', 'links' => [
+        ['label' => 'Starting a company abroad', 'desc' => 'Where to begin, step by step', 'url' => '/resources/start-company-abroad/'],
+        ['label' => 'Master documents checklist', 'desc' => 'What authorities typically ask for', 'url' => '/resources/documents-master-checklist/'],
+        ['label' => 'After incorporation', 'desc' => 'Filings, renewals and records', 'url' => '/resources/post-incorporation-calendar/'],
       ]],
-      ['title' => 'Asia', 'icon' => 'building-2', 'links' => [
+      ['title' => 'Structures by jurisdiction', 'icon' => 'building-2', 'links' => [
+        ['label' => 'UAE mainland legal forms', 'desc' => 'Legal form selection', 'url' => '/uae/legal-form-selection/'],
         ['label' => 'Singapore business structures', 'desc' => 'Structures registered with ACRA', 'url' => '/singapore/business-structure/'],
         ['label' => 'Hong Kong company types', 'desc' => 'Types and name selection', 'url' => '/hong-kong/company-types-and-name/'],
+        ['label' => 'UK private limited company', 'desc' => 'Company types', 'url' => '/uk/private-limited-company-type/'],
+        ['label' => 'USA business structures', 'desc' => 'Structures described by the SBA', 'url' => '/usa/business-structure/'],
         ['label' => 'Malaysia company types', 'desc' => 'Companies Act 2016 types', 'url' => '/malaysia/company-types/'],
       ]],
     ],
@@ -61,7 +53,18 @@ return [
       ]],
     ],
     'all' => ['label' => 'All services', 'url' => '/services/'],
-    'feature' => ['title' => 'Get a structured plan', 'text' => 'Tell us what you need and where. We map every step to the authority that controls it.', 'cta' => 'Get started', 'url' => '/get-started/'],
+    'feature' => ['title' => 'Get a structured plan', 'text' => 'Tell us what you need and where. We map every step to the authority that controls it.', 'cta' => 'Enquiry Now', 'url' => '/get-started/'],
+  ],
+  'jurisdictions' => [
+    'label' => 'Jurisdictions',
+    'intro' => 'Set up a company across the Middle East, Asia, Europe and the Americas, each step guided by its official authority.',
+    'cols' => [
+      ['title' => 'Middle East', 'links' => $pick(['uae', 'saudi-arabia']), 'icon' => 'map-pin'],
+      ['title' => 'Asia', 'links' => $pick(['singapore', 'hong-kong', 'malaysia', 'philippines', 'thailand']), 'icon' => 'map-pin'],
+      ['title' => 'Europe & Americas', 'links' => $pick(['uk', 'usa']), 'icon' => 'map-pin'],
+    ],
+    'all' => ['label' => 'Compare all jurisdictions', 'url' => '/jurisdictions/'],
+    'feature' => ['title' => 'Not sure where to start?', 'text' => 'Answer four questions and get a setup path built from the official guidance for your country.', 'cta' => 'Find the right setup', 'url' => '/#setup-finder'],
   ],
   'resources' => [
     'label' => 'Resources',
@@ -101,5 +104,7 @@ return [
     ],
     'feature' => ['title' => 'Verified, not assumed', 'text' => 'We never publish invented fees, timelines or approval promises.', 'cta' => 'Read our source policy', 'url' => '/about/source-policy/'],
   ],
+  // Plain link (no mega menu).
+  'contact' => ['label' => 'Contact', 'url' => '/contact/'],
 ];
 })();

@@ -3,6 +3,7 @@ require_once __DIR__.'/../includes/config.php';
 $page=['slug'=>'support','h1'=>'Support','title'=>'Support | INCORPSYS','description'=>'Get help from INCORPSYS: start a new enquiry, contact the team as an existing client, find answers in our guides, or report a correction.'];
 $crumbs=[['name'=>'Home','slug'=>''],['name'=>'Support','slug'=>'support']];
 $eyebrow='Support';$lead='Find the fastest way to get help.';
+$faqs=[['q'=>'How do I start a new company setup?','a'=>'Use the guided enquiry (Enquiry Now) so we can reply with the right authority, route and next steps, or open INCORPSYS Assist at the bottom of any page.'],['q'=>'How do existing clients get help?','a'=>'Contact your INCORPSYS team on WhatsApp, by phone or by email — the same channels you used during setup. The online client portal is not open yet.'],['q'=>'How do I report an error in a guide?','a'=>'Email us with the page address and the official link. Confirmed errors are corrected and the page\'s verification date is updated.'],['q'=>'Will INCORPSYS ask for my password or card details?','a'=>'No. INCORPSYS will never ask for passwords or payment card details by email or through website forms.']];
 ob_start();?>
 <h2>Planning a new company setup</h2>
 <p>Use the <a href="/get-started/">guided enquiry</a> so we can reply with the right authority, route and next steps. You can also open <strong>INCORPSYS Assist</strong> at the bottom of any page.</p>

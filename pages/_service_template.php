@@ -6,13 +6,16 @@ $crumbs=[['name'=>'Home','slug'=>''],['name'=>'Services','slug'=>'services']];
 
 if($key===''||$key===false):
   $page=['slug'=>'services','title'=>'Services | INCORPSYS','description'=>'Company incorporation, business licensing, corporate banking readiness, compliance, visa and ongoing corporate support across six jurisdictions.'];
+  $faqs=[['q'=>'What services does INCORPSYS provide?','a'=>'Company incorporation, business licensing, corporate banking readiness, compliance and documentation, visa and residency support, ongoing corporate support, registered office solutions, tax registration, corporate due diligence and international expansion.'],['q'=>'How much do INCORPSYS services cost?','a'=>'INCORPSYS service fees are quoted after we confirm your jurisdiction, structure, activity and scope. Government fees are shown separately, with their official source. Contact INCORPSYS for current pricing.'],['q'=>'Can INCORPSYS guarantee an approval?','a'=>'No. Authorities, banks and licensing bodies make their own decisions. See our Filing Quality Commitment for how we prepare and check filings.']];
   include __DIR__.'/../partials/header.php';?>
 <main id="main">
 <?=page_hero('Services','Corporate services, organized around the authority','Every INCORPSYS service starts the same way: identify the authority that controls the step, confirm its current requirements, then prepare and coordinate the work.',$crumbs)?>
 <section class="section-tight"><div class="container grid grid-3"><?php foreach($services as $k=>$s):?><a class="card card-link" href="/services/<?=e($k)?>/"><span class="card-icon"><?=icon($s['icon'])?></span><h2 class="h3"><?=e($s['name'])?></h2><p><?=e($s['summary'])?></p><span class="link-arrow card-foot">Explore<?=icon('arrow-right')?></span></a><?php endforeach;?></div></section>
+<section class="section-tight"><div class="container-narrow"><?=faq_accordion($faqs)?></div></section>
 <?=cta_band()?>
 </main>
 <?=json_ld(['@context'=>'https://schema.org','@type'=>'CollectionPage','name'=>$page['title'],'description'=>$page['description'],'url'=>page_url('services'),'publisher'=>publisher(),'breadcrumb'=>breadcrumb_schema([['name'=>'Home','slug'=>''],['name'=>'Services','slug'=>'services']])])?>
+<?=json_ld(faq_schema($faqs))?>
 <?php include __DIR__.'/../partials/footer.php';return; endif;
 
 $s=$services[$key]??null;
@@ -33,7 +36,7 @@ include __DIR__.'/../partials/header.php';?>
   <div class="content-main">
     <?=answer_block($s['answer'])?>
     <section class="content-section" aria-labelledby="scope"><h2 id="scope">What we help with</h2><ul class="check-list"><?php foreach($s['scope'] as $b):?><li><?=icon('check')?><span><?=e($b)?></span></li><?php endforeach;?></ul></section>
-    <section class="content-section" aria-labelledby="controls"><h2 id="controls">Who decides</h2><p><?=e($controls[$key]??'The competent authority for the jurisdiction and activity.')?> INCORPSYS prepares and coordinates; the authority makes the final decision.</p></section>
+    <section class="content-section" aria-labelledby="controls"><h2 id="controls">Who decides</h2><p><?=e($controls[$key]??'The competent authority for the jurisdiction and activity.')?> INCORPSYS prepares and coordinates; the authority makes the final decision. See our <a href="/legal/filing-quality-commitment/">Filing Quality Commitment</a> and <a href="/legal/service-terms/">Service Terms</a>.</p></section>
     <section class="content-section" aria-labelledby="process"><h2 id="process">How it works</h2><ol class="process-list"><?php foreach($process as [$t,$d]):?><li><h3><?=e($t)?></h3><p><?=e($d)?></p></li><?php endforeach;?></ol></section>
     <section class="content-section" aria-labelledby="provide"><h2 id="provide">What you provide</h2><ul><?php foreach($s['provide'] as $b):?><li><?=e($b)?></li><?php endforeach;?></ul><p>We ask for identity and company documents only when a specific step needs them.</p></section>
     <?php if($guides):?><section class="content-section" aria-labelledby="guides"><h2 id="guides">Guides for this service</h2><ul class="link-list"><?php foreach($guides as $g):?><li><a href="<?=e(path_url($g['slug']))?>"><?=icon('chevron-right')?><?=e($g['name'])?></a></li><?php endforeach;?></ul></section><?php endif;?>

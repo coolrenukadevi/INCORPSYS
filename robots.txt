@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 Disallow: /enquiry/
-Sitemap: https://www.incorpsys.com/sitemap.xml
+Sitemap: https://incorpsys.com/sitemap.xml

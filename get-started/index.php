@@ -2,6 +2,7 @@
 require_once __DIR__.'/../includes/config.php';
 $page=['slug'=>'get-started','title'=>'Get Started | INCORPSYS','description'=>'Tell INCORPSYS what you need, where and when. A short guided enquiry for company incorporation, licensing, banking, visa and compliance support.'];
 $reg=site_registry();
+$faqs=[['q'=>'What happens after I send an enquiry?','a'=>'The team reviews your answers about activity, ownership, visa needs and timeline, then replies by your preferred channel with the relevant route and next steps.'],['q'=>'Does sending an enquiry commit me to anything?','a'=>'No. Services start only under a quotation or engagement confirmation, governed by our Service Terms.'],['q'=>'How do I get pricing?','a'=>'INCORPSYS service fees are quoted after we confirm your requirements. Government fees are shown separately, with their official source. Contact INCORPSYS for current pricing.'],['q'=>'How is my information used?','a'=>'Only to reply to your enquiry and, if you engage us, to deliver the services, as described in our Privacy Policy. We do not sell personal information.']];
 $countries=enquiry_countries();
 // Pre-fill from the setup finder or INCORPSYS Assist; only allow-listed values are accepted.
 $pre=[];
@@ -51,5 +52,7 @@ include __DIR__.'/../partials/header.php';?>
     <p class="wizard-preparing" role="status"><span class="spinner" aria-hidden="true"></span>Your enquiry is being prepared…</p>
   </form>
 </div></section>
+<section class="section-tight"><div class="container-narrow"><?=faq_accordion($faqs,'Questions about the enquiry')?></div></section>
 </main>
+<?=json_ld(faq_schema($faqs))?>
 <?php include __DIR__.'/../partials/footer.php';?>

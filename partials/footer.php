@@ -15,13 +15,13 @@
         <div><h2>Company</h2><ul><li><a href="/about/">About Us</a></li><li><a href="/about/why-choose-us/">Why Choose Us?</a></li><li><a href="/about/vision-mission/">Vision &amp; Mission</a></li><li><a href="/about/leadership/">Leadership</a></li><li><a href="/careers/">Careers</a></li><li><a href="/contact/">Contact</a></li></ul></div>
         <div><h2>Services</h2><ul><li><a href="/services/company-incorporation/">Company incorporation</a></li><li><a href="/services/business-licensing/">Business licensing</a></li><li><a href="/services/corporate-banking/">Corporate banking</a></li><li><a href="/services/compliance-documentation/">Compliance</a></li><li><a href="/services/visa-residency/">Visa &amp; residency</a></li><li><a href="/services/">All services</a></li></ul></div>
         <div><h2>Jurisdictions</h2><ul><?php foreach($footSources as $k=>$s):?><li><a href="<?=e(path_url($k))?>"><?=e($s['label'])?></a></li><?php endforeach;?><li><a href="/jurisdictions/">Compare jurisdictions</a></li></ul></div>
-        <div><h2>Resources</h2><ul><li><a href="/resources/">Guides</a></li><li><a href="/resources/company-incorporation-faq/">FAQs</a></li><li><a href="/resources/documents-master-checklist/">Checklists</a></li><li><a href="/resources/official-sources-directory/">Official sources</a></li><li><a href="/about/methodology/">Methodology</a></li><li><a href="/about/source-policy/">Source policy</a></li><li><a href="/search/">Search</a></li></ul></div><div><h2>Legal &amp; Support</h2><ul><li><a href="/legal/">Legal &amp; Support</a></li><li><a href="/legal/privacy/">Privacy Policy</a></li><li><a href="/legal/data-policy/">Data Policy</a></li><li><a href="/legal/payment-policy/">Payment Policy</a></li><li><a href="/legal/refund-policy/">Refund Policy</a></li><li><a href="/legal/cancellation-policy/">Cancellation Policy</a></li><li><a href="/legal/hiring-policy/">Hiring Policy</a></li><li><a href="/legal/grievance-redressal/">Grievance Redressal</a></li><li><a href="/support/">Support</a></li></ul></div>
+        <div><h2>Resources</h2><ul><li><a href="/resources/">Guides</a></li><li><a href="/resources/company-incorporation-faq/">FAQs</a></li><li><a href="/resources/documents-master-checklist/">Checklists</a></li><li><a href="/resources/official-sources-directory/">Official sources</a></li><li><a href="/about/methodology/">Methodology</a></li><li><a href="/about/source-policy/">Source policy</a></li><li><a href="/search/">Search</a></li></ul></div><div><h2>Legal &amp; Support</h2><ul><li><a href="/legal/">Legal &amp; Support</a></li><li><a href="/legal/privacy/">Privacy Policy</a></li><li><a href="/legal/data-policy/">Data Policy</a></li><li><a href="/legal/service-terms/">Service Terms</a></li><li><a href="/legal/filing-quality-commitment/">Filing Quality Commitment</a></li><li><a href="/legal/payment-policy/">Payment Policy</a></li><li><a href="/legal/refund-policy/">Refund Policy</a></li><li><a href="/legal/cancellation-policy/">Cancellation Policy</a></li><li><a href="/legal/hiring-policy/">Hiring Policy</a></li><li><a href="/legal/grievance-redressal/">Grievance Redressal</a></li><li><a href="/support/">Support</a></li></ul></div>
       </div>
     </div>
     <p class="footer-notice"><strong>Official source methodology.</strong> INCORPSYS guides summarise official government and registry guidance and link to it. They are not legal, tax or immigration advice and do not replace the competent authority. Fees, timelines and requirements change: verify them with the authority before filing or payment. INCORPSYS does not guarantee incorporation, licensing, banking or visa outcomes. <a href="/about/methodology/">How we build our guides</a>.</p>
     <div class="footer-bottom">
       <span>© <?=date('Y')?> INCORPSYS. All rights reserved.</span>
-      <ul aria-label="Legal"><li><a href="/legal/terms/">Terms</a></li><li><a href="/legal/disclaimer/">Disclaimer</a></li><li><a href="/legal/cookies/">Cookie Policy</a></li><li><a href="/sitemap/">Sitemap</a></li><li><button class="footer-link-btn" type="button" data-cookie-settings>Cookie settings</button></li></ul>
+      <ul aria-label="Legal"><li><a href="/legal/terms/">Terms of Use</a></li><li><a href="/legal/service-terms/">Service Terms</a></li><li><a href="/legal/disclaimer/">Disclaimer</a></li><li><a href="/legal/cookies/">Cookie Policy</a></li><li><a href="/sitemap/">Sitemap</a></li><li><button class="footer-link-btn" type="button" data-cookie-settings>Cookie settings</button></li></ul>
     </div>
   </div>
 </footer>
@@ -45,11 +45,17 @@
         <a class="assist-option" href="/contact/">Speak to an Expert<?=icon('chevron-right')?></a>
       </div>
     </div>
-    <div class="assist-foot"><a href="<?=e(wa_url())?>" target="_blank" rel="noopener"><?=icon('message-circle')?>WhatsApp</a><a href="/contact/"><?=icon('send')?>Contact us</a></div>
+    <ul class="assist-contact" aria-label="Contact INCORPSYS">
+      <li><a class="assist-contact-primary" href="/get-started/"><?=icon('send')?><span>Enquiry Now</span></a></li>
+      <li><a href="<?=e(wa_url())?>" target="_blank" rel="noopener"><?=icon('message-circle')?><span>WhatsApp</span></a></li>
+      <li><a href="<?=e(tel_url())?>"><?=icon('phone')?><span>Call</span></a></li>
+      <li><a href="mailto:<?=e(SITE_EMAIL)?>"><?=icon('mail')?><span>Email</span></a></li>
+    </ul>
   </div>
 </div>
 <?php if(($page['slug']??'')!=='get-started'):?>
-<nav class="mobile-cta" aria-label="Quick actions"><a class="btn btn-cta" href="/get-started/">Get Started<?=icon('arrow-right')?></a><a class="btn btn-secondary" href="<?=e(wa_url())?>" target="_blank" rel="noopener"><?=icon('message-circle')?>WhatsApp</a></nav>
+<nav class="mobile-cta" aria-label="Quick actions"><a class="btn btn-cta" href="/get-started/">Enquiry Now<?=icon('arrow-right')?></a><a class="btn btn-secondary" href="<?=e(wa_url())?>" target="_blank" rel="noopener"><?=icon('message-circle')?>WhatsApp</a></nav>
 <?php endif;?>
+<?=site_schema($page??[],$crumbs??null)?>
 <script src="<?=e(asset('js/site.js'))?>" defer></script>
 </body></html>

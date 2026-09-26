@@ -8,6 +8,7 @@ if($hub==='resources'){
   $page=['slug'=>'resources','title'=>'Company Incorporation Resources & Checklists | INCORPSYS','description'=>'The INCORPSYS Knowledge Hub: cross-jurisdiction guides, checklists, comparisons and glossaries for company incorporation, with links to each jurisdiction\'s official authority.'];
   $crumbs=[['name'=>'Home','slug'=>''],['name'=>'Knowledge Hub','slug'=>'resources']];
   $cats=require __DIR__.'/../content/knowledge-hub.php';
+  $faqs=[['q'=>'What is the INCORPSYS Knowledge Hub?','a'=>'A library of cross-jurisdiction guides, checklists, comparisons and glossaries for company incorporation. Each one points to the official authority for the country you choose.'],['q'=>'Do the guides replace official guidance?','a'=>'No. They summarise official sources and link to them. Verify current requirements with the competent authority before filing or payment.'],['q'=>'How do I find guidance for a specific country?','a'=>'Open the Jurisdictions category or a country guide, such as the UAE or Singapore guide, for its authority, official route and in-depth guides.']];
   include __DIR__.'/../partials/header.php';?>
 <main id="main">
 <?=page_hero('INCORPSYS Knowledge Hub','Company incorporation guides and checklists','Guides, checklists, comparisons and glossaries that apply across jurisdictions. Each one points you to the official authority for the country you choose.',$crumbs)?>
@@ -22,10 +23,12 @@ if($hub==='resources'){
     <div class="grid grid-3"><?php foreach($list as $p):?><a class="card card-link card-compact" href="<?=e(path_url($p['slug']))?>"><span class="eyebrow"><?=e($c['label'])?></span><h3 class="h4 mt-2"><?=e($p['name'])?></h3><p class="small"><?=e($p['description'])?></p></a><?php endforeach;?></div>
   </section>
   <?php endforeach;?>
+  <div class="container-narrow mt-10"><?=faq_accordion($faqs)?></div>
 </div></section>
 <?=cta_band()?>
 </main>
 <?=json_ld(['@context'=>'https://schema.org','@type'=>'CollectionPage','name'=>$page['title'],'description'=>$page['description'],'url'=>page_url('resources'),'publisher'=>publisher(),'breadcrumb'=>breadcrumb_schema($crumbs)])?>
+<?=json_ld(faq_schema($faqs))?>
 <?php include __DIR__.'/../partials/footer.php';return;}
 
 /* ---------- Jurisdiction hub ---------- */

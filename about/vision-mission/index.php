@@ -3,6 +3,7 @@ require_once __DIR__.'/../../includes/config.php';
 $page=['slug'=>'about/vision-mission','h1'=>'Vision & mission','title'=>'Vision & Mission | INCORPSYS','description'=>'The INCORPSYS vision and mission: a clear, digital and source-backed path to company incorporation for founders building beyond borders.'];
 $crumbs=[['name'=>'Home','slug'=>''],['name'=>'About','slug'=>'about'],['name'=>'Vision & mission','slug'=>'about/vision-mission']];
 $eyebrow='Vision & mission';$lead='Smart Technology. Seamless Incorporation. Global Growth.';
+$faqs=[['q'=>'What is INCORPSYS\'s mission?','a'=>'To replace complex, manual registration processes with an intelligent, end-to-end digital workflow that streamlines entity setup, document verification and government filings, grounded in official sources.'],['q'=>'What principles guide INCORPSYS?','a'=>'Accuracy, speed with care, transparency about where information comes from, and a global outlook with one team across jurisdictions.']];
 ob_start();?>
 <h2>Our vision</h2>
 <p>A world where founders can build their business beyond borders without being slowed down by complex, manual registration processes.</p>

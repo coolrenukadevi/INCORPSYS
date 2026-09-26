@@ -4,13 +4,13 @@ Premium, source-backed PHP website for **INCORPSYS — Global Company Incorporat
 
 ### Included
 - Design system: CSS tokens and components (buttons, cards, forms, tables, tabs, accordions, alerts, badges, breadcrumbs, modal, tooltip); self-hosted Inter; Lucide icons as inline SVG.
-- Header: utility bar (WhatsApp, Login, Sign Up), mega menus on every tab (Company Setup, Business Structures, Services, Resources, About), Get Started, mobile drawer.
+- Header: utility bar (Login, Sign Up, positioning line, WhatsApp), menus Company / Services / Jurisdictions / Resources / About / Contact, Enquiry Now, mobile drawer.
 - Cookie consent banner; Google Analytics loads only after the visitor accepts analytics cookies.
 - Homepage: four-step guided setup with an inline setup path, official-source trust bar, jurisdiction explorer, filterable comparison, source-first method, services, structures, Knowledge Hub, FAQ.
 - `/get-started/`: 8-step enquiry (works without JavaScript), with server-side validation, spam protection and lead priority.
-- INCORPSYS Assist: guided chat flow that hands off to the enquiry or WhatsApp.
+- INCORPSYS Assist: guided flow plus Enquiry Now, WhatsApp, Call and Email.
 - Jurisdiction guides built from a source registry; comparison and pricing engines that show only verified values.
-- SEO: canonical URLs, unique titles and descriptions, Open Graph with a 1200×630 image, XML sitemap, `robots.txt`, `llms.txt`, JSON-LD (Organization, WebSite, Article, Service, FAQPage, BreadcrumbList).
+- SEO: canonical URLs on https://incorpsys.com, unique titles and descriptions, Open Graph and X cards, XML sitemap, `robots.txt`, `llms.txt`, JSON-LD on every page (Organization, WebSite, WebPage, BreadcrumbList) plus Article, Service, FAQPage and ItemList where relevant. Favicon set in `assets/icons/` and `/favicon.ico`.
 - Security: Content-Security-Policy, Origin check on form posts, internal folders blocked.
 
 ### Pages
@@ -26,7 +26,7 @@ Premium, source-backed PHP website for **INCORPSYS — Global Company Incorporat
 | Sitemap page (the XML sitemap is styled for browsers via `assets/sitemap.xsl`) | `/sitemap/` | 1 | yes |
 | Phase A topic and service pages | `/uae/company-registration/` | 100 | **no** — template text, noindex until rewritten |
 | Legal & Support hub | `/legal/` | 1 | yes |
-| Policies: Privacy, Data, Payment, Refund, Cancellation, Hiring, Cookie, Terms, Disclaimer, Grievance Redressal | `/legal/privacy/` … | 10 | no — drafts with `[To be confirmed]` items until legal approval |
+| Policies: Privacy, Data, Payment, Refund, Cancellation, Hiring, Cookie, Terms of Use, Service Terms, Filing Quality Commitment, Disclaimer, Grievance Redressal | `/legal/privacy/` … | 12 | no — drafts with `[To be confirmed]` items until legal approval |
 | Utility | `/explore/`, `/search/`, `/login/`, `/signup/`, `/account/` | 5 | no |
 
 ### Content files
@@ -60,14 +60,32 @@ It writes the page stub files, regenerates `sitemap.xml` and `docs/source-regist
 
 **Team photos:** add square images to `assets/img/team/` named `anisha-bharti`, `renuka-devi` and `vk-anand` (`.webp`, `.jpg` or `.png`). The About page uses them automatically; initials show until then.
 
+### Settings (update in one place)
+`includes/settings.php` holds the domain, contact details, legal entity fields, GA4 ID and brand lines.
+- Legal entity: `LEGAL_ENTITY_NAME`, `REGISTRATION_NUMBER`, `REGISTERED_ADDRESS`, `TAX_ID`, `LEGAL_JURISDICTION` read `[TO BE PROVIDED]` until supplied. They appear in the draft policies and, once provided, in the Organization schema.
+- Analytics: set `GA4_MEASUREMENT_ID` (for example `G-XXXXXXXXXX`). While it is empty, Google Analytics never loads; when set, it loads only after a visitor accepts analytics cookies.
+- Leadership: `content/team.php` (name, designation, bio, photo, LinkedIn, display order). Empty fields are not shown.
+- Policies: `content/legal.php` — all drafts, subject to legal review, noindex until approved.
+
 ### Deployment
 1. PHP 8.1+ on Apache/cPanel with `mod_rewrite` (and ideally `mod_headers`, `mod_deflate`).
-2. Point `www.incorpsys.com` to the web root.
-3. Settings: copy `includes/secrets.example.php` to `includes/secrets.php` and set `FORM_SECRET` (a long random string) and, optionally, `GA_MEASUREMENT_ID`. Alternatively set the `INCORPSYS_FORM_SECRET` and `INCORPSYS_GA_ID` environment variables. To enable Google Analytics, set `INCORPSYS_GA_ID` to your GA4 measurement ID (for example `G-XXXXXXXXXX`); it loads only for visitors who accept analytics cookies.
+2. Point `incorpsys.com` and `www.incorpsys.com` to the web root. `.htaccess` redirects www → `https://incorpsys.com` and HTTP → HTTPS on the live domain; canonicals, sitemap and schema use `https://incorpsys.com`.
+3. Copy `includes/secrets.example.php` to `includes/secrets.php` and set `FORM_SECRET` (a long random string), or set the `INCORPSYS_FORM_SECRET` environment variable. The cPanel zip already contains a generated one.
 4. Replace `mail()` with authenticated SMTP or a CRM webhook, and add SPF/DKIM for incorpsys.com.
-5. Review the legal text (Privacy, Cookie Policy, Terms, Disclaimer) in `content/phase2.php`. Once approved, remove the legal `noindex` rule in `pages/_page_template.php` and the legal skip in `tools/build.php`.
+5. After legal approval of a policy, remove the legal `noindex` rule in `pages/_page_template.php` and the legal skip in `tools/build.php`.
 6. Serve over HTTPS and add `Strict-Transport-Security` at the server or CDN.
-7. Submit `/sitemap.xml` to Google Search Console and Bing Webmaster Tools.
+7. Submit `https://incorpsys.com/sitemap.xml` to Google Search Console and Bing Webmaster Tools.
 8. Re-check official sources before relying on time-sensitive regulatory information.
+
+### QA commands
+```
+php tools/build.php                     # regenerate stubs, sitemap.xml and docs/source-registry.csv
+php -l includes/settings.php            # syntax check after editing settings
+php tools/qa.php                        # quality gate against a local copy (http://127.0.0.1:8080)
+php tools/qa.php https://incorpsys.com  # quality gate against the live site
+curl -sI https://www.incorpsys.com/     # expect 301 → https://incorpsys.com/
+curl -sI http://incorpsys.com/          # expect 301 → https://incorpsys.com/
+```
+`tools/qa.php` checks broken links, truncated pages, canonicals, unique titles and descriptions, one H1, breadcrumbs, Open Graph/X tags, Organization/WebSite/WebPage/BreadcrumbList schema, FAQ coverage, thin content, orphans, sitemap ↔ indexable pages, robots.txt, and the Enquiry/Email/WhatsApp/Call/Login/Sign Up/favicon links.
 
 See `docs/incorpsys-premium-polish-audit.md` and `docs/incorpsys-premium-polish-final-report.md` for the latest audit, changes and production readiness report (earlier: `docs/incorpsys-phase2-*.md`).
