@@ -9,6 +9,7 @@
           <li><a href="<?=e(wa_url())?>" target="_blank" rel="noopener"><?=icon('message-circle')?>WhatsApp</a></li>
           <li><a href="/contact/"><?=icon('send')?>Contact us</a></li>
         </ul>
+        <address class="footer-address"><?=icon('map-pin')?><span><b>Head office</b><?=e(HEAD_OFFICE_ADDRESS)?></span></address>
         <ul class="footer-social" aria-label="INCORPSYS on social media"><?php foreach(SOCIAL_LINKS as $name=>$href):?><li><a href="<?=e($href)?>" target="_blank" rel="noopener me" aria-label="INCORPSYS on <?=e($name)?> (opens in a new tab)" title="<?=e($name)?>"><?=social_icon($name)?></a></li><?php endforeach;?></ul>
       </div>
       <div class="footer-cols">

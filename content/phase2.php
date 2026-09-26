@@ -128,14 +128,16 @@ $phase2['contact']=[
   'slug'=>'contact','jurisdiction'=>null,'kind'=>'contact','name'=>'Contact INCORPSYS','title'=>'Contact INCORPSYS | INCORPSYS','h1'=>'Contact INCORPSYS','eyebrow'=>'CONTACT',
   'description'=>'Contact INCORPSYS for global company incorporation and international business setup enquiries.','answer'=>'Use the INCORPSYS enquiry form, email, phone or WhatsApp route to discuss a company incorporation or international business setup requirement.',
   'sections'=>[
-    ['title'=>'Page purpose','body'=>'Contact INCORPSYS for global company incorporation and international business setup enquiries.'],
-    ['title'=>'Key information','bullets'=>['Email: hello@incorpsys.com','Phone / WhatsApp: +91 78448 19819','Online enquiry form on the website','Do not send passwords or sensitive financial information through the public enquiry form.']],
+    ['title'=>'How to reach us','bullets'=>['Email: '.SITE_EMAIL,'Phone / WhatsApp: '.SITE_PHONE,'Online enquiry form on this page, or Enquiry Now on any page','Do not send passwords or sensitive financial information through the public enquiry form.']],
+    ['title'=>'Head office','body'=>LEGAL_ENTITY_NAME.', '.HEAD_OFFICE_ADDRESS.'.'],
+    ['title'=>'Complaints','body'=>'To raise a grievance, contact the Grievance Officer, '.GRIEVANCE_OFFICER_NAME.', at '.GRIEVANCE_OFFICER_EMAIL.'. See Grievance Redressal for the full process.'],
   ],
   'faqs'=>[
     ['q'=>'Where can I get the latest official or business information?','a'=>'For regulatory rules, use the relevant government or registry source. For INCORPSYS service enquiries, use the website contact options.'],
     ['q'=>'Can this page replace legal advice?','a'=>'No. It is informational website content and should not be treated as a substitute for professional advice.'],
     ['q'=>'How do I start an enquiry?','a'=>'Use the Enquiry Now button or contact hello@incorpsys.com or +91 78448 19819.'],
     ['q'=>'What is the INCORPSYS contact email?','a'=>'hello@incorpsys.com'],
+    ['q'=>'Where is the INCORPSYS head office?','a'=>HEAD_OFFICE_ADDRESS.'.'],
   ],
   'source'=>null,'verified'=>'2026-09-25'
 ];

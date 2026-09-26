@@ -153,7 +153,7 @@ function organization_schema(): array {
     'logo' => url('assets/img/logo-144.png'), 'slogan' => SITE_POSITIONING, 'description' => SITE_TAGLINE, 'email' => SITE_EMAIL, 'telephone' => SITE_PHONE, 'sameAs' => array_values(SOCIAL_LINKS)]
     // Legal details are added only once supplied in includes/settings.php.
     + (is_provided(LEGAL_ENTITY_NAME) ? ['legalName' => LEGAL_ENTITY_NAME] : [])
-    + (is_provided(REGISTERED_ADDRESS) ? ['address' => REGISTERED_ADDRESS] : [])
+    + ['address' => ['@type' => 'PostalAddress', 'streetAddress' => HEAD_OFFICE['street'], 'addressLocality' => HEAD_OFFICE['locality'], 'addressRegion' => HEAD_OFFICE['region'], 'postalCode' => HEAD_OFFICE['postcode'], 'addressCountry' => HEAD_OFFICE['country']]]
     + (is_provided(TAX_ID) ? ['taxID' => TAX_ID] : []);
 }
 

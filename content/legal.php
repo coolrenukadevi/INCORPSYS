@@ -17,7 +17,7 @@ $legal = function (string $slug, string $name, string $description, string $answ
     'eyebrow' => 'LEGAL & SUPPORT', 'description' => $description, 'answer' => $answer, 'sections' => $sections, 'faqs' => $faqs, 'source' => null, 'verified' => null];
 };
 $contact = 'Contact INCORPSYS through the Contact page or email '.SITE_EMAIL.'.';
-$entity = 'Legal entity: '.LEGAL_ENTITY_NAME.'. Registration number: '.REGISTRATION_NUMBER.'. Registered address: '.REGISTERED_ADDRESS.'.';
+$entity = 'Legal entity: '.LEGAL_ENTITY_NAME.'. Registration number: '.REGISTRATION_NUMBER.'. Registered address: '.REGISTERED_ADDRESS.'. Head office: '.HEAD_OFFICE_ADDRESS.'.';
 
 return [
   'legal/privacy' => $legal('privacy', 'Privacy Policy',
@@ -118,7 +118,7 @@ return [
     'How to raise a complaint with INCORPSYS, who handles it, and how it is escalated and resolved.',
     'Raise a complaint by email with your details and reference number. The Grievance Officer acknowledges it, investigates and replies with a resolution, and you can escalate if you are not satisfied.',
     [
-      ['title' => 'Grievance Officer', 'bullets' => ['Name: '.GRIEVANCE_OFFICER_NAME, 'Designation: Grievance Officer', 'Email: '.GRIEVANCE_OFFICER_EMAIL, 'Phone: '.GRIEVANCE_OFFICER_PHONE, 'Address: '.$tbc('postal address'), 'Working hours: '.$tbc('days and hours')]],
+      ['title' => 'Grievance Officer', 'bullets' => ['Name: '.GRIEVANCE_OFFICER_NAME, 'Designation: Grievance Officer', 'Email: '.GRIEVANCE_OFFICER_EMAIL, 'Phone: '.GRIEVANCE_OFFICER_PHONE, 'Address: '.HEAD_OFFICE_ADDRESS, 'Working hours: '.$tbc('days and hours')]],
       ['title' => 'How to raise a grievance', 'bullets' => ['Email the Grievance Officer at '.GRIEVANCE_OFFICER_EMAIL.' with your name, contact details, invoice or reference number, and a clear description of the issue.', 'Attach any relevant correspondence. Do not send passwords or payment card details.', 'Complaints about this website\'s content can also be raised with the page address and the official source you are relying on.']],
       ['title' => 'What happens next', 'bullets' => ['Acknowledgement within '.$tbc('timeframe, e.g. 48 hours').'.', 'Investigation and a written response within '.$tbc('timeframe').'.', 'If more time is needed, we tell you why and when to expect a reply.']],
       ['title' => 'Escalation', 'body' => 'If you are not satisfied with the response, escalate to '.$tbc('escalation contact, e.g. a Director').'. You may also have the right to approach the relevant consumer or regulatory forum under applicable law.'],

@@ -25,7 +25,12 @@ const SITE_PHONE_TEL = '+917844819819';
 const WHATSAPP_NUMBER = '917844819819';
 const MAIL_FROM = 'noreply@incorpsys.com';
 
+// Head office (HO). Shown on the Contact page, in the footer, the policies and the Organization schema.
+const HEAD_OFFICE_ADDRESS = 'Flat 203, Sharda Mansion Apartment, Kailashpuri, Kankarbagh, Hanuman Nagar, Patna, Bihar 800020, India';
+const HEAD_OFFICE = ['street' => 'Flat 203, Sharda Mansion Apartment, Kailashpuri, Kankarbagh, Hanuman Nagar', 'locality' => 'Patna', 'region' => 'Bihar', 'postcode' => '800020', 'country' => 'IN'];
+
 // Legal entity. Supply the registered details; do not guess them.
+// REGISTERED_ADDRESS is the registered office on record; it may differ from the head office above.
 const PLACEHOLDER = '[TO BE PROVIDED]';
 const LEGAL_ENTITY_NAME = 'Paynancial Technology Private Limited';
 const REGISTRATION_NUMBER = PLACEHOLDER;
