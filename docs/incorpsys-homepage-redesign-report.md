@@ -233,3 +233,10 @@ The closing CTA (`partials/home/cta.php`) now follows the supplied banner design
   - axe: 0 violations at 390 / 768 / 1440.
   - No overflow at 320–1440; no console errors.
   - Lighthouse: desktop 100 (LCP 0.5 s), mobile 98 (LCP 2.2 s, TBT 70 ms); CLS 0 on both.
+
+### Compact view (follow-up)
+- The key-comparison table now uses the compact icon style of the reference: a tick for "from the official source", a grey dash for "not yet verified" and "Varies" where it depends on state or emirate.
+- Rows are 39 px tall (about 80 px before); the avatars are smaller and the header names stay on one line.
+- Each tick links to its source guide. The sourced statement shows in a tooltip on hover or keyboard focus and is read out by screen readers.
+- The "Local Agent / Secretary" row is now "Agent / Secretary".
+- **QA:** `tools/qa.php` 0 failures; html-validate 0 errors; axe 0 violations at 390 / 768 / 1440; no overflow at 320–1440.

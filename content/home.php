@@ -97,7 +97,7 @@ return [
   // source guide are linked from each cell). A cell with no registry value shows "Not yet verified".
   'keycompare' => [
     'tabs' => [
-      'key' => ['Key Comparison', ['route' => ['Company Setup', 'briefcase-business'], 'officers' => ['Directors', 'user-round'], 'local' => ['Local Agent / Secretary', 'id-card'], 'tax' => ['Tax Registration', 'calculator'], 'timeline' => ['Processing Time', 'list-checks']]],
+      'key' => ['Key Comparison', ['route' => ['Company Setup', 'briefcase-business'], 'officers' => ['Directors', 'user-round'], 'local' => ['Agent / Secretary', 'id-card'], 'tax' => ['Tax Registration', 'calculator'], 'timeline' => ['Processing Time', 'list-checks']]],
       'tax' => ['Tax Overview', ['tax' => ['Tax Registration', 'calculator'], 'fees' => ['Government Fees', 'banknote']]],
       'visa' => ['Visa Options', ['visa' => ['Visa & Residency', 'id-card']]],
       'banking' => ['Banking', ['banking' => ['Corporate Banking', 'landmark']]],
