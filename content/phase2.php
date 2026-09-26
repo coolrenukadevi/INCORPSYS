@@ -129,7 +129,7 @@ $phase2['contact']=[
   'description'=>'Contact INCORPSYS for global company incorporation and international business setup enquiries.','answer'=>'Use the INCORPSYS enquiry form, email, phone or WhatsApp route to discuss a company incorporation or international business setup requirement.',
   'sections'=>[
     ['title'=>'How to reach us','bullets'=>['Email: '.SITE_EMAIL,'Phone / WhatsApp: '.SITE_PHONE,'Online enquiry form on this page, or Enquiry Now on any page','Do not send passwords or sensitive financial information through the public enquiry form.']],
-    ['title'=>'Head office','body'=>LEGAL_ENTITY_NAME.', '.HEAD_OFFICE_ADDRESS.'.'],
+    ['title'=>'Registered office and head office','body'=>LEGAL_ENTITY_NAME.', '.REGISTERED_ADDRESS.'.'],
     ['title'=>'Complaints','body'=>'To raise a grievance, contact the Grievance Officer, '.GRIEVANCE_OFFICER_NAME.', at '.GRIEVANCE_OFFICER_EMAIL.'. See Grievance Redressal for the full process.'],
   ],
   'faqs'=>[

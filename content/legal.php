@@ -17,7 +17,7 @@ $legal = function (string $slug, string $name, string $description, string $answ
     'eyebrow' => 'LEGAL & SUPPORT', 'description' => $description, 'answer' => $answer, 'sections' => $sections, 'faqs' => $faqs, 'source' => null, 'verified' => null];
 };
 $contact = 'Contact INCORPSYS through the Contact page or email '.SITE_EMAIL.'.';
-$entity = 'Legal entity: '.LEGAL_ENTITY_NAME.'. CIN: '.REGISTRATION_NUMBER.'. GSTIN: '.TAX_ID.'. Registered address: '.REGISTERED_ADDRESS.'. Head office: '.HEAD_OFFICE_ADDRESS.'.';
+$entity = 'Legal entity: '.LEGAL_ENTITY_NAME.'. CIN: '.REGISTRATION_NUMBER.'. GSTIN: '.TAX_ID.'. Registered office and head office: '.REGISTERED_ADDRESS.'.';
 
 return [
   'legal/privacy' => $legal('privacy', 'Privacy Policy',

@@ -30,11 +30,11 @@ const HEAD_OFFICE_ADDRESS = 'Flat 203, Sharda Mansion Apartment, Kailashpuri, Ka
 const HEAD_OFFICE = ['street' => 'Flat 203, Sharda Mansion Apartment, Kailashpuri, Kankarbagh, Hanuman Nagar', 'locality' => 'Patna', 'region' => 'Bihar', 'postcode' => '800020', 'country' => 'IN'];
 
 // Legal entity. Supply the registered details; do not guess them.
-// REGISTERED_ADDRESS is the registered office on record; it may differ from the head office above.
+// REGISTERED_ADDRESS is the registered office on record (confirmed the same as the head office).
 const PLACEHOLDER = '[TO BE PROVIDED]';
 const LEGAL_ENTITY_NAME = 'Paynancial Technology Private Limited';
 const REGISTRATION_NUMBER = 'U66190BR2024PTC067929';   // CIN (Corporate Identification Number)
-const REGISTERED_ADDRESS = PLACEHOLDER;
+const REGISTERED_ADDRESS = HEAD_OFFICE_ADDRESS;   // registered office is the same as the head office
 const TAX_ID = '10AAOCP5173C1ZO';                      // GSTIN
 const LEGAL_JURISDICTION = PLACEHOLDER;
 
