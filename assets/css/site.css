@@ -952,4 +952,4 @@ a.chip{text-decoration:none}
 .legal-details-card dt .icon{color:var(--blue-600)}
 .legal-details-card dd{color:var(--ink-900);font-weight:var(--fw-medium)}
 @media (max-width:960px){.legal-details dl{grid-template-columns:repeat(2,minmax(0,1fr))}.legal-details .legal-wide{grid-column:1/-1}}
-@media (max-width:420px){.legal-details dl{grid-template-columns:1fr}}
+@media (max-width:640px){.legal-details dl{grid-template-columns:1fr}}

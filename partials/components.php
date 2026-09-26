@@ -287,8 +287,9 @@ function legal_details(string $variant = 'card'): string {
     ['map-pin', 'Registered & head office', REGISTERED_ADDRESS],
   ], fn($i) => is_provided($i[2]));
   if (!$items) return '';
-  $h = '<section class="legal-details legal-details-'.e($variant).'" aria-label="Company information">'
-    .($variant === 'card' ? '<h2 class="h4">Company information</h2>' : '').'<dl>';
+  $h = $variant === 'card'
+    ? '<section class="legal-details legal-details-card" aria-labelledby="company-info"><h2 class="h4" id="company-info">Company information</h2><dl>'
+    : '<section class="legal-details legal-details-'.e($variant).'" aria-label="Company legal information"><dl>';
   foreach ($items as [$ic, $label, $value]) {
     $h .= '<div'.($label === 'Registered & head office' ? ' class="legal-wide"' : '').'><dt>'.icon($ic).e($label).'</dt><dd'.(in_array($label, ['CIN', 'GSTIN'], true) ? ' class="legal-id"' : '').'>'.e($value).'</dd></div>';
   }
