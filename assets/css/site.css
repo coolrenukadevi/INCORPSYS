@@ -934,3 +934,22 @@ a.chip{text-decoration:none}
 .footer-address{display:flex;gap:var(--sp-2);margin-top:var(--sp-4);font-style:normal;font-size:var(--fs-sm);color:#c5d3e6;line-height:1.55}
 .footer-address .icon{flex:none;width:16px;height:16px;margin-top:3px;color:#8fc1ff}
 .footer-address b{display:block;color:var(--white);font-weight:var(--fw-semibold)}
+
+/* Company (legal) information */
+.legal-details dl{display:grid;grid-template-columns:auto auto auto minmax(0,1fr);gap:var(--sp-4) var(--sp-8);margin:0}
+.legal-details dt{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:var(--fw-bold);letter-spacing:.08em;text-transform:uppercase}
+.legal-details dt .icon{width:14px;height:14px}
+.legal-details dd{margin:4px 0 0;font-size:var(--fs-sm);line-height:1.5}
+.legal-details .legal-id{font-variant-numeric:tabular-nums;letter-spacing:.03em;white-space:nowrap}
+.legal-details-footer+.footer-notice{border-top:0}
+.legal-details-footer{margin-top:var(--sp-10);margin-bottom:var(--sp-2);padding:var(--sp-5) var(--sp-6);border:1px solid rgba(255,255,255,.1);border-radius:var(--r-lg);background:rgba(255,255,255,.03)}
+.legal-details-footer dt{color:#8fa6c4}
+.legal-details-footer dt .icon{color:#8fc1ff}
+.legal-details-footer dd{color:#e6edf7}
+.legal-details-card{padding:var(--sp-6);border:1px solid var(--border);border-radius:var(--r-lg);background:var(--bg-subtle)}
+.legal-details-card h2{margin-bottom:var(--sp-5)}
+.legal-details-card dt{color:var(--ink-500)}
+.legal-details-card dt .icon{color:var(--blue-600)}
+.legal-details-card dd{color:var(--ink-900);font-weight:var(--fw-medium)}
+@media (max-width:960px){.legal-details dl{grid-template-columns:repeat(2,minmax(0,1fr))}.legal-details .legal-wide{grid-column:1/-1}}
+@media (max-width:420px){.legal-details dl{grid-template-columns:1fr}}

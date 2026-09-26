@@ -275,6 +275,26 @@ function team_schema(): array {
     + (!empty($m['linkedin']) ? ['sameAs' => [$m['linkedin']]] : []) + (!empty($m['bio']) ? ['description' => $m['bio']] : []), team_members());
 }
 
+/**
+ * Company (legal) information, from includes/settings.php. Only supplied values are shown.
+ * $variant: 'footer' (dark strip) or 'card' (light card, e.g. Legal & Support).
+ */
+function legal_details(string $variant = 'card'): string {
+  $items = array_filter([
+    ['building-2', 'Operated by', LEGAL_ENTITY_NAME],
+    ['badge-check', 'CIN', REGISTRATION_NUMBER],
+    ['file-text', 'GSTIN', TAX_ID],
+    ['map-pin', 'Registered & head office', REGISTERED_ADDRESS],
+  ], fn($i) => is_provided($i[2]));
+  if (!$items) return '';
+  $h = '<section class="legal-details legal-details-'.e($variant).'" aria-label="Company information">'
+    .($variant === 'card' ? '<h2 class="h4">Company information</h2>' : '').'<dl>';
+  foreach ($items as [$ic, $label, $value]) {
+    $h .= '<div'.($label === 'Registered & head office' ? ' class="legal-wide"' : '').'><dt>'.icon($ic).e($label).'</dt><dd'.(in_array($label, ['CIN', 'GSTIN'], true) ? ' class="legal-id"' : '').'>'.e($value).'</dd></div>';
+  }
+  return $h.'</dl></section>';
+}
+
 /** Escape text and highlight "[To be confirmed: ...]" and "[TO BE PROVIDED]" placeholders in draft policies. */
 function rich_text(string $text): string {
   return preg_replace('/\[To be confirmed:[^\]]*\]|\[TO BE PROVIDED\]/', '<mark class="tbc">$0</mark>', e($text));

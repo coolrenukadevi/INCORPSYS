@@ -9,7 +9,6 @@
           <li><a href="<?=e(wa_url())?>" target="_blank" rel="noopener"><?=icon('message-circle')?>WhatsApp</a></li>
           <li><a href="/contact/"><?=icon('send')?>Contact us</a></li>
         </ul>
-        <address class="footer-address"><?=icon('map-pin')?><span><b>Registered &amp; head office</b><?=e(HEAD_OFFICE_ADDRESS)?></span></address>
         <ul class="footer-social" aria-label="INCORPSYS on social media"><?php foreach(SOCIAL_LINKS as $name=>$href):?><li><a href="<?=e($href)?>" target="_blank" rel="noopener me" aria-label="INCORPSYS on <?=e($name)?> (opens in a new tab)" title="<?=e($name)?>"><?=social_icon($name)?></a></li><?php endforeach;?></ul>
       </div>
       <div class="footer-cols">
@@ -19,9 +18,10 @@
         <div><h2>Resources</h2><ul><li><a href="/resources/">Guides</a></li><li><a href="/resources/company-incorporation-faq/">FAQs</a></li><li><a href="/resources/documents-master-checklist/">Checklists</a></li><li><a href="/resources/official-sources-directory/">Official sources</a></li><li><a href="/about/methodology/">Methodology</a></li><li><a href="/about/source-policy/">Source policy</a></li><li><a href="/search/">Search</a></li></ul></div><div><h2>Legal &amp; Support</h2><ul><li><a href="/legal/">Legal &amp; Support</a></li><li><a href="/legal/privacy/">Privacy Policy</a></li><li><a href="/legal/data-policy/">Data Policy</a></li><li><a href="/legal/service-terms/">Service Terms</a></li><li><a href="/legal/filing-quality-commitment/">Filing Quality Commitment</a></li><li><a href="/legal/payment-policy/">Payment Policy</a></li><li><a href="/legal/refund-policy/">Refund Policy</a></li><li><a href="/legal/cancellation-policy/">Cancellation Policy</a></li><li><a href="/legal/hiring-policy/">Hiring Policy</a></li><li><a href="/legal/grievance-redressal/">Grievance Redressal</a></li><li><a href="/support/">Support</a></li></ul></div>
       </div>
     </div>
+    <?=legal_details('footer')?>
     <p class="footer-notice"><strong>Official source methodology.</strong> INCORPSYS guides summarise official government and registry guidance and link to it. They are not legal, tax or immigration advice and do not replace the competent authority. Fees, timelines and requirements change: verify them with the authority before filing or payment. INCORPSYS does not guarantee incorporation, licensing, banking or visa outcomes. <a href="/about/methodology/">How we build our guides</a>.</p>
     <div class="footer-bottom">
-      <span>© <?=date('Y')?> INCORPSYS. All rights reserved.<?php if(is_provided(LEGAL_ENTITY_NAME)):?> INCORPSYS is operated by <?=e(LEGAL_ENTITY_NAME)?>.<?php endif;?><?php if(is_provided(REGISTRATION_NUMBER)):?> CIN: <?=e(REGISTRATION_NUMBER)?>.<?php endif;?><?php if(is_provided(TAX_ID)):?> GSTIN: <?=e(TAX_ID)?>.<?php endif;?></span>
+      <span>© <?=date('Y')?> INCORPSYS. All rights reserved.</span>
       <ul aria-label="Legal"><li><a href="/legal/terms/">Terms of Use</a></li><li><a href="/legal/service-terms/">Service Terms</a></li><li><a href="/legal/disclaimer/">Disclaimer</a></li><li><a href="/legal/cookies/">Cookie Policy</a></li><li><a href="/sitemap/">Sitemap</a></li><li><button class="footer-link-btn" type="button" data-cookie-settings>Cookie settings</button></li></ul>
     </div>
   </div>

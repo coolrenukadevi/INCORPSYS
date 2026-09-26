@@ -22,7 +22,8 @@ include __DIR__.'/../partials/header.php';?>
   <h2 class="mt-10"><?=e($g)?></h2>
   <div class="grid grid-3 mt-6"><?php foreach($items as [$s,$ic]): if(!isset($pages[$s])) continue; $p=$pages[$s];?><a class="card card-link" href="<?=e(path_url($s))?>"><span class="card-icon"><?=icon($ic)?></span><h3><?=e($p['name'])?></h3><p><?=e($p['description'])?></p></a><?php endforeach;?></div>
   <?php endforeach;?>
-  <div class="alert alert-info mt-10"><?=icon('info')?><div><strong>Effective <?=e(fmt_date(POLICIES_EFFECTIVE_DATE))?></strong>INCORPSYS is operated by <?=e(LEGAL_ENTITY_NAME)?>. Questions about any policy: <a href="/contact/">contact us</a>.</div></div>
+  <div class="mt-10"><?=legal_details('card')?></div>
+  <p class="policy-meta mt-4"><?=icon('badge-check')?>Policies effective <?=e(fmt_date(POLICIES_EFFECTIVE_DATE))?>. Questions about any policy: <a href="/contact/">contact us</a>.</p>
 <div class="container-narrow mt-10"><?=faq_accordion($faqs)?></div>
 </div></section>
 </main>
