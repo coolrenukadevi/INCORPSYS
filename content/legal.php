@@ -72,12 +72,13 @@ return [
     [
       ['title' => 'Government and authority fees', 'body' => 'Once a government or authority fee has been paid on your behalf, INCORPSYS cannot refund it; any refund depends on the authority\'s own rules. If an authority refunds a fee to us, we pass it on to you.'],
       ['title' => 'INCORPSYS service fees', 'bullets' => ['Before any work starts: 0% refund (non-refundable).', 'After work has started but before filing: 0% refund (non-refundable).', 'After a filing has been submitted: 0% refund (non-refundable).']],
-      ['title' => 'Outcomes decided by authorities or banks', 'body' => 'Registries, licensing authorities, banks and immigration authorities make their own decisions. INCORPSYS service fees are not refunded (0%) if an application is rejected by an authority or bank. Any refund of a government fee depends on that authority\'s own rules.'],
+      ['title' => 'Outcomes decided by authorities or banks', 'body' => 'Registries, licensing authorities, banks and immigration authorities make their own decisions. INCORPSYS service fees are not refunded (0%) if an application is rejected by an authority or bank. This includes the rejection of a visa or residency application: no refund is provided. Any refund of a government fee depends on that authority\'s own rules.'],
       ['title' => 'How to request a refund', 'body' => 'Email '.SITE_EMAIL.' with your name, invoice number and the reason for the request. We acknowledge requests within '.$tbc('number of working days').' and process approved refunds within '.$tbc('number of working days').' to the original payment method.'],
       ['title' => 'Related policies', 'body' => 'See the Cancellation Policy for how to cancel an engagement, and Grievance Redressal if you disagree with a refund decision.'],
     ],
     [
       ['q' => 'Are INCORPSYS service fees refundable?', 'a' => 'No. INCORPSYS service fees are non-refundable (0% refund) at every stage, including when an authority or bank rejects an application.'],
+      ['q' => 'Is there a refund if my visa application is rejected?', 'a' => 'No. If a visa or residency application is rejected, no refund of INCORPSYS service fees is provided (0% refund). Immigration decisions are made solely by the competent authority.'],
       ['q' => 'Are government fees refundable?', 'a' => 'Only if the authority refunds them. Once a government fee has been paid on your behalf, INCORPSYS cannot refund it; if an authority refunds a fee to us, we pass it on to you.'],
       ['q' => 'How do I request a refund?', 'a' => 'Email hello@incorpsys.com with your name, invoice number and the reason for the request.'],
       ['q' => 'What if I disagree with a refund decision?', 'a' => 'Use our Grievance Redressal process.']

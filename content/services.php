@@ -62,6 +62,7 @@ return [
     'faqs' => [
       ['q' => 'Does setting up a company give me a visa?', 'a' => 'Not automatically. Company formation and immigration are separate processes. Any visa or residency is granted by the immigration authority under its own criteria.'],
       ['q' => 'Can INCORPSYS guarantee a visa?', 'a' => 'No. Immigration decisions are made solely by the competent authority.'],
+      ['q' => 'Is the service fee refunded if a visa is rejected?', 'a' => 'No. If a visa or residency application is rejected, no refund of INCORPSYS service fees is provided. See our Refund Policy.'],
     ],
   ],
   'ongoing-support' => [
