@@ -118,3 +118,18 @@ Accessibility, Best Practices and SEO score 100 on both.
 ## 12. Deployment and rollback
 - **Deploy (after your review):** in cPanel File Manager, upload `INCORPSYS_Premium_Homepage_Redesign_Phase2_FINAL.zip` to `public_html`, extract it and overwrite. `includes/secrets.php` is included (freshly generated). Then run `php tools/qa.php https://incorpsys.com`.
 - **Rollback:** re-upload the previous package (`incorpsys-cpanel-upload-v11.zip`) and extract it over the site, or redeploy commit `59933c2` (the last commit before the redesign).
+
+## Addendum — supplied city card images (26 September 2026)
+- **Source:** the six images from `INCORPSYS_plain_city_cards.zip` (UAE, Singapore, Hong Kong, United Kingdom, United States, Malaysia), supplied by INCORPSYS for the jurisdiction cards. They replace the SVG line-art on those cards; the line-art stays in `partials/home/art.php` as the fallback if an image file is missing.
+- **Processing:**
+  - Cropped to the skyline area, removing the plain navy lower panel, the stretched reflection band, the rounded white corners, and the white vertical strips in the UK, USA and Malaysia images (and a thin edge on Hong Kong).
+  - Exported as WebP at native resolution (no upscaling): `assets/img/jurisdictions/{uae,singapore,hong-kong,uk,usa,malaysia}.webp`, 6–8 KB each.
+- **Display:**
+  - 16:10 frame, anchored near the top so the full towers show.
+  - Lazy-loaded with explicit width and height (no layout shift); `alt=""` because the card heading names the jurisdiction.
+  - Subtle zoom on hover, off under reduced motion.
+- **Limitation:** the originals are 338 × 343 px, so the usable crop is about 270–322 px wide. On high-density screens the cards display at up to ~400 px (800 device pixels), so the images look slightly soft. Higher-resolution originals (at least 800 px wide, ideally 1200 px) would give crisp cards; drop them into the same folder with the same names.
+- **QA after the change:**
+  - `tools/qa.php`: 0 failures; html-validate: 0 errors; axe: 0 violations.
+  - No overflow at 320–1440; no console errors.
+  - Lighthouse: desktop 100 (LCP 0.5 s, CLS 0); mobile 97 (LCP 2.2 s, CLS 0).

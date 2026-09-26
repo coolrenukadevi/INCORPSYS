@@ -1,5 +1,6 @@
 <?php
 // Stats (computed from data — never typed) + six primary jurisdiction cards + slim row for guides in preparation.
+// Card images: assets/img/jurisdictions/{key}.webp (supplied by INCORPSYS); the SVG line-art is the fallback when a file is missing.
 // Expects $reg, $pages, $cmp (comparison data), $services.
 $guides = array_filter($pages, fn($p) => $p['kind'] === 'guide' && isset($reg['sources'][$p['jurisdiction'] ?? '']));
 $officialPages = array_sum(array_map(fn($s) => count($s['links'] ?? [1]), $reg['sources']));
@@ -22,7 +23,8 @@ $codes = ['uae' => 'AE', 'singapore' => 'SG', 'hong-kong' => 'HK', 'uk' => 'UK',
   <?php foreach($reg['sources'] as $k=>$s): $row=$cmp['rows'][$k]??[]; $struct=null; foreach($profiles[$k]['sections']['structures']??[] as $g){ if(isset($pages[$g])){$struct=$pages[$g];break;} }
     $count=count(array_filter($guides,fn($p)=>$p['jurisdiction']===$k));?>
     <li class="jcard">
-      <div class="jcard-art"><?=art_jurisdiction($k)?><span class="jcard-code"><?=e($codes[$k])?></span></div>
+      <?php $img=is_file(__DIR__.'/../../assets/img/jurisdictions/'.$k.'.webp')?'img/jurisdictions/'.$k.'.webp':null; [$iw,$ih]=$img?getimagesize(__DIR__.'/../../assets/'.$img):[0,0];?>
+      <div class="jcard-art<?=$img?' has-photo':''?>"><?php if($img):?><img src="<?=e(asset($img))?>" alt="" width="<?=$iw?>" height="<?=$ih?>" loading="lazy" decoding="async"><?php else:?><?=art_jurisdiction($k)?><?php endif;?><span class="jcard-code"><?=e($codes[$k])?></span></div>
       <div class="jcard-body">
         <h3><a href="<?=e(path_url($k))?>"><?=e($s['label']==='UK'?'United Kingdom':($s['label']==='USA'?'United States':$s['label']))?></a></h3>
         <p class="jcard-auth"><?=icon('landmark')?><?=e($s['authority'])?></p>
