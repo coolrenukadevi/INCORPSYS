@@ -92,6 +92,11 @@ return [
     ['q' => 'What costs are government fees versus professional fees?', 'a' => 'Government fees are charged by the registry or authority and are shown only with their official source. INCORPSYS professional fees cover preparation and coordination and are quoted separately. Third-party costs, such as a registered agent or company secretary, are listed separately too.', 'guide' => 'resources/fee-verification'],
   ],
 
+  // Testimonials: real clients only, published with their approval (quote approved by the client, 26 September 2026).
+  'testimonials' => [
+    ['quote' => 'INCORPSYS made our incorporation journey smooth and transparent. Their team provided clear guidance with official sources, which gave us confidence.', 'name' => 'Mr. Prem Giri', 'org' => 'M/S P. Prakash Consultancy FZE LLC', 'photo' => 'img/testimonials/prem-giri.webp'],
+  ],
+
   'cta' => [
     'kicker' => 'Build Your Business Beyond Borders',
     'title' => 'Your Global Business Starts Here',

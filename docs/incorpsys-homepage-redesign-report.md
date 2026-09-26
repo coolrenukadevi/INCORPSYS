@@ -178,3 +178,22 @@ The closing CTA (`partials/home/cta.php`) now follows the supplied banner design
   - desktop: 100, LCP 0.5 s, CLS 0
   - mobile: 99, LCP 2.1 s, TBT 90 ms, CLS 0
   - Accessibility, Best Practices and SEO: 100 on both
+
+## Addendum — testimonial and official-sources panels (26 September 2026)
+- **Placement:** new section `partials/home/proof.php`, placed after the FAQ and directly above the "Your Global Business Starts Here" band, following the supplied reference.
+- **Testimonial:**
+  - Mr. Prem Giri, M/S P. Prakash Consultancy FZE LLC.
+  - Photo supplied by INCORPSYS, cropped to a 240 px WebP (7 KB).
+  - The quote is the reference wording, which INCORPSYS confirmed Mr. Giri has read and approved.
+  - Stored in `content/home.php` under `testimonials`; only real clients with approval may be added there.
+  - The reference's placeholder person ("Amit Sharma") and its carousel dots were not used: there is one real testimonial, so no navigation is shown.
+  - No Review/AggregateRating schema is added (self-published reviews are not eligible, and no ratings exist).
+- **Official sources:**
+  - Heading and wording follow the reference; the lead says guides are *mapped* to official sources "with the date each was last checked", since some values are still pending verification.
+  - The six authorities (UAE Government, ACRA, Companies Registry, Companies House, SBA, SSM) are shown as text tiles, each linking to its official site. **No government logos are used,** because logos would suggest partnership or endorsement.
+  - "View Our Source Methodology" links to `/about/methodology/`.
+- **QA:**
+  - `tools/qa.php`: 0 failures, 0 warnings.
+  - html-validate: 0 errors.
+  - axe: 0 violations at 390 / 768 / 1440.
+  - No overflow at 320–1440; no console errors.

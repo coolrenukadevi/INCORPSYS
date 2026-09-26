@@ -1052,6 +1052,28 @@ a.chip{text-decoration:none}
 /* FAQ source link */
 .faq-src{margin-top:var(--sp-2);font-size:var(--fs-sm)}
 
+/* Testimonial + official sources (above the closing band) */
+.hs-proof{background:linear-gradient(180deg,#F5F8FF,#EEF3FD)}
+.proof{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:var(--sp-6);align-items:stretch}
+.proof-card{display:flex;flex-direction:column;background:#fff;border:1px solid var(--border);border-radius:20px;padding:clamp(1.25rem,1rem + 1vw,2rem);box-shadow:0 10px 30px -18px rgba(15,40,90,.25)}
+.proof-card h2{font-size:clamp(1.4rem,1.2rem + .8vw,1.85rem);letter-spacing:-.02em}
+.tst{flex:1;display:grid;grid-template-columns:auto minmax(0,1fr);grid-template-rows:1fr auto auto 1fr;column-gap:var(--sp-6);align-content:center;margin:var(--sp-5) 0 0;padding:var(--sp-5);border:1px solid var(--border);border-radius:16px;background:linear-gradient(180deg,#fff,#F8FAFF)}
+.tst-photo{grid-row:1/-1;align-self:center;width:112px;height:112px;border-radius:50%;object-fit:cover;box-shadow:0 0 0 4px #fff,0 0 0 5px var(--border)}
+.tst blockquote{grid-row:2;grid-column:2;margin:0;padding:0;border:0;max-width:none}
+.tst blockquote p{max-width:none;font-size:var(--fs-lg);line-height:1.55;color:var(--ink-900)}
+.tst figcaption{grid-row:3;grid-column:2;margin-top:var(--sp-3);display:flex;flex-direction:column;font-size:var(--fs-sm);color:var(--ink-600)}
+.tst figcaption strong{color:var(--ink-900);font-size:var(--fs-base)}
+.proof-lead{margin-top:var(--sp-2);color:var(--ink-600)}
+.auth-tiles{list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--sp-3);margin-top:var(--sp-5)}
+.auth-tiles a{display:flex;flex-direction:column;align-items:center;gap:4px;height:100%;padding:var(--sp-4) var(--sp-2);border:1px solid var(--border);border-radius:14px;text-align:center;text-decoration:none;color:var(--ink-900);transition:border-color .2s,box-shadow .2s}
+.auth-tiles a:hover{border-color:#93C5FD;box-shadow:0 6px 18px -10px rgba(37,99,235,.45)}
+.auth-ic{display:grid;place-items:center;width:40px;height:40px;border-radius:12px;background:#EFF4FF;color:#1D4ED8}
+.auth-ic .icon{width:20px;height:20px}
+.auth-name{font-weight:700;font-size:var(--fs-sm);line-height:1.3}
+.auth-country{font-size:var(--fs-xs);color:var(--ink-600)}
+.proof-more{display:inline-flex;margin-top:var(--sp-5)}
+@media (max-width:1024px){.proof{grid-template-columns:1fr}}
+@media (max-width:560px){.tst{grid-template-columns:1fr;grid-template-rows:auto;row-gap:var(--sp-4);justify-items:center;text-align:center}.tst-photo,.tst blockquote,.tst figcaption{grid-row:auto;grid-column:1}.tst figcaption{align-items:center;margin-top:0}.auth-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
 /* Closing CTA band: copy · dotted world map · features */
 .hs-cta{padding-block:clamp(2.5rem,1.75rem + 2.5vw,4rem);background:radial-gradient(45% 90% at 55% 40%,rgba(37,99,235,.28),transparent 65%),linear-gradient(160deg,#04111F,#071A33 60%,#0A2350);color:#C5D3E6;overflow:hidden}
 .fcta{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1.25fr) minmax(0,.8fr);gap:var(--sp-8);align-items:center}
