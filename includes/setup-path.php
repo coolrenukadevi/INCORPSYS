@@ -34,6 +34,16 @@ function setup_path_data(): array {
       'structure' => null, 'route' => null, 'requirements' => [], 'verify' => ['All requirements — guide in preparation'], 'verified' => '', 'pending' => true,
     ];
   }
+  // Guides suggested for particular answers (configurator "Also read" and the decision module).
+  $answerGuides = [
+    'structure:branch' => 'resources/branch-vs-subsidiary', 'ownership:corporate' => 'resources/cross-border-expansion',
+    'ownership:foreign-individual' => 'resources/foreign-founder-preparation', 'based:outside' => 'resources/start-company-abroad',
+    'ops:yes' => 'resources/registered-office-checklist', 'ops:visa' => 'resources/visa-vs-incorporation',
+    'activity:regulated' => 'resources/licence-and-approval-mapping', 'activity:trading' => 'resources/business-activity-mapping',
+    'activity:holding' => 'resources/legal-form-decision', 'activity:any' => 'resources/business-activity-mapping',
+    'choose' => 'resources/choose-jurisdiction-framework',
+  ];
+  foreach ($answerGuides as $key => $slug) if (isset($pages[$slug])) $out['guides'][$key] = ['text' => $pages[$slug]['name'], 'url' => path_url($slug)];
   foreach (['company-incorporation', 'business-licensing', 'corporate-banking', 'visa-residency', 'registered-office-solutions', 'business-expansion', 'compliance-documentation'] as $sk) {
     if (isset($services[$sk])) $out['services'][$sk] = ['text' => $services[$sk]['name'], 'url' => '/services/'.$sk.'/'];
   }

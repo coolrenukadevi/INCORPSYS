@@ -202,66 +202,120 @@
     show(start, true);
   }
 
-  /* ---- Guided setup (homepage): one question at a time, then an inline setup path ---- */
-  var gs = $('[data-guided-setup]');
-  if (gs) (function () {
-    var box = gs.closest('.gs'), steps = $$('.gs-step', gs), bars = $$('.gs-progress span', box), count = $('[data-gs-count]', box);
-    var back = $('[data-gs-back]', gs), next = $('[data-gs-next]', gs), submit = $('[data-gs-submit]', gs), result = $('[data-gs-result]', box);
-    var data = {}; try { data = JSON.parse($('#setup-data').textContent); } catch (e) { return; }
-    var idx = 0;
-    box.classList.add('is-stepped');
-    function show(i, focus) {
-      idx = i;
-      steps.forEach(function (st, n) { st.hidden = n !== i; });
-      bars.forEach(function (b, n) { b.classList.toggle('is-done', n <= i); });
-      count.textContent = 'Step ' + (i + 1) + ' of ' + steps.length;
-      back.hidden = i === 0; next.hidden = i === steps.length - 1; submit.hidden = i !== steps.length - 1;
-      if (focus) { var first = $('input:checked', steps[i]) || $('input', steps[i]); if (first) first.focus(); }
-    }
-    function answered(st) { return !!$('input:checked', st); }
-    next.addEventListener('click', function () {
-      if (idx === 0 && !answered(steps[0])) { $('input', steps[0]).reportValidity(); return; }
-      show(idx + 1, true);
+  /* ---- Homepage: setup configurator (inline setup path) ---- */
+  var cfg = $('[data-configurator]');
+  var setupData = null;
+  try { setupData = JSON.parse(($('#setup-data') || {}).textContent || 'null'); } catch (e) { setupData = null; }
+  function link(item) { var a = doc.createElement('a'); a.href = item.url; a.textContent = item.text; return a; }
+  if (cfg && setupData) (function () {
+    var box = $('[data-cfg-result]'), q = function (n) { return cfg.elements[n].value; };
+    function put(key, node) { var el = $('[data-r="' + key + '"]', box); el.textContent = ''; if (node) el.appendChild(node); var w = $('[data-r-wrap="' + key + '"]', box); if (w) w.hidden = !node; return el; }
+    function list(key, items) { var ul = put(key, null); items.forEach(function (it) { var li = doc.createElement('li'); li.appendChild(link(it)); ul.appendChild(li); }); var w = $('[data-r-wrap="' + key + '"]', box); if (w) w.hidden = !items.length; }
+    cfg.addEventListener('submit', function (e) {
+      var j = setupData.jurisdictions[q('country')];
+      if (!j) return; // let the browser show the required-field message / server fallback
+      e.preventDefault();
+      var structure = q('structure'), owner = q('ownership');
+      $('[data-r="title"]', box).textContent = 'Company setup in ' + j.label;
+      var auth = doc.createElement('a'); auth.href = j.authorityUrl; auth.target = '_blank'; auth.rel = 'noopener noreferrer'; auth.textContent = j.authority; put('authority', auth);
+      put('structure', j.structure ? link(j.structure) : null);
+      put('route', j.route ? link(j.route) : null);
+      list('requirements', j.requirements);
+      var extras = [];
+      ['structure:' + structure, 'ownership:' + owner].forEach(function (k) { if (setupData.guides && setupData.guides[k]) extras.push(setupData.guides[k]); });
+      list('extras', extras);
+      $('[data-r="verify"]', box).textContent = j.verify.length ? j.verify.join(', ') : 'Nothing flagged';
+      var qs = 'country=' + encodeURIComponent(q('country')) + (structure !== 'undecided' ? '&structure=' + structure : '') + (owner !== 'undecided' ? '&ownership=' + owner : '');
+      $('[data-r="plan"]', box).href = '/get-started/?' + qs;
+      $('[data-r="full"]', box).href = j.pending ? j.hub : '/explore/?' + qs;
+      box.hidden = false; box.focus();
     });
-    back.addEventListener('click', function () { show(idx - 1, true); });
-    // A pointer click on an option moves on; keyboard selection (arrow keys) stays put until Next.
-    steps.forEach(function (st, n) {
-      st.addEventListener('click', function (e) {
-        if (e.detail > 0 && e.target.matches('input[type="radio"]') && n < steps.length - 1) setTimeout(function () { show(n + 1, false); }, 180);
+    $('[data-cfg-close]', box).addEventListener('click', function () { box.hidden = true; cfg.elements.country.focus(); });
+  })();
+
+  /* ---- Homepage: comparison matrix — topic filter + phone tabs (Previous / Next) ---- */
+  $$('[data-cm]').forEach(function (wrap) {
+    var section = wrap.closest('section'), ctl = $('[data-cm-controls]', section);
+    if (ctl) $$('[data-cm-show]', ctl).forEach(function (b) {
+      b.addEventListener('click', function () {
+        $$('[data-cm-show]', ctl).forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+        wrap.setAttribute('data-show', b.getAttribute('data-cm-show'));
       });
     });
-    function val(name) { var c = $('input[name="' + name + '"]:checked', gs); return c ? c.value : ''; }
-    function link(item) { var a = doc.createElement('a'); a.href = item.url; a.textContent = item.text; return a; }
-    function fill(key, node) { var el = $('[data-r="' + key + '"]', result); el.textContent = ''; if (node) el.appendChild(node); var w = $('[data-r-wrap="' + key + '"]', result); if (w) w.hidden = !node; return el; }
-    gs.addEventListener('submit', function (e) {
-      var j = data.jurisdictions[val('country')];
-      if (!j) return; // unknown value: let the server handle it
-      e.preventDefault();
-      var q = { country: val('country') };
-      ['activity', 'ownership', 'visa'].forEach(function (k) { var v = val(k); if (v && v !== 'undecided') q[k] = v; });
-      var qs = Object.keys(q).map(function (k) { return k + '=' + encodeURIComponent(q[k]); }).join('&');
-      $('[data-r="title"]', result).textContent = 'Company setup in ' + j.label;
-      var auth = doc.createElement('a'); auth.href = j.authorityUrl; auth.target = '_blank'; auth.rel = 'noopener noreferrer'; auth.textContent = j.authority; fill('authority', auth);
-      fill('structure', j.structure ? link(j.structure) : null);
-      fill('route', j.route ? link(j.route) : null);
-      var ul = fill('requirements', null); j.requirements.forEach(function (r) { var li = doc.createElement('li'); li.appendChild(link(r)); ul.appendChild(li); });
-      $('[data-r-wrap="requirements"]', result).hidden = !j.requirements.length;
-      var svc = ['company-incorporation'];
-      if (q.activity === 'regulated' || q.activity === 'trading') svc.push('business-licensing');
-      if (q.visa === 'founders' || q.visa === 'employees') svc.push('visa-residency');
-      if (q.ownership === 'corporate') svc.push('business-expansion');
-      svc.push('corporate-banking', 'compliance-documentation');
-      var sv = fill('services', null); svc.forEach(function (k, n) { if (!data.services[k]) return; if (n) sv.appendChild(doc.createTextNode(' · ')); sv.appendChild(link(data.services[k])); });
-      $('[data-r="verify"]', result).textContent = j.verify.length ? j.verify.join(', ') : 'Nothing flagged';
-      $('[data-r="plan"]', result).href = '/get-started/?' + qs;
-      $('[data-r="full"]', result).href = j.pending ? j.hub : '/explore/?' + qs;
-      gs.hidden = true; bars.forEach(function (b) { b.classList.add('is-done'); }); count.textContent = 'Your path';
-      result.hidden = false; result.focus();
+    // Build jurisdiction tabs from the table (single source of truth; table stays the no-JS fallback).
+    var heads = $$('thead th[data-j]', wrap), rows = $$('tbody tr', wrap);
+    if (!heads.length) return;
+    var tabs = doc.createElement('div'); tabs.className = 'cm-tabs';
+    var tl = doc.createElement('div'); tl.className = 'cm-tablist'; tl.setAttribute('role', 'tablist'); tl.setAttribute('aria-label', 'Jurisdictions');
+    tabs.appendChild(tl);
+    var panels = [], buttons = [];
+    heads.forEach(function (h, i) {
+      var key = h.getAttribute('data-j'), name = $('.cm-j', h).textContent, sub = $('small', h).textContent;
+      var b = doc.createElement('button'); b.type = 'button'; b.className = 'chip'; b.id = 'cmt-' + key; b.setAttribute('role', 'tab'); b.setAttribute('aria-controls', 'cmp-' + key); b.textContent = name;
+      tl.appendChild(b); buttons.push(b);
+      var p = doc.createElement('div'); p.className = 'cm-panel'; p.id = 'cmp-' + key; p.setAttribute('role', 'tabpanel'); p.setAttribute('aria-labelledby', b.id); p.tabIndex = 0;
+      var h3 = doc.createElement('h3'); h3.textContent = name; var sm = doc.createElement('small'); sm.textContent = sub; h3.appendChild(sm); p.appendChild(h3);
+      var dl = doc.createElement('dl');
+      rows.forEach(function (r) {
+        var d = doc.createElement('div'), dt = doc.createElement('dt'), dd = doc.createElement('dd');
+        dt.textContent = $('th', r).textContent; var cell = $('td[data-j="' + key + '"]', r); dd.innerHTML = cell ? cell.innerHTML : '';
+        d.appendChild(dt); d.appendChild(dd); dl.appendChild(d);
+      });
+      p.appendChild(dl);
+      var pager = doc.createElement('div'); pager.className = 'cm-pager';
+      var prev = doc.createElement('button'); prev.type = 'button'; prev.className = 'btn btn-secondary btn-sm'; prev.textContent = '← Previous';
+      var next = doc.createElement('button'); next.type = 'button'; next.className = 'btn btn-secondary btn-sm'; next.textContent = 'Next →';
+      prev.addEventListener('click', function () { select((i - 1 + heads.length) % heads.length, true); });
+      next.addEventListener('click', function () { select((i + 1) % heads.length, true); });
+      pager.appendChild(prev); pager.appendChild(next); p.appendChild(pager);
+      tabs.appendChild(p); panels.push(p);
     });
-    $('[data-gs-restart]', result).addEventListener('click', function () { result.hidden = true; gs.hidden = false; gs.reset(); show(0, true); });
-    show(0, false);
-    requestAnimationFrame(function () { box.classList.add('is-animated'); });
+    function select(i, focus) {
+      buttons.forEach(function (b, n) { var on = n === i; b.setAttribute('aria-selected', String(on)); b.tabIndex = on ? 0 : -1; panels[n].hidden = !on; });
+      if (focus) { buttons[i].focus(); buttons[i].scrollIntoView({ block: 'nearest', inline: 'nearest' }); }
+    }
+    buttons.forEach(function (b, i) {
+      b.addEventListener('click', function () { select(i, false); });
+      b.addEventListener('keydown', function (e) {
+        var d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+        if (d) { e.preventDefault(); select((i + d + buttons.length) % buttons.length, true); }
+      });
+    });
+    select(0, false);
+    wrap.parentNode.insertBefore(tabs, wrap.nextSibling);
+    wrap.classList.add('is-tabbed');
+  });
+
+  /* ---- Homepage: founder decision module ---- */
+  var dec = $('[data-decision]');
+  if (dec && setupData) (function () {
+    var regions = { 'middle-east': ['uae'], asia: ['singapore', 'hong-kong', 'malaysia'], europe: ['uk'], americas: ['usa'], global: ['uae', 'singapore', 'hong-kong', 'uk', 'usa', 'malaysia'] };
+    var out = $('[data-dec-out]', dec);
+    dec.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var v = function (n) { return dec.elements[n].value; };
+      var js = $('[data-dec-j]', out), gs = $('[data-dec-g]', out); js.textContent = ''; gs.textContent = '';
+      (regions[v('market')] || []).forEach(function (k) { var j = setupData.jurisdictions[k]; if (!j) return; var li = doc.createElement('li'); li.appendChild(link({ text: j.label, url: j.hub })); js.appendChild(li); });
+      var keys = ['choose', 'based:' + v('based'), 'ownership:' + v('residency'), 'activity:' + (setupData.guides['activity:' + v('activity')] ? v('activity') : 'any')];
+      if (v('ops') === 'yes') keys.push('ops:yes', 'ops:visa');
+      var seen = {};
+      keys.forEach(function (k) { var g = setupData.guides[k]; if (!g || seen[g.url]) return; seen[g.url] = 1; var li = doc.createElement('li'); li.appendChild(link(g)); gs.appendChild(li); });
+      var qs = 'activity=' + encodeURIComponent(v('activity')) + (v('residency') !== 'undecided' ? '&ownership=' + v('residency') : '');
+      $('[data-dec-cta]', out).href = '/get-started/?' + qs;
+      out.hidden = false; out.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    });
   })();
+
+  /* ---- Scroll reveal (process flow); reduced motion shows everything immediately ---- */
+  var reveals = $$('[data-reveal]');
+  if (reveals.length) {
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce || !('IntersectionObserver' in window)) reveals.forEach(function (r) { r.classList.add('is-in'); });
+    else {
+      var io = new IntersectionObserver(function (entries) { entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('is-in'); io.unobserve(en.target); } }); }, { threshold: 0.2 });
+      reveals.forEach(function (r) { io.observe(r); });
+    }
+  }
 
   /* ---- Knowledge Hub category filter ---- */
   $$('[data-hub-filter]').forEach(function (bar) {
