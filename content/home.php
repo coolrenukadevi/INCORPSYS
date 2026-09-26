@@ -59,15 +59,6 @@ return [
     ['Regional Office', 'Explore branch or subsidiary options.', [['Branch vs subsidiary', '/resources/branch-vs-subsidiary/'], ['Local agent requirements', '/resources/local-agent-concepts/']]],
   ],
 
-  // Founder decision module: markets by region (geography only — not a recommendation).
-  'regions' => [
-    'middle-east' => ['label' => 'Middle East', 'jurisdictions' => ['uae']],
-    'asia' => ['label' => 'Asia', 'jurisdictions' => ['singapore', 'hong-kong', 'malaysia']],
-    'europe' => ['label' => 'Europe', 'jurisdictions' => ['uk']],
-    'americas' => ['label' => 'Americas', 'jurisdictions' => ['usa']],
-    'global' => ['label' => 'Several regions / online', 'jurisdictions' => ['uae', 'singapore', 'hong-kong', 'uk', 'usa', 'malaysia']],
-  ],
-
   // Global Business Intelligence (Knowledge Hub) — categories map to content/knowledge-hub.php.
   'knowledge' => [
     'categories' => [['Company Formation', 'formation'], ['Tax', 'tax'], ['Banking', 'banking'], ['Compliance', 'compliance'], ['Visa', 'visa'], ['Global Expansion', 'comparisons']],

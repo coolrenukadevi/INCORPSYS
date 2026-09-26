@@ -14,11 +14,9 @@ include __DIR__.'/partials/home/jurisdiction-cards.php';
 include __DIR__.'/partials/home/comparison.php';
 include __DIR__.'/partials/home/process.php';
 include __DIR__.'/partials/home/costs.php';
-include __DIR__.'/partials/home/sources.php';
 include __DIR__.'/partials/home/why.php';
 include __DIR__.'/partials/home/ecosystem.php';
 include __DIR__.'/partials/home/scenarios.php';
-include __DIR__.'/partials/home/decision.php';
 include __DIR__.'/partials/home/knowledge.php';
 ?>
 <section class="section hs-faq" aria-labelledby="home-faq"><div class="container-narrow">

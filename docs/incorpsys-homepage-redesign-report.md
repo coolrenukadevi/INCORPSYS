@@ -240,3 +240,15 @@ The closing CTA (`partials/home/cta.php`) now follows the supplied banner design
 - Each tick links to its source guide. The sourced statement shows in a tooltip on hover or keyboard focus and is read out by screen readers.
 - The "Local Agent / Secretary" row is now "Agent / Secretary".
 - **QA:** `tools/qa.php` 0 failures; html-validate 0 errors; axe 0 violations at 390 / 768 / 1440; no overflow at 320–1440.
+
+## Addendum — sections removed (26 September 2026)
+- **Removed at INCORPSYS's request:**
+  - The founder decision module ("Which Jurisdiction Fits Your Business?"): `partials/home/decision.php`, its script, its styles and the `regions` data in `content/home.php`.
+  - The "Built on Official Sources." source-engine section: `partials/home/sources.php` and its styles. The later "Official Sources. Verified Information." panel still lists the six authorities with links to their official sites.
+- **Link check:** no page was left orphaned; every guide these sections linked to is still linked from the comparison, FAQ, knowledge and jurisdiction sections.
+- **Homepage section order now:** hero · jurisdiction cards · comparison matrix · process · costs · why · ecosystem · scenarios · knowledge hub · FAQ · Compare Jurisdictions panel · testimonial + official sources · closing band.
+- **QA:**
+  - `tools/qa.php`: 0 failures, 0 warnings.
+  - html-validate: 0 errors.
+  - axe: 0 violations at 390 / 768 / 1440.
+  - No page overflow at 320–1440; no console errors.

@@ -309,26 +309,6 @@
     wrap.classList.add('is-tabbed');
   });
 
-  /* ---- Homepage: founder decision module ---- */
-  var dec = $('[data-decision]');
-  if (dec && setupData) (function () {
-    var regions = { 'middle-east': ['uae'], asia: ['singapore', 'hong-kong', 'malaysia'], europe: ['uk'], americas: ['usa'], global: ['uae', 'singapore', 'hong-kong', 'uk', 'usa', 'malaysia'] };
-    var out = $('[data-dec-out]', dec);
-    dec.addEventListener('submit', function (e) {
-      e.preventDefault();
-      var v = function (n) { return dec.elements[n].value; };
-      var js = $('[data-dec-j]', out), gs = $('[data-dec-g]', out); js.textContent = ''; gs.textContent = '';
-      (regions[v('market')] || []).forEach(function (k) { var j = setupData.jurisdictions[k]; if (!j) return; var li = doc.createElement('li'); li.appendChild(link({ text: j.label, url: j.hub })); js.appendChild(li); });
-      var keys = ['choose', 'based:' + v('based'), 'ownership:' + v('residency'), 'activity:' + (setupData.guides['activity:' + v('activity')] ? v('activity') : 'any')];
-      if (v('ops') === 'yes') keys.push('ops:yes', 'ops:visa');
-      var seen = {};
-      keys.forEach(function (k) { var g = setupData.guides[k]; if (!g || seen[g.url]) return; seen[g.url] = 1; var li = doc.createElement('li'); li.appendChild(link(g)); gs.appendChild(li); });
-      var qs = 'activity=' + encodeURIComponent(v('activity')) + (v('residency') !== 'undecided' ? '&ownership=' + v('residency') : '');
-      $('[data-dec-cta]', out).href = '/get-started/?' + qs;
-      out.hidden = false; out.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
-    });
-  })();
-
   /* ---- Scroll reveal (process flow); reduced motion shows everything immediately ---- */
   var reveals = $$('[data-reveal]');
   if (reveals.length) {
