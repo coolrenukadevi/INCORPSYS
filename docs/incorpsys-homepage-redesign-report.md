@@ -197,3 +197,17 @@ The closing CTA (`partials/home/cta.php`) now follows the supplied banner design
   - html-validate: 0 errors.
   - axe: 0 violations at 390 / 768 / 1440.
   - No overflow at 320–1440; no console errors.
+
+## Addendum — INCORPSYS Assist: compact panel, opens at the start (26 September 2026)
+- **Scroll fix:** the chat used to jump to its bottom after every message, so it opened on the last option. `assets/js/site.js` now keeps the newest question at the top of the chat (`reveal()`), so it opens on "Hello. What would you like help with?" with the first option focused. Reopening the panel returns to the current question.
+- **Compact premium styling** (CSS overrides at the end of `site.css`):
+  - Panel height ~400 px instead of ~740 px; width 360 px.
+  - Gradient navy header with a round assistant avatar.
+  - Options shown as pill chips instead of full-width rows.
+  - Tighter contact row (Enquiry Now / WhatsApp / Call / Email).
+  - Phones: bottom sheet up to 78% of the screen height.
+- Flows, links and wording are unchanged.
+- **QA:**
+  - axe on the open panel: 0 violations at 390 and 1440.
+  - `tools/qa.php`: 0 failures.
+  - No console errors.

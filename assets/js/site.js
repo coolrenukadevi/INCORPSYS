@@ -78,7 +78,10 @@
     };
     var state = {};
     function el(tag, cls, text) { var n = doc.createElement(tag); if (cls) n.className = cls; if (text) n.textContent = text; return n; }
-    function say(text, who) { body.appendChild(el('p', 'assist-msg' + (who ? ' ' + who : ''), text)); body.scrollTop = body.scrollHeight; }
+    var lastQ = null;
+    function say(text, who) { var m = el('p', 'assist-msg' + (who ? ' ' + who : ''), text); body.appendChild(m); if (!who) lastQ = m; }
+    // Keep the newest question at the top of the chat so its options read from the first one (never jump to the last option).
+    function reveal() { body.scrollTop = lastQ ? Math.max(0, lastQ.offsetTop - 12) : 0; }
     function options(list, onPick) {
       var wrap = el('div', 'assist-options');
       list.forEach(function (o) {
@@ -86,7 +89,7 @@
         b.addEventListener('click', function () { wrap.remove(); say(o[1], 'user'); onPick(o[0], o[1]); });
         wrap.appendChild(b);
       });
-      body.appendChild(wrap); body.scrollTop = body.scrollHeight;
+      body.appendChild(wrap); reveal();
       var first = $('button', wrap); first && first.focus({ preventScroll: true });
     }
     function finish(flow) {
@@ -101,7 +104,7 @@
       wrap.appendChild(wa);
       if (state.country && state.country !== 'undecided') { var g = el('a', 'assist-option', 'Read the ' + state.labels.country + ' guides'); g.href = '/' + state.country + '/'; wrap.appendChild(g); }
       var again = el('button', 'assist-option', 'Start again'); again.type = 'button'; again.addEventListener('click', start); wrap.appendChild(again);
-      body.appendChild(wrap); body.scrollTop = body.scrollHeight;
+      body.appendChild(wrap); reveal();
     }
     function ask(flow, i) {
       var steps = FLOWS[flow].steps;
@@ -111,7 +114,7 @@
       options(q.options, function (value, label) { state[steps[i]] = value; state.labels[steps[i]] = label; ask(flow, i + 1); });
     }
     function start() {
-      state = { labels: {} }; body.innerHTML = '';
+      state = { labels: {} }; body.innerHTML = ''; lastQ = null;
       say('Hello. What would you like help with?');
       options(Object.keys(FLOWS).map(function (k) { return [k, FLOWS[k].label]; }), function (flow) {
         if (FLOWS[flow].link) { say('Opening the jurisdiction comparison…'); window.location.href = FLOWS[flow].link; return; }
@@ -122,7 +125,7 @@
       panel.hidden = !open;
       aToggle.setAttribute('aria-expanded', String(open));
       doc.body.classList.toggle('assist-open', open);
-      if (open) { if (!assist.dataset.started) { assist.dataset.started = '1'; start(); } var f = $('.assist-option', panel); f && f.focus({ preventScroll: true }); }
+      if (open) { if (!assist.dataset.started) { assist.dataset.started = '1'; start(); } else reveal(); var f = $('.assist-option', panel); f && f.focus({ preventScroll: true }); }
     }
     aToggle.addEventListener('click', function () { setAssist(panel.hidden); });
     $('.assist-close', assist).addEventListener('click', function () { setAssist(false); aToggle.focus(); });
