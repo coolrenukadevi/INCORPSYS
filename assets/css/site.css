@@ -203,7 +203,7 @@ fieldset{border:0;margin:0;padding:0;min-width:0}
 .hp{position:absolute!important;left:-10000px;width:1px;height:1px;overflow:hidden}
 
 /* Tables (stack into cards on small screens via data-label) */
-.table-wrap{border:1px solid var(--border);border-radius:var(--r-lg);overflow:auto;background:var(--white);box-shadow:var(--shadow-sm)}
+.table-wrap{position:relative;border:1px solid var(--border);border-radius:var(--r-lg);overflow:auto;background:var(--white);box-shadow:var(--shadow-sm)}
 .table{font-size:var(--fs-sm);min-width:640px}
 .table th,.table td{padding:var(--sp-3) var(--sp-4);text-align:left;vertical-align:top;border-bottom:1px solid var(--border)}
 .table thead th{background:var(--bg-subtle);font-size:var(--fs-xs);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-600);font-weight:var(--fw-bold);white-space:nowrap}
@@ -701,15 +701,17 @@ label.choice{display:block}
 .chip{display:inline-flex;align-items:center;min-height:36px;padding:0 var(--sp-3);border:1px solid var(--border);border-radius:var(--r-full);background:var(--white);color:var(--ink-600);font:inherit;font-size:var(--fs-sm);font-weight:var(--fw-semibold);cursor:pointer;transition:background-color .15s,border-color .15s,color .15s}
 .chip:hover{border-color:var(--blue-600);color:var(--blue-700)}
 .chip[aria-pressed="true"]{background:var(--navy-900);border-color:var(--navy-900);color:var(--white)}
-.compare[data-show="formation"] [data-group]:not([data-group="formation"]),
-.compare[data-show="operating"] [data-group]:not([data-group="operating"]),
-.compare[data-show="cost"] [data-group]:not([data-group="cost"]){display:none}
+.no-js [data-compare-controls],.no-js [data-hub-filter]{display:none}
+/* Column groups hide only when the filter script runs; without it every column shows. */
+.js .compare[data-show="formation"] [data-group]:not([data-group="formation"]),
+.js .compare[data-show="operating"] [data-group]:not([data-group="operating"]),
+.js .compare[data-show="cost"] [data-group]:not([data-group="cost"]){display:none}
 .compare tbody tr[hidden]{display:none}
 .compare .table tbody th{position:sticky;left:0;z-index:1;background:var(--white);min-width:150px}
 .compare .table thead th:first-child{position:sticky;left:0;z-index:2}
 .compare .table tbody tr:hover th,.compare .table tbody tr:hover td{background:var(--bg-subtle)}
 .cell-source{display:inline-block;margin-left:2px;font-size:var(--fs-xs)}
-@media (max-width:768px){
+@media (max-width:640px){
   .compare-sort{margin-left:0}
   .table-stack.compare{border:0;box-shadow:none;background:none;overflow:visible;overflow-x:clip;padding:2px}
   .table-stack.compare tbody{display:grid;gap:var(--sp-3)}
@@ -730,11 +732,13 @@ label.choice{display:block}
 /* Guided setup (hero card). Without JS every step shows; .is-stepped shows one at a time. */
 .selector form.gs-form{display:block;margin-top:var(--sp-4)}
 .gs-progress{display:none;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:var(--sp-4)}
-.gs.is-stepped .gs-progress{display:grid}
+.js .gs .gs-progress{display:grid}
+/* Before the script runs, show only the first step so the card does not collapse after paint. */
+.js .gs:not(.is-stepped) .gs-step+.gs-step{display:none}
 .gs-progress span{height:3px;border-radius:2px;background:var(--silver-200);transition:background-color .25s}
 .gs-progress span.is-done{background:var(--blue-600)}
 .gs-step{border:0;padding:0;margin:0 0 var(--sp-5);min-width:0}
-.gs.is-stepped .gs-step{margin-bottom:var(--sp-4)}
+.js .gs .gs-step{margin-bottom:var(--sp-4)}
 .gs.is-animated .gs-step{animation:gs-in .22s ease-out}
 .gs-step legend{display:block;padding:0;margin-bottom:var(--sp-3);font-size:var(--fs-md);font-weight:var(--fw-semibold);color:var(--ink-900);letter-spacing:-.01em}
 .gs-num{display:block;margin-bottom:2px;font-size:var(--fs-xs);font-weight:var(--fw-bold);letter-spacing:.1em;text-transform:uppercase;color:var(--blue-600)}
@@ -786,7 +790,7 @@ label.choice{display:block}
 .explorer-card{position:relative;display:flex;flex-direction:column;gap:var(--sp-3);padding:var(--sp-6);border:1px solid var(--border);border-radius:var(--r-lg);background:var(--white);transition:border-color .2s,box-shadow .2s,transform .2s}
 .explorer-card:hover{border-color:var(--blue-200);box-shadow:0 18px 40px -20px rgba(7,26,51,.25);transform:translateY(-2px)}
 .explorer-card.is-pending{background:var(--bg-subtle)}
-.explorer-card.is-pending .dest-code{background:var(--silver-400,#94A3B8)}
+.explorer-card.is-pending .dest-code{background:#475569}
 .explorer-top{display:flex;justify-content:space-between;align-items:center;gap:var(--sp-2);flex-wrap:wrap}
 .explorer-card h3{font-size:var(--fs-xl);letter-spacing:-.02em}
 .explorer-card h3 a{color:inherit}
@@ -862,3 +866,47 @@ label.choice{display:block}
 .compare .table{min-width:0}
 .compare .table td,.compare .table tbody th{min-width:120px}
 .section-dark .section-head p,.on-dark .section-head p{color:#b4c3d8}
+
+/* Commercial layer: CTA band mini-form */
+.cta-form{position:relative;z-index:1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--sp-3);margin-top:var(--sp-6)}
+.cta-form label{color:#c5d3e6;font-size:var(--fs-xs);letter-spacing:.02em}
+.cta-form .btn{grid-column:1/-1;justify-self:start;margin-top:var(--sp-2)}
+.cta-side{position:relative;z-index:1;align-self:stretch;display:flex;flex-direction:column;justify-content:center;gap:var(--sp-3);padding-left:var(--sp-10);border-left:1px solid rgba(255,255,255,.12)}
+.cta-side-title{margin:0;color:var(--white);font-weight:var(--fw-semibold);font-size:var(--fs-lg)}
+.cta-band .cta-side-note{margin:0;font-size:var(--fs-xs);color:#a9bad0}
+@media (max-width:960px){.cta-side{padding-left:0;border-left:0;padding-top:var(--sp-6);border-top:1px solid rgba(255,255,255,.12)}}
+@media (max-width:480px){.cta-form{grid-template-columns:1fr}.cta-form .btn{justify-self:stretch}}
+
+/* Sticky action bar on phones */
+.mobile-cta{display:none}
+@media (max-width:768px){
+  .mobile-cta{position:fixed;left:0;right:0;bottom:0;z-index:var(--z-assist);display:grid;grid-template-columns:3fr 2fr;gap:var(--sp-2);padding:10px var(--gutter) calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.96);backdrop-filter:blur(8px);border-top:1px solid var(--border);box-shadow:0 -8px 24px -12px rgba(7,26,51,.18)}
+  .mobile-cta .btn{min-height:46px;padding-inline:var(--sp-3)}
+  body:has(.mobile-cta){padding-bottom:calc(68px + env(safe-area-inset-bottom))}
+  body:has(.mobile-cta) .assist{bottom:calc(80px + env(safe-area-inset-bottom))}
+  .menu-open .mobile-cta,.cookie-open .mobile-cta{display:none}
+}
+@media print{.mobile-cta{display:none}}
+
+/* Knowledge Hub */
+.hub-search{max-width:720px}
+.hub-filter{display:flex;flex-wrap:wrap;gap:var(--sp-2);margin-top:var(--sp-6)}
+.hub-cat{margin-top:var(--sp-10)}
+.hub-cat[hidden]{display:none}
+.hub-cat-title{display:flex;align-items:center;gap:var(--sp-3);font-size:var(--fs-xl);margin-bottom:var(--sp-5)}
+.hub-cat-title::after{content:"";flex:1;height:1px;background:var(--border)}
+a.chip{text-decoration:none}
+.chip[aria-current="page"]{background:var(--navy-900);border-color:var(--navy-900);color:var(--white)}
+.chip-count{margin-left:6px;font-size:var(--fs-xs);opacity:.7}
+.result-meta{display:flex;flex-wrap:wrap;align-items:center;gap:var(--sp-2)}
+.result-date{font-size:var(--fs-xs);color:var(--ink-500)}
+.excluded .icon{color:var(--ink-400,#94A3B8)}
+.on-dark .select{background-repeat:no-repeat;background-position:right 14px center}
+/* The sticky bar carries Get Started on phones; keep the header uncluttered. */
+@media (max-width:768px){body:has(.mobile-cta) .header-cta{display:none}}
+@media (max-width:400px){.header-cta{display:none}}
+.chip-count{opacity:1;color:inherit;font-weight:var(--fw-regular)}
+/* Tap targets (WCAG 2.5.8): standalone links get at least 24px of height */
+.verify-status-link,.compare .table tbody th a,.alert a{display:inline-flex;align-items:center;min-height:24px}
+.cell-source{display:inline-flex;align-items:center;min-height:24px}
+.card h3>a,.table td>a:not(.cell-source){display:inline-flex;align-items:center;min-height:24px}

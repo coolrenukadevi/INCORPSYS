@@ -67,13 +67,13 @@
       timeline: { text: 'When do you want to start?', options: [['asap', 'Within a month'], ['1-3', 'In 1–3 months'], ['3-6', 'In 3–6 months'], ['exploring', 'Just exploring']] }
     };
     var FLOWS = {
-      incorporation: { label: 'Start a company', steps: ['country', 'activity', 'structure', 'ownership', 'visa', 'timeline'] },
-      compare: { label: 'Compare jurisdictions', link: '/jurisdictions/' },
-      licensing: { label: 'Business licence', steps: ['country', 'activity', 'timeline'] },
-      banking: { label: 'Corporate banking', steps: ['country', 'ownership', 'timeline'] },
-      visa: { label: 'Visa & residency', steps: ['country', 'visa', 'timeline'] },
+      incorporation: { label: 'Start a Company', steps: ['country', 'activity', 'structure', 'ownership', 'visa', 'timeline'] },
+      compare: { label: 'Compare Jurisdictions', link: '/jurisdictions/' },
+      licensing: { label: 'Business Licence', steps: ['country', 'activity', 'timeline'] },
+      banking: { label: 'Corporate Banking', steps: ['country', 'ownership', 'timeline'] },
+      visa: { label: 'Visa & Residency', steps: ['country', 'visa', 'timeline'] },
       compliance: { label: 'Compliance', steps: ['country', 'timeline'] },
-      expert: { label: 'Speak to an expert', steps: [] }
+      expert: { label: 'Speak to an Expert', steps: [] }
     };
     var state = {};
     function el(tag, cls, text) { var n = doc.createElement(tag); if (cls) n.className = cls; if (text) n.textContent = text; return n; }
@@ -261,11 +261,22 @@
     requestAnimationFrame(function () { box.classList.add('is-animated'); });
   })();
 
+  /* ---- Knowledge Hub category filter ---- */
+  $$('[data-hub-filter]').forEach(function (bar) {
+    var cats = $$('.hub-cat[data-cat]');
+    $$('[data-cat]', bar).forEach(function (b) {
+      b.addEventListener('click', function () {
+        var c = b.getAttribute('data-cat');
+        $$('[data-cat]', bar).forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+        cats.forEach(function (sec) { sec.hidden = c !== 'all' && sec.getAttribute('data-cat') !== c; });
+      });
+    });
+  });
+
   /* ---- Comparison filters: topic groups, jurisdiction rows, sort ---- */
   $$('[data-compare-controls]').forEach(function (ctl) {
     var wrap = ctl.nextElementSibling; if (!wrap || !wrap.hasAttribute('data-compare')) return;
     var tbody = $('tbody', wrap);
-    ctl.hidden = false;
     $$('[data-show]', ctl).forEach(function (b) {
       b.addEventListener('click', function () {
         $$('[data-show]', ctl).forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });

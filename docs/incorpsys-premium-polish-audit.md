@@ -37,7 +37,7 @@ Scope: the "Final Premium Polish & Conversion" brief (and the CRO brief sent wit
 | G9 | §19 Assist | Subheading differs from the brief | Low |
 | G10 | §21–22 hub/search | Resource hub has no category filter; search results lack category/jurisdiction/date | Medium |
 | G11 | §24 mobile | No sticky bottom action bar on phones | Medium |
-| G12 | §30 schema | No ItemList for jurisdictions; no ProfessionalService entity | Low |
+| G12 | §30 schema | No ItemList for jurisdictions | Low |
 | G13 | New request | Philippines, Thailand, Saudi Arabia not present | High (user request) |
 
 ## 3. Items not implemented as written, and why
@@ -49,7 +49,7 @@ Scope: the "Final Premium Polish & Conversion" brief (and the CRO brief sent wit
 | Matrix sort "by tax rate, setup speed, total estimated fees" | No verified tax rates, timelines or fees in the registry | Filters by jurisdiction and topic; unverified cells read **Not yet verified** |
 | "Incorporation Readiness & Cost Estimator" | No verified fee data and no quote backend | Guided setup path + "Request a formal quote" through the enquiry; no computed prices (brief §18 permits UX-only) |
 | Lead magnets ("2026 Cross-Border Taxation Master Matrix", "Checklist Generator") | No verified tax matrix exists; exit-intent popups conflict with the calm/consultative brief | Deferred; existing checklists linked from the commercial layer |
-| "LegalService" schema | INCORPSYS is not a law firm; LegalService implies legal representation | `ProfessionalService` |
+| "LegalService" schema | INCORPSYS is not a law firm; LegalService implies legal representation | Organization + Service (existing) + ItemList. ProfessionalService was considered but is a LocalBusiness type that expects a verified street address, which is not confirmed |
 | "Launch 60-Sec Jurisdiction Matcher", "Start Corporate Setup" (CRO brief) | Conflicts with the Final brief's CTA set | Final brief wins: Get Started / Compare Jurisdictions / Explore Jurisdictions |
 | UAE free-zone pages (DMCC, IFZA, RAKEZ …) | Brief §15 requires official verification first; official sites are not reachable from this environment | Architecture note only; no pages created |
 | Philippines / Thailand / Saudi Arabia facts | No supplied content; official sites unreachable here | Jurisdictions added as **in preparation**: authority links, verification-required status, enquiry and setup routing; pages `noindex` until verified content exists |
@@ -69,5 +69,5 @@ Scope: the "Final Premium Polish & Conversion" brief (and the CRO brief sent wit
 5. Comparison: extra rows, filter chips, mobile cards, "Not yet verified".
 6. Commercial layer: "Need help with this setup?" mini-form on major pages.
 7. Assist copy; search result metadata; knowledge-hub category filter.
-8. Schema: ItemList, ProfessionalService.
+8. Schema: ItemList.
 9. QA at 11 widths, html-validate, axe, Lighthouse; final report and production-readiness report. No deployment.

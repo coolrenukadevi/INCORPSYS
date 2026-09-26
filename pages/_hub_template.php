@@ -3,24 +3,25 @@ require_once __DIR__.'/../includes/config.php';
 $pages=site_data();$reg=site_registry();
 $hub=trim((string)($GLOBALS['PAGE_SLUG']??''),'/');
 
-/* ---------- Resource library hub ---------- */
+/* ---------- Knowledge Hub (resource library) ---------- */
 if($hub==='resources'){
-  $page=['slug'=>'resources','title'=>'Company Incorporation Resources & Checklists | INCORPSYS','description'=>'Cross-jurisdiction guides, checklists, FAQs and glossaries for planning company incorporation, with links to each jurisdiction\'s official authority.'];
-  $crumbs=[['name'=>'Home','slug'=>''],['name'=>'Resources','slug'=>'resources']];
-  $items=array_filter($pages,fn($p)=>$p['kind']==='resource');
-  $groups=['Plan'=>['start-company-abroad','choose-jurisdiction-framework','source-first-research','how-to-read-official-guidance','cross-border-expansion','branch-vs-subsidiary','legal-form-decision','business-activity-mapping','licence-and-approval-mapping','local-agent-concepts','foreign-founder-preparation','visa-vs-incorporation','tax-authority-handoff','banking-readiness'],
-    'Checklists'=>['documents-master-checklist','startup-global-setup-checklist','company-name-checklist','registered-office-checklist','director-shareholder-prep','enquiry-preparation','service-provider-due-diligence'],
-    'Verify and comply'=>['fee-verification','timeline-verification','authority-vs-provider','source-freshness','post-incorporation-calendar','compliance-evidence','document-version-control','filing-proof','official-sources-directory'],
-    'FAQs and glossaries'=>['company-incorporation-faq','jurisdiction-faq','incorporation-glossary','registration-glossary','compliance-glossary']];
+  $page=['slug'=>'resources','title'=>'Company Incorporation Resources & Checklists | INCORPSYS','description'=>'The INCORPSYS Knowledge Hub: cross-jurisdiction guides, checklists, comparisons and glossaries for company incorporation, with links to each jurisdiction\'s official authority.'];
+  $crumbs=[['name'=>'Home','slug'=>''],['name'=>'Knowledge Hub','slug'=>'resources']];
+  $cats=require __DIR__.'/../content/knowledge-hub.php';
   include __DIR__.'/../partials/header.php';?>
 <main id="main">
-<?=page_hero('Resource library','Company incorporation resources','Guides, checklists, FAQs and glossaries that apply across jurisdictions. Each one points you to the official authority for the country you choose.',$crumbs)?>
+<?=page_hero('INCORPSYS Knowledge Hub','Company incorporation guides and checklists','Guides, checklists, comparisons and glossaries that apply across jurisdictions. Each one points you to the official authority for the country you choose.',$crumbs)?>
 <section class="content-body"><div class="container">
-<?php $shown=[]; foreach($groups as $g=>$slugs): $list=array_filter(array_map(fn($s)=>$pages['resources/'.$s]??null,$slugs)); if(!$list) continue;?>
-  <h2 class="mt-10"><?=e($g)?></h2><div class="grid grid-3 mt-6"><?php foreach($list as $p): $shown[]=$p['slug'];?><a class="card card-link" href="<?=e(path_url($p['slug']))?>"><h3 class="h4"><?=e($p['name'])?></h3><p class="small"><?=e($p['description'])?></p></a><?php endforeach;?></div>
-<?php endforeach; $rest=array_diff_key($items,array_flip($shown)); if($rest):?>
-  <h2 class="mt-10">More guides</h2><div class="grid grid-3 mt-6"><?php foreach($rest as $p):?><a class="card card-link" href="<?=e(path_url($p['slug']))?>"><h3 class="h4"><?=e($p['name'])?></h3><p class="small"><?=e($p['description'])?></p></a><?php endforeach;?></div>
-<?php endif;?>
+  <form class="search-form hub-search" action="/search/" method="get" role="search"><label class="visually-hidden" for="hub-q">Search the Knowledge Hub</label><input class="input" id="hub-q" name="q" type="search" placeholder="Search guides, checklists and jurisdictions" maxlength="100"><button class="btn btn-primary" type="submit"><?=icon('search')?>Search</button></form>
+  <div class="hub-filter" data-hub-filter role="group" aria-label="Filter by category"><button type="button" class="chip" data-cat="all" aria-pressed="true">All</button><button type="button" class="chip" data-cat="jurisdictions" aria-pressed="false">Jurisdictions</button><?php foreach($cats as $k=>$c):?><button type="button" class="chip" data-cat="<?=e($k)?>" aria-pressed="false"><?=e($c['label'])?></button><?php endforeach;?></div>
+  <section class="hub-cat" data-cat="jurisdictions" aria-labelledby="cat-jurisdictions"><h2 id="cat-jurisdictions" class="hub-cat-title">Jurisdictions</h2>
+    <div class="grid grid-3"><?php foreach($reg['sources']+$reg['pending'] as $k=>$src): $pend=isset($reg['pending'][$k]);?><a class="card card-link card-compact" href="<?=e(path_url($k))?>"><span class="eyebrow">Jurisdiction guide</span><h3 class="h4 mt-2">Company formation in <?=e($src['label'])?></h3><p class="small"><?=e($src['authority'])?></p><?php if($pend):?><span class="badge badge-warning mt-2"><?=icon('clock-4')?>Guide in preparation</span><?php else:?><span class="badge badge-verified mt-2"><?=icon('badge-check')?>Sources checked <?=e(fmt_date($src['verified']??null))?></span><?php endif;?></a><?php endforeach;?></div>
+  </section>
+  <?php foreach($cats as $k=>$c): $list=array_filter(array_map(fn($s)=>$pages['resources/'.$s]??null,$c['slugs'])); if(!$list) continue;?>
+  <section class="hub-cat" data-cat="<?=e($k)?>" aria-labelledby="cat-<?=e($k)?>"><h2 id="cat-<?=e($k)?>" class="hub-cat-title"><?=e($c['label'])?></h2>
+    <div class="grid grid-3"><?php foreach($list as $p):?><a class="card card-link card-compact" href="<?=e(path_url($p['slug']))?>"><span class="eyebrow"><?=e($c['label'])?></span><h3 class="h4 mt-2"><?=e($p['name'])?></h3><p class="small"><?=e($p['description'])?></p></a><?php endforeach;?></div>
+  </section>
+  <?php endforeach;?>
 </div></section>
 <?=cta_band()?>
 </main>

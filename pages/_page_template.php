@@ -9,7 +9,7 @@ $kind=$page['kind'];$jKey=$page['jurisdiction']??null;$jLabel=$jKey?$reg['source
 if($kind==='legal'||!empty($page['noindex'])) $noindex=true;
 $crumbs=[['name'=>'Home','slug'=>'']];
 if($jKey) $crumbs[]=['name'=>$jLabel,'slug'=>$jKey];
-elseif($kind==='resource') $crumbs[]=['name'=>'Resources','slug'=>'resources'];
+elseif($kind==='resource') $crumbs[]=['name'=>'Knowledge Hub','slug'=>'resources'];
 elseif($kind==='legal') $crumbs[]=['name'=>'Legal & Support','slug'=>'legal'];
 $crumbs[]=['name'=>$page['name'],'slug'=>$slug];
 // Related links: this jurisdiction's other pages, the same topic elsewhere, or the rest of the resource library.

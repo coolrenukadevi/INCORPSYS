@@ -63,7 +63,7 @@ include __DIR__.'/partials/header.php';?>
     </form>
     <div class="gs-result" data-gs-result tabindex="-1" hidden>
       <p class="eyebrow">Your setup path</p>
-      <h3 data-r="title"></h3>
+      <h3 data-r="title">Company setup</h3>
       <dl class="gs-dl">
         <div><dt>Official authority</dt><dd data-r="authority"></dd></div>
         <div data-r-wrap="structure"><dt>Possible structure</dt><dd data-r="structure"></dd></div>

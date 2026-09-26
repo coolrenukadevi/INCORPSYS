@@ -4,7 +4,7 @@
     <div class="footer-top">
       <div class="footer-brand">
         <a class="footer-logo" href="/" aria-label="INCORPSYS home"><picture><source type="image/webp" srcset="<?=e(asset('img/logo-reverse-96.webp'))?> 1x, <?=e(asset('img/logo-reverse-144.webp'))?> 1.5x"><img src="<?=e(asset('img/logo-reverse-96.png'))?>" alt="INCORPSYS — Global Company Incorporation" width="240" height="48" loading="lazy"></picture></a>
-        <p>Company incorporation, licensing, banking readiness and compliance support across global jurisdictions — organised around official government sources. Guides for the UAE, Singapore, Hong Kong, the UK, the USA and Malaysia; Saudi Arabia, the Philippines and Thailand on enquiry.</p>
+        <p>Company incorporation, licensing, banking readiness and compliance support across global jurisdictions, organised around official government sources and delivered by one team from enquiry to ongoing compliance.</p>
         <ul class="footer-contact">
           <li><a href="<?=e(wa_url())?>" target="_blank" rel="noopener"><?=icon('message-circle')?>WhatsApp</a></li>
           <li><a href="/contact/"><?=icon('send')?>Contact us</a></li>
@@ -32,21 +32,24 @@
 <div class="assist" id="assist" data-countries="<?=e(json_encode(array_map(fn($s)=>$s['label'],$footSources)))?>" data-wa="<?=e(WHATSAPP_NUMBER)?>">
   <button class="assist-toggle" type="button" aria-expanded="false" aria-controls="assist-panel"><?=icon('message-circle')?><span class="assist-label">INCORPSYS Assist</span><span class="visually-hidden"> — open</span></button>
   <div class="assist-panel" id="assist-panel" role="dialog" aria-modal="false" aria-labelledby="assist-title" hidden>
-    <div class="assist-head"><div><b id="assist-title">INCORPSYS Assist</b><small>Guided help — answers go to our team, not a bot</small></div><button class="assist-close" type="button"><?=icon('x')?><span class="visually-hidden">Close INCORPSYS Assist</span></button></div>
+    <div class="assist-head"><div><b id="assist-title">INCORPSYS Assist</b><small>Guided setup assistance from the INCORPSYS team.</small></div><button class="assist-close" type="button"><?=icon('x')?><span class="visually-hidden">Close INCORPSYS Assist</span></button></div>
     <div class="assist-body" aria-live="polite">
       <p class="assist-msg">Hello. What would you like help with?</p>
       <div class="assist-options assist-static">
-        <a class="assist-option" href="/get-started/?need=incorporation">Start a company<?=icon('chevron-right')?></a>
-        <a class="assist-option" href="/jurisdictions/">Compare jurisdictions<?=icon('chevron-right')?></a>
-        <a class="assist-option" href="/get-started/?need=licensing">Business licence<?=icon('chevron-right')?></a>
-        <a class="assist-option" href="/get-started/?need=banking">Corporate banking<?=icon('chevron-right')?></a>
-        <a class="assist-option" href="/get-started/?need=visa">Visa &amp; residency<?=icon('chevron-right')?></a>
+        <a class="assist-option" href="/get-started/?need=incorporation">Start a Company<?=icon('chevron-right')?></a>
+        <a class="assist-option" href="/jurisdictions/">Compare Jurisdictions<?=icon('chevron-right')?></a>
+        <a class="assist-option" href="/get-started/?need=licensing">Business Licence<?=icon('chevron-right')?></a>
+        <a class="assist-option" href="/get-started/?need=banking">Corporate Banking<?=icon('chevron-right')?></a>
+        <a class="assist-option" href="/get-started/?need=visa">Visa &amp; Residency<?=icon('chevron-right')?></a>
         <a class="assist-option" href="/get-started/?need=compliance">Compliance<?=icon('chevron-right')?></a>
-        <a class="assist-option" href="/contact/">Speak to an expert<?=icon('chevron-right')?></a>
+        <a class="assist-option" href="/contact/">Speak to an Expert<?=icon('chevron-right')?></a>
       </div>
     </div>
     <div class="assist-foot"><a href="<?=e(wa_url())?>" target="_blank" rel="noopener"><?=icon('message-circle')?>WhatsApp</a><a href="/contact/"><?=icon('send')?>Contact us</a></div>
   </div>
 </div>
+<?php if(($page['slug']??'')!=='get-started'):?>
+<nav class="mobile-cta" aria-label="Quick actions"><a class="btn btn-cta" href="/get-started/">Get Started<?=icon('arrow-right')?></a><a class="btn btn-secondary" href="<?=e(wa_url())?>" target="_blank" rel="noopener"><?=icon('message-circle')?>WhatsApp</a></nav>
+<?php endif;?>
 <script src="<?=e(asset('js/site.js'))?>" defer></script>
 </body></html>

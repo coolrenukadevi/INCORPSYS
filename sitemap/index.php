@@ -23,6 +23,7 @@ include __DIR__.'/../partials/header.php';?>
   <div class="grid grid-3 mt-6"><?php foreach($reg['sources'] as $k=>$s): $guides=array_filter($pages,fn($p)=>($p['jurisdiction']??null)===$k&&$p['kind']==='guide');?>
     <section class="card" aria-labelledby="sm-<?=e($k)?>"><h3 id="sm-<?=e($k)?>"><a href="<?=e(path_url($k))?>">Company formation in <?=e($s['label'])?></a></h3><?=$list(array_map(fn($p)=>$link(path_url($p['slug']),$p['name']),$guides))?></section>
   <?php endforeach;?></div>
+  <p class="mt-6"><strong>Guides in preparation:</strong> <?php $n=0; foreach($reg['pending'] as $k=>$s): echo $n++?' · ':'';?><a href="<?=e(path_url($k))?>">Company formation in <?=e($s['label'])?></a><?php endforeach;?></p>
   <div class="grid grid-2 mt-10">
     <section class="card" aria-labelledby="sm-res"><h2 id="sm-res" class="h3">Resources</h2><?=$list($res)?></section>
     <section class="card" aria-labelledby="sm-legal"><h2 id="sm-legal" class="h3">Legal &amp; Support</h2><?=$list($legal)?><p class="small muted mt-6">Search engines: see the <a href="/sitemap.xml">XML sitemap</a>.</p></section>

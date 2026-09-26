@@ -6,7 +6,7 @@ Premium, source-backed PHP website for **INCORPSYS — Global Company Incorporat
 - Design system: CSS tokens and components (buttons, cards, forms, tables, tabs, accordions, alerts, badges, breadcrumbs, modal, tooltip); self-hosted Inter; Lucide icons as inline SVG.
 - Header: utility bar (WhatsApp, Login, Sign Up), mega menus on every tab (Company Setup, Business Structures, Services, Resources, About), Get Started, mobile drawer.
 - Cookie consent banner; Google Analytics loads only after the visitor accepts analytics cookies.
-- Homepage: setup finder, jurisdiction comparison, services, process, structures, resources, FAQ.
+- Homepage: four-step guided setup with an inline setup path, official-source trust bar, jurisdiction explorer, filterable comparison, source-first method, services, structures, Knowledge Hub, FAQ.
 - `/get-started/`: 8-step enquiry (works without JavaScript), with server-side validation, spam protection and lead priority.
 - INCORPSYS Assist: guided chat flow that hands off to the enquiry or WhatsApp.
 - Jurisdiction guides built from a source registry; comparison and pricing engines that show only verified values.
@@ -18,8 +18,9 @@ Premium, source-backed PHP website for **INCORPSYS — Global Company Incorporat
 |---|---|---|---|
 | Home, comparison, Get started | `/`, `/jurisdictions/`, `/get-started/` | 3 | yes |
 | Jurisdiction guides | `/uae/` … | 6 | yes |
+| Jurisdictions in preparation (Saudi Arabia, Philippines, Thailand) | `/saudi-arabia/` … | 3 | no — verification-required pages until sourced content is added |
 | In-depth jurisdiction guides | `/singapore/name-reservation-120-days/` | 60 | yes |
-| Resource library and guides | `/resources/`, `/resources/fee-verification/` | 36 | yes |
+| Knowledge Hub and resource guides | `/resources/`, `/resources/fee-verification/` | 36 | yes |
 | Services | `/services/`, `/services/company-incorporation/` | 11 | yes |
 | About, company and trust pages, Contact | `/about/`, `/about/why-choose-us/`, `/about/vision-mission/`, `/about/leadership/`, `/about/methodology/`, `/about/source-policy/`, `/about/editorial-policy/`, `/careers/`, `/support/`, `/contact/` | 10 | yes |
 | Sitemap page (the XML sitemap is styled for browsers via `assets/sitemap.xsl`) | `/sitemap/` | 1 | yes |
@@ -32,12 +33,14 @@ Premium, source-backed PHP website for **INCORPSYS — Global Company Incorporat
 | File | What it holds |
 |---|---|
 | `content/sources.php` | Official authority, source links and verification date per jurisdiction |
+| `content/pending-jurisdictions.php` | Jurisdictions in preparation: authority and official home pages only. To publish one, move it into `sources.php` and add guides, a profile, a journey and comparison values |
+| `content/knowledge-hub.php` | Knowledge Hub categories for the resource guides (also used for search result types) |
 | `content/pages.php` | Phase A pages (built at render time by `includes/phase-a.php` from sourced guide statements; set `'noindex'` per page) |
 | `content/legal.php` | Legal & Support policies (drafts; search for `[To be confirmed` to find open items) |
 | `content/phase2.php` | In-depth guides, resource guides, Contact and legal text |
 | `content/jurisdiction-profiles.php` | Jurisdiction guide sections, FAQs and common mistakes |
 | `content/services.php` | Service hub content |
-| `content/comparisons.php` | Comparison tables (`null` cells render "Verify") |
+| `content/comparisons.php` | Comparison tables and filter groups (`null` cells render "Not yet verified") |
 | `content/pricing.php` | Verified fees only: amount, currency, source, URL, date, validity |
 | `content/journeys.php` | Setup-path steps used by `/explore/` and the jurisdiction guides |
 | `content/navigation.php` | Mega menu links |
@@ -67,4 +70,4 @@ It writes the page stub files, regenerates `sitemap.xml` and `docs/source-regist
 7. Submit `/sitemap.xml` to Google Search Console and Bing Webmaster Tools.
 8. Re-check official sources before relying on time-sensitive regulatory information.
 
-See `docs/incorpsys-phase2-audit.md` and `docs/incorpsys-phase2-final-report.md` for the audit, the changes and the deployment readiness report.
+See `docs/incorpsys-premium-polish-audit.md` and `docs/incorpsys-premium-polish-final-report.md` for the latest audit, changes and production readiness report (earlier: `docs/incorpsys-phase2-*.md`).

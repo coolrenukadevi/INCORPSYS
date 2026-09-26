@@ -57,6 +57,16 @@ function verify_value(string $hint = 'Verify with the authority'): string {
   return '<span class="verify" data-tip="'.e($hint).'" tabindex="0">'.icon('triangle-alert').'Not yet verified<span class="visually-hidden">: '.e($hint).'</span></span>';
 }
 
+/**
+ * Verification status: shown wherever an official requirement is not yet confirmed in the source registry.
+ * $link is the authority page to check ([title, url]); omitted when no official page is registered.
+ */
+function verification_status(string $text, ?array $link = null, string $title = 'Verification required'): string {
+  return '<div class="verify-status" role="note"><span class="verify-status-dot" aria-hidden="true"></span><div><p class="verify-status-title">'.e($title).'</p><p>'.$text.'</p>'
+    .($link ? '<a class="verify-status-link" href="'.e($link['url']).'" target="_blank" rel="noopener noreferrer">Verify with '.e($link['title']).icon('external-link').'<span class="visually-hidden"> (opens official site)</span></a>' : '')
+    .'</div></div>';
+}
+
 /** Short authority name for compact labels (trust bar, explorer cards, verify links). */
 function authority_short(string $key): string {
   static $short = ['uae' => 'UAE Government', 'singapore' => 'ACRA', 'hong-kong' => 'Companies Registry', 'uk' => 'Companies House / GOV.UK', 'usa' => 'SBA', 'malaysia' => 'SSM', 'saudi-arabia' => 'MISA', 'philippines' => 'SEC Philippines', 'thailand' => 'DBD'];
@@ -82,17 +92,31 @@ function contact_card(): string {
     .'<li><a href="/contact/">Contact us'.icon('send').'</a></li></ul></div>';
 }
 
-/** Final call-to-action band. Optional jurisdiction pre-fills the enquiry. */
+/**
+ * Commercial layer: "Need help with this setup?" band closing every major page.
+ * The mini-form pre-fills the enquiry (GET /get-started/); an optional jurisdiction is pre-selected.
+ */
 function cta_band(string $countryKey = '', string $countryLabel = '', string $heading = ''): string {
-  $url = '/get-started/'.($countryKey !== '' ? '?country='.rawurlencode($countryKey) : '');
-  $heading = $heading !== '' ? $heading : ($countryLabel !== '' ? 'Planning a company in '.$countryLabel.'?' : 'Ready to plan your company setup?');
+  $heading = $heading !== '' ? $heading : ($countryLabel !== '' ? 'Planning a company in '.$countryLabel.'?' : 'Need help with this setup?');
+  $select = function (string $name, string $label, array $opts, string $selected = '') {
+    $h = '<div class="field"><label for="cta-'.e($name).'">'.e($label).'</label><select class="select" id="cta-'.e($name).'" name="'.e($name).'">';
+    foreach ($opts as $k => $v) $h .= '<option value="'.e((string)$k).'"'.((string)$k === $selected ? ' selected' : '').'>'.e($v).'</option>';
+    return $h.'</select></div>';
+  };
+  $countries = enquiry_countries();
+  $countries = ['undecided' => $countries['undecided']] + array_diff_key($countries, ['undecided' => 1]);
   return '<section class="section-tight"><div class="container"><div class="cta-band on-dark"><div><p class="eyebrow">Next step</p><h2>'.e($heading).'</h2>'
-    .'<p>Answer a few questions about your activity, ownership and timeline. We map each step to the authority that controls it and reply with a structured plan.</p>'
-    .'<div class="cluster mt-6"><a class="btn btn-cta btn-lg" href="'.e($url).'">Launch your entity'.icon('arrow-right').'</a><a class="btn btn-on-dark btn-lg" href="/jurisdictions/">Compare jurisdictions</a></div></div>'
-    .'<ul class="cta-contact">'
+    .'<p>Tell us four things. We confirm the official route for your case and reply with a structured setup plan — no obligation.</p>'
+    .'<form class="cta-form" action="/get-started/" method="get">'
+    .$select('country', 'Country', $countries, $countryKey)
+    .$select('activity', 'Business activity', ENQUIRY_OPTIONS['activity'])
+    .$select('ownership', 'Ownership', ENQUIRY_OPTIONS['ownership'])
+    .$select('visa', 'Visa requirement', ENQUIRY_OPTIONS['visa'])
+    .'<button class="btn btn-cta btn-lg" type="submit">Get a Setup Plan'.icon('arrow-right').'</button></form></div>'
+    .'<div class="cta-side"><p class="cta-side-title">Speak to an Expert</p><ul class="cta-contact">'
     .'<li><a href="'.e(wa_url()).'" target="_blank" rel="noopener">'.icon('message-circle').'<span>WhatsApp<small>Chat with the team</small></span></a></li>'
     .'<li><a href="/contact/">'.icon('send').'<span>Contact us<small>Send a message</small></span></a></li>'
-    .'</ul></div></div></section>';
+    .'</ul><p class="cta-side-note">Authorities make the final decisions. We never guarantee incorporation, licensing, banking or visa outcomes.</p></div></div></div></section>';
 }
 
 /** Standard page shell pieces for simple pages. */
@@ -133,7 +157,7 @@ function compare_table(string $id, ?array $only = null, bool $interactive = fals
   }
   $h = '';
   if ($interactive && $id === 'jurisdictions') {
-    $h .= '<div class="compare-controls" data-compare-controls hidden><div class="compare-filter" role="group" aria-label="Show topics"><span class="compare-filter-label">Topics</span>';
+    $h .= '<div class="compare-controls" data-compare-controls><div class="compare-filter" role="group" aria-label="Show topics"><span class="compare-filter-label">Topics</span>';
     foreach (['all' => 'All topics'] + array_map(fn($g) => $g['label'], $t['groups']) as $g => $label) $h .= '<button type="button" class="chip" data-show="'.e($g).'" aria-pressed="'.($g === 'formation' ? 'true' : 'false').'">'.e($label).'</button>';
     $h .= '</div><div class="compare-filter" role="group" aria-label="Show jurisdictions"><span class="compare-filter-label">Jurisdictions</span>';
     foreach ($rows as $k => $_) { $l = ($reg['sources'][$k] ?? $reg['pending'][$k])['label']; $h .= '<button type="button" class="chip" data-row="'.e($k).'" aria-pressed="true">'.e($l).'</button>'; }
