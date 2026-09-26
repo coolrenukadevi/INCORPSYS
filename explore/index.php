@@ -5,13 +5,24 @@ $noindex=true;
 $country=(string)($_GET['country']??'');
 $answers=[];foreach(['activity','ownership','visa'] as $k){$v=(string)($_GET[$k]??'');$answers[$k]=isset(ENQUIRY_OPTIONS[$k][$v])?$v:'undecided';}
 $src=$reg['sources'][$country]??null;
-$page=['slug'=>'explore','title'=>($src?'Your setup path in '.$src['label']:'Find the right setup').' | INCORPSYS','description'=>'A setup path built from official guidance for your jurisdiction, activity, ownership and visa needs.'];
+$pend=$src?null:($reg['pending'][$country]??null);
+$page=['slug'=>'explore','title'=>(($src??$pend)?'Your setup path in '.($src??$pend)['label']:'Find the right setup').' | INCORPSYS','description'=>'A setup path built from official guidance for your jurisdiction, activity, ownership and visa needs.'];
 $link=fn($s)=>isset($pages[$s])?'<li><a href="'.e(path_url($s)).'">'.icon('chevron-right').e($pages[$s]['name']).'</a></li>':'';
 include __DIR__.'/../partials/header.php';?>
 <main id="main">
-<?php if(!$src):?>
+<?php if($pend):?>
+<?=page_hero('Your setup path','Company setup in '.$pend['label'],'We are preparing source-verified guidance for '.$pend['label'].'. Our team will confirm the official route and requirements for your case before recommending anything.',[['name'=>'Home','slug'=>''],['name'=>$pend['label'],'slug'=>$country],['name'=>'Setup path','slug'=>'explore']])?>
+<section class="content-body"><div class="container layout-aside">
+  <div class="content-main">
+    <div class="card card-subtle"><h2 class="h4">Your answers</h2><dl class="summary-list mt-4"><dt>Jurisdiction</dt><dd><?=e($pend['label'])?></dd><?php foreach(['activity'=>'Activity','ownership'=>'Ownership','visa'=>'Visa'] as $k=>$l):?><dt><?=e($l)?></dt><dd><?=e(ENQUIRY_OPTIONS[$k][$answers[$k]])?></dd><?php endforeach;?></dl></div>
+    <?=verification_status('The '.e($pend['label']).' requirements have not yet been confirmed in the INCORPSYS source registry, so we cannot show a step-by-step path yet. Send your answers and we will confirm the official route for your case.',$pend['links'][0])?>
+    <p class="mt-6"><a class="link-arrow" href="<?=e(path_url($country))?>">About company formation in <?=e($pend['label'])?><?=icon('arrow-right')?></a></p>
+  </div>
+  <aside class="source-rail"><div class="source-card"><span class="eyebrow">Next step</span><h2 class="mt-2">Get a setup plan</h2><p>We will pre-fill the enquiry with your answers.</p><p class="mt-4"><a class="btn btn-cta btn-block" href="/get-started/?<?=e(http_build_query(['country'=>$country]+array_filter($answers,fn($v)=>$v!=='undecided')))?>">Get My Setup Plan<?=icon('arrow-right')?></a></p></div></aside>
+</div></section>
+<?php elseif(!$src):?>
 <?=page_hero('Setup finder','Find the right setup','Choose a jurisdiction to see a setup path built from its official guidance.',[['name'=>'Home','slug'=>''],['name'=>'Setup finder','slug'=>'explore']])?>
-<section class="content-body"><div class="container grid grid-3"><?php foreach($reg['sources'] as $k=>$s):?><a class="card card-link" href="/explore/?country=<?=e($k)?>"><h2 class="h3"><?=e($s['label'])?></h2><p><?=e($s['authority'])?></p></a><?php endforeach;?></div></section>
+<section class="content-body"><div class="container grid grid-3"><?php foreach($reg['sources']+$reg['pending'] as $k=>$s):?><a class="card card-link" href="/explore/?country=<?=e($k)?>"><h2 class="h3"><?=e($s['label'])?></h2><p><?=e($s['authority'])?></p><?php if(isset($reg['pending'][$k])):?><span class="badge badge-warning mt-2"><?=icon('clock-4')?>Guide in preparation</span><?php endif;?></a><?php endforeach;?></div></section>
 <?php else:
   $prefill=http_build_query(['country'=>$country]+array_filter($answers,fn($v)=>$v!=='undecided'));
   $extras=[];foreach($answers as $k=>$v){foreach($j['extras'][$k.':'.$v]??[] as $s){if(isset($pages[$s]))$extras[$s]=$pages[$s];}}

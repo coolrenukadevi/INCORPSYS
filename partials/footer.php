@@ -1,10 +1,10 @@
-<?php $footSources=site_registry()['sources']; ?>
+<?php $footSources=site_registry()['sources']+site_registry()['pending']; ?>
 <footer class="site-footer on-dark">
   <div class="container">
     <div class="footer-top">
       <div class="footer-brand">
         <a class="footer-logo" href="/" aria-label="INCORPSYS home"><picture><source type="image/webp" srcset="<?=e(asset('img/logo-reverse-96.webp'))?> 1x, <?=e(asset('img/logo-reverse-144.webp'))?> 1.5x"><img src="<?=e(asset('img/logo-reverse-96.png'))?>" alt="INCORPSYS — Global Company Incorporation" width="240" height="48" loading="lazy"></picture></a>
-        <p>Company incorporation, licensing, banking readiness and compliance support for the UAE, Singapore, Hong Kong, the UK, the USA and Malaysia — organized around official government sources.</p>
+        <p>Company incorporation, licensing, banking readiness and compliance support across global jurisdictions — organised around official government sources. Guides for the UAE, Singapore, Hong Kong, the UK, the USA and Malaysia; Saudi Arabia, the Philippines and Thailand on enquiry.</p>
         <ul class="footer-contact">
           <li><a href="<?=e(wa_url())?>" target="_blank" rel="noopener"><?=icon('message-circle')?>WhatsApp</a></li>
           <li><a href="/contact/"><?=icon('send')?>Contact us</a></li>

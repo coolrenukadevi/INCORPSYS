@@ -46,8 +46,8 @@ function phase_a_checklist(array $slugs): array {
   return array_keys($items);
 }
 
-function phase_a_pending(string $topic, string $label, string $authority): string {
-  return '<div class="alert alert-warning">'.icon('triangle-alert').'<div><strong>Pending verification</strong>We have not yet published verified guidance on '.e($topic).' for '.e($label).'. Check with '.e($authority).', or ask us to confirm it for your case.</div></div>';
+function phase_a_pending(string $topic, string $label, string $authority, ?array $link = null): string {
+  return verification_status('We have not yet published verified guidance on '.e($topic).' for '.e($label).'. Check with '.e($authority).', or ask us to confirm it for your case.', $link);
 }
 
 /** Rewrites a Phase A page's answer, sections and FAQs from sourced material. */
@@ -76,7 +76,7 @@ function phase_a_enrich(array $page): array {
       $check = phase_a_checklist($guides);
       $page['sections'] = array_values(array_filter([
         // The first statement is the direct answer; list the rest here, then link every guide used.
-        ['title' => 'What the official guidance says', 'html' => !$guides ? phase_a_pending(strtolower($topicName), $label, $auth)
+        ['title' => 'What the official guidance says', 'html' => !$guides ? phase_a_pending(strtolower($topicName), $label, $auth, ['title' => $auth, 'url' => $src['url']])
           : (count($guides) > ($rest === 'company-incorporation-overview' ? 0 : 1) ? phase_a_fact_list($rest === 'company-incorporation-overview' ? $guides : array_slice($guides, 1)) : '')
             .'<p class="small muted">Source: '.e($auth).' guidance, via our in-depth guides:</p><ul class="link-list">'.implode('', array_map(fn($g) => '<li><a href="'.e(path_url($g)).'">'.icon('chevron-right').e($pages[$g]['name']).'</a></li>', $guides)).'</ul>'],
         $check ? ['title' => $topicName.' checklist for '.$label, 'bullets' => $check] : null,

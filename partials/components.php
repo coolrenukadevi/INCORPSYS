@@ -54,7 +54,14 @@ function verified_badge(?string $date): string {
 
 /** Marker for values that are not yet established from an official source (comparison and pricing engines). */
 function verify_value(string $hint = 'Verify with the authority'): string {
-  return '<span class="verify" data-tip="'.e($hint).'" tabindex="0">'.icon('triangle-alert').'Verify<span class="visually-hidden">: '.e($hint).'</span></span>';
+  return '<span class="verify" data-tip="'.e($hint).'" tabindex="0">'.icon('triangle-alert').'Not yet verified<span class="visually-hidden">: '.e($hint).'</span></span>';
+}
+
+/** Short authority name for compact labels (trust bar, explorer cards, verify links). */
+function authority_short(string $key): string {
+  static $short = ['uae' => 'UAE Government', 'singapore' => 'ACRA', 'hong-kong' => 'Companies Registry', 'uk' => 'Companies House / GOV.UK', 'usa' => 'SBA', 'malaysia' => 'SSM', 'saudi-arabia' => 'MISA', 'philippines' => 'SEC Philippines', 'thailand' => 'DBD'];
+  $r = site_registry();
+  return $short[$key] ?? (($r['sources'][$key] ?? $r['pending'][$key] ?? [])['authority'] ?? '');
 }
 
 /** Official source card for the page rail. */
@@ -95,28 +102,65 @@ function organization_schema(): array {
     'logo' => url('assets/img/logo-144.png'), 'email' => SITE_EMAIL, 'telephone' => SITE_PHONE, 'sameAs' => array_values(SOCIAL_LINKS)];
 }
 
-/** Comparison engine: renders a table from content/comparisons.php; null cells show "Verify". */
-function compare_table(string $id, ?array $only = null): string {
+/** ItemList of published (indexable) jurisdiction guides, for the homepage and comparison page. */
+function jurisdiction_item_list(): array {
+  $items = []; $n = 0;
+  foreach (site_registry()['sources'] as $k => $src) $items[] = ['@type' => 'ListItem', 'position' => ++$n, 'name' => 'Company formation in '.$src['label'], 'url' => page_url($k)];
+  return ['@type' => 'ItemList', 'name' => 'INCORPSYS jurisdiction guides', 'itemListElement' => $items];
+}
+
+/**
+ * Comparison engine: renders a table from content/comparisons.php; null cells show "Not yet verified".
+ * $interactive adds the topic and jurisdiction filters and the sort control (site.js); without JavaScript every column shows.
+ * Jurisdictions in preparation are added as rows with no verified values.
+ */
+function compare_table(string $id, ?array $only = null, bool $interactive = false): string {
   static $data = null; $data ??= require __DIR__.'/../content/comparisons.php';
   $t = $data[$id]; $reg = site_registry(); $pages = site_data();
-  $cols = $t['columns'];
-  $h = '<div class="table-wrap table-stack"><table class="table"><caption class="visually-hidden">'.e($t['caption']).'</caption><thead><tr><th scope="col">'.($id === 'jurisdictions' ? 'Jurisdiction' : 'Structure').'</th>';
-  foreach ($cols as $label) $h .= '<th scope="col">'.e($label).'</th>';
+  $cols = $t['columns']; $groupOf = [];
+  foreach ($t['groups'] ?? [] as $g => $def) foreach ($def['cols'] as $c) $groupOf[$c] = $g;
+  $rows = $t['rows'];
+  if ($id === 'jurisdictions' && $only === null) foreach ($reg['pending'] as $k => $_) $rows[$k] = [];
+  // One jurisdiction (its own guide page): a two-column facts list reads better than a one-row table.
+  if ($id === 'jurisdictions' && $only !== null && count($only) === 1 && isset($rows[$only[0]])) {
+    $key = $only[0]; $src = $reg['sources'][$key]; $h = '<dl class="facts-grid">';
+    foreach ($cols as $ck => $label) {
+      if ($ck === 'authority') { $v = '<a href="'.e($src['url']).'" target="_blank" rel="noopener noreferrer">'.e($src['authority']).'<span class="visually-hidden"> (opens official site)</span></a>'; }
+      else { $cell = $rows[$key][$ck] ?? null; $v = $cell && isset($pages[$cell['guide']]) ? e($cell['value']).' <a class="cell-source" href="'.e(path_url($cell['guide'])).'">Source guide<span class="visually-hidden">: '.e($pages[$cell['guide']]['name']).'</span></a>' : verify_value('Not yet verified from '.$src['authority'].' — check the official source'); }
+      $h .= '<div><dt>'.e($label).'</dt><dd>'.$v.'</dd></div>';
+    }
+    return $h.'</dl>';
+  }
+  $h = '';
+  if ($interactive && $id === 'jurisdictions') {
+    $h .= '<div class="compare-controls" data-compare-controls hidden><div class="compare-filter" role="group" aria-label="Show topics"><span class="compare-filter-label">Topics</span>';
+    foreach (['all' => 'All topics'] + array_map(fn($g) => $g['label'], $t['groups']) as $g => $label) $h .= '<button type="button" class="chip" data-show="'.e($g).'" aria-pressed="'.($g === 'formation' ? 'true' : 'false').'">'.e($label).'</button>';
+    $h .= '</div><div class="compare-filter" role="group" aria-label="Show jurisdictions"><span class="compare-filter-label">Jurisdictions</span>';
+    foreach ($rows as $k => $_) { $l = ($reg['sources'][$k] ?? $reg['pending'][$k])['label']; $h .= '<button type="button" class="chip" data-row="'.e($k).'" aria-pressed="true">'.e($l).'</button>'; }
+    $h .= '</div><label class="compare-sort"><span>Sort</span><select class="select select-sm" data-sort><option value="default">Default order</option><option value="verified">Most verified values</option><option value="az">A–Z</option></select></label></div>';
+  }
+  $h .= '<div class="table-wrap table-stack'.($interactive ? ' compare' : '').'"'.($interactive ? ' data-compare data-show="formation"' : '').'><table class="table"><caption class="visually-hidden">'.e($t['caption']).'</caption><thead><tr><th scope="col">'.($id === 'jurisdictions' ? 'Jurisdiction' : 'Structure').'</th>';
+  foreach ($cols as $ck => $label) $h .= '<th scope="col"'.(isset($groupOf[$ck]) ? ' data-group="'.$groupOf[$ck].'"' : '').'>'.e($label).'</th>';
   $h .= '</tr></thead><tbody>';
-  foreach ($t['rows'] as $key => $row) {
+  $i = 0;
+  foreach ($rows as $key => $row) {
     if ($only !== null && !in_array($key, $only, true)) continue;
     if ($id === 'jurisdictions') {
-      $src = $reg['sources'][$key];
-      $h .= '<tr><th scope="row"><a href="'.e(path_url($key)).'">'.e($src['label']).'</a></th>';
+      $pend = !isset($reg['sources'][$key]); $src = $reg['sources'][$key] ?? $reg['pending'][$key];
+      $srcUrl = $src['url'] ?? $src['links'][0]['url'];
+      $known = count(array_filter($row, fn($c) => $c && isset($pages[$c['guide']])));
+      $cells = '';
       foreach ($cols as $ck => $label) {
-        if ($ck === 'authority') { $h .= '<td data-label="'.e($label).'"><a href="'.e($src['url']).'" target="_blank" rel="noopener noreferrer">'.e($src['authority']).'</a></td>'; continue; }
+        $g = isset($groupOf[$ck]) ? ' data-group="'.$groupOf[$ck].'"' : '';
+        if ($ck === 'authority') { $cells .= '<td data-label="'.e($label).'"><a href="'.e($srcUrl).'" target="_blank" rel="noopener noreferrer">'.e($src['authority']).'<span class="visually-hidden"> (opens official site)</span></a></td>'; continue; }
         $cell = $row[$ck] ?? null;
         if ($cell && isset($pages[$cell['guide']])) {
-          $h .= '<td data-label="'.e($label).'">'.e($cell['value']).' <a href="'.e(path_url($cell['guide'])).'" aria-label="Source guide: '.e($pages[$cell['guide']]['name']).'">Guide</a></td>';
+          $cells .= '<td data-label="'.e($label).'"'.$g.'>'.e($cell['value']).' <a class="cell-source" href="'.e(path_url($cell['guide'])).'">Source guide<span class="visually-hidden">: '.e($pages[$cell['guide']]['name']).'</span></a></td>';
         } else {
-          $h .= '<td data-label="'.e($label).'">'.verify_value('Not yet verified from the '.$src['authority'].' — check the official source').'</td>';
+          $cells .= '<td data-label="'.e($label).'"'.$g.'>'.verify_value('Not yet verified from '.$src['authority'].' — check the official source').'</td>';
         }
       }
+      $h .= '<tr data-row="'.e($key).'" data-verified="'.$known.'" data-order="'.($i++).'"><th scope="row"><a href="'.e(path_url($key)).'">'.e($src['label']).'</a>'.($pend ? ' <span class="badge badge-warning">In preparation</span>' : '').'</th>'.$cells;
     } else {
       $h .= '<tr><th scope="row">'.e($key).'</th>';
       foreach ($cols as $ck => $label) {

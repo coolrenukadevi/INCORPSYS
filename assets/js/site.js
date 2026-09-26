@@ -200,6 +200,99 @@
     show(start, true);
   }
 
+  /* ---- Guided setup (homepage): one question at a time, then an inline setup path ---- */
+  var gs = $('[data-guided-setup]');
+  if (gs) (function () {
+    var box = gs.closest('.gs'), steps = $$('.gs-step', gs), bars = $$('.gs-progress span', box), count = $('[data-gs-count]', box);
+    var back = $('[data-gs-back]', gs), next = $('[data-gs-next]', gs), submit = $('[data-gs-submit]', gs), result = $('[data-gs-result]', box);
+    var data = {}; try { data = JSON.parse($('#setup-data').textContent); } catch (e) { return; }
+    var idx = 0;
+    box.classList.add('is-stepped');
+    function show(i, focus) {
+      idx = i;
+      steps.forEach(function (st, n) { st.hidden = n !== i; });
+      bars.forEach(function (b, n) { b.classList.toggle('is-done', n <= i); });
+      count.textContent = 'Step ' + (i + 1) + ' of ' + steps.length;
+      back.hidden = i === 0; next.hidden = i === steps.length - 1; submit.hidden = i !== steps.length - 1;
+      if (focus) { var first = $('input:checked', steps[i]) || $('input', steps[i]); if (first) first.focus(); }
+    }
+    function answered(st) { return !!$('input:checked', st); }
+    next.addEventListener('click', function () {
+      if (idx === 0 && !answered(steps[0])) { $('input', steps[0]).reportValidity(); return; }
+      show(idx + 1, true);
+    });
+    back.addEventListener('click', function () { show(idx - 1, true); });
+    // A pointer click on an option moves on; keyboard selection (arrow keys) stays put until Next.
+    steps.forEach(function (st, n) {
+      st.addEventListener('click', function (e) {
+        if (e.detail > 0 && e.target.matches('input[type="radio"]') && n < steps.length - 1) setTimeout(function () { show(n + 1, false); }, 180);
+      });
+    });
+    function val(name) { var c = $('input[name="' + name + '"]:checked', gs); return c ? c.value : ''; }
+    function link(item) { var a = doc.createElement('a'); a.href = item.url; a.textContent = item.text; return a; }
+    function fill(key, node) { var el = $('[data-r="' + key + '"]', result); el.textContent = ''; if (node) el.appendChild(node); var w = $('[data-r-wrap="' + key + '"]', result); if (w) w.hidden = !node; return el; }
+    gs.addEventListener('submit', function (e) {
+      var j = data.jurisdictions[val('country')];
+      if (!j) return; // unknown value: let the server handle it
+      e.preventDefault();
+      var q = { country: val('country') };
+      ['activity', 'ownership', 'visa'].forEach(function (k) { var v = val(k); if (v && v !== 'undecided') q[k] = v; });
+      var qs = Object.keys(q).map(function (k) { return k + '=' + encodeURIComponent(q[k]); }).join('&');
+      $('[data-r="title"]', result).textContent = 'Company setup in ' + j.label;
+      var auth = doc.createElement('a'); auth.href = j.authorityUrl; auth.target = '_blank'; auth.rel = 'noopener noreferrer'; auth.textContent = j.authority; fill('authority', auth);
+      fill('structure', j.structure ? link(j.structure) : null);
+      fill('route', j.route ? link(j.route) : null);
+      var ul = fill('requirements', null); j.requirements.forEach(function (r) { var li = doc.createElement('li'); li.appendChild(link(r)); ul.appendChild(li); });
+      $('[data-r-wrap="requirements"]', result).hidden = !j.requirements.length;
+      var svc = ['company-incorporation'];
+      if (q.activity === 'regulated' || q.activity === 'trading') svc.push('business-licensing');
+      if (q.visa === 'founders' || q.visa === 'employees') svc.push('visa-residency');
+      if (q.ownership === 'corporate') svc.push('business-expansion');
+      svc.push('corporate-banking', 'compliance-documentation');
+      var sv = fill('services', null); svc.forEach(function (k, n) { if (!data.services[k]) return; if (n) sv.appendChild(doc.createTextNode(' · ')); sv.appendChild(link(data.services[k])); });
+      $('[data-r="verify"]', result).textContent = j.verify.length ? j.verify.join(', ') : 'Nothing flagged';
+      $('[data-r="plan"]', result).href = '/get-started/?' + qs;
+      $('[data-r="full"]', result).href = j.pending ? j.hub : '/explore/?' + qs;
+      gs.hidden = true; bars.forEach(function (b) { b.classList.add('is-done'); }); count.textContent = 'Your path';
+      result.hidden = false; result.focus();
+    });
+    $('[data-gs-restart]', result).addEventListener('click', function () { result.hidden = true; gs.hidden = false; gs.reset(); show(0, true); });
+    show(0, false);
+    requestAnimationFrame(function () { box.classList.add('is-animated'); });
+  })();
+
+  /* ---- Comparison filters: topic groups, jurisdiction rows, sort ---- */
+  $$('[data-compare-controls]').forEach(function (ctl) {
+    var wrap = ctl.nextElementSibling; if (!wrap || !wrap.hasAttribute('data-compare')) return;
+    var tbody = $('tbody', wrap);
+    ctl.hidden = false;
+    $$('[data-show]', ctl).forEach(function (b) {
+      b.addEventListener('click', function () {
+        $$('[data-show]', ctl).forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+        wrap.setAttribute('data-show', b.getAttribute('data-show'));
+      });
+    });
+    $$('[data-row]', ctl).forEach(function (b) {
+      b.addEventListener('click', function () {
+        var on = b.getAttribute('aria-pressed') !== 'true';
+        // Keep at least one jurisdiction visible.
+        if (!on && $$('[data-row][aria-pressed="true"]', ctl).length === 1) return;
+        b.setAttribute('aria-pressed', String(on));
+        var row = $('tr[data-row="' + b.getAttribute('data-row') + '"]', tbody); if (row) row.hidden = !on;
+      });
+    });
+    var sort = $('[data-sort]', ctl);
+    sort.addEventListener('change', function () {
+      var rows = $$('tr', tbody), mode = sort.value;
+      rows.sort(function (a, b) {
+        if (mode === 'verified') return (+b.dataset.verified - +a.dataset.verified) || (+a.dataset.order - +b.dataset.order);
+        if (mode === 'az') return $('th', a).textContent.localeCompare($('th', b).textContent);
+        return +a.dataset.order - +b.dataset.order;
+      });
+      rows.forEach(function (r) { tbody.appendChild(r); });
+    });
+  });
+
   /* ---- Tabs ---- */
   $$('[role="tablist"]').forEach(function (list) {
     var tabs = $$('[role="tab"]', list);

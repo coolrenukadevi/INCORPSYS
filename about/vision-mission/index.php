@@ -13,6 +13,6 @@ ob_start();?>
   <li><strong>Accuracy.</strong> Official sources first; nothing invented.</li>
   <li><strong>Speed with care.</strong> Structured workflows that move quickly without skipping checks.</li>
   <li><strong>Transparency.</strong> We show where information comes from and when it was checked.</li>
-  <li><strong>Global outlook.</strong> One team for company setup across six jurisdictions.</li>
+  <li><strong>Global outlook.</strong> One team for company setup across global jurisdictions.</li>
 </ul>
 <?php $body=ob_get_clean(); include __DIR__.'/../../partials/simple-page.php';

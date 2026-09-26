@@ -9,6 +9,7 @@ function site_search_index(): array {
   }
   foreach (require __DIR__.'/../content/services.php' as $k => $s) $idx[] = ['url' => '/services/'.$k.'/', 'name' => $s['name'], 'desc' => $s['summary'], 'type' => 'Service', 'noindex' => false];
   foreach (site_registry()['sources'] as $k => $s) $idx[] = ['url' => path_url($k), 'name' => 'Company incorporation in '.$s['label'], 'desc' => $s['note'], 'type' => 'Jurisdiction', 'noindex' => false];
+  foreach (site_registry()['pending'] as $k => $s) $idx[] = ['url' => path_url($k), 'name' => 'Company incorporation in '.$s['label'], 'desc' => 'Guide in preparation. Enquire and we will confirm the official requirements with '.$s['authority'].'.', 'type' => 'Jurisdiction', 'noindex' => true];
   foreach ([['/jurisdictions/', 'Compare jurisdictions', 'Authorities, filing routes and officer rules side by side.'], ['/about/', 'About INCORPSYS', 'Who we are, leadership and how we work.'], ['/about/methodology/', 'Methodology', 'How our guides are researched and verified.'], ['/about/source-policy/', 'Source policy', 'Which sources we accept for regulatory facts.'], ['/get-started/', 'Get started', 'Guided enquiry for company setup.']] as [$u, $n, $d]) $idx[] = ['url' => $u, 'name' => $n, 'desc' => $d, 'type' => 'Page', 'noindex' => false];
   return $idx;
 }

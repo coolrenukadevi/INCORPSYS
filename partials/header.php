@@ -20,7 +20,7 @@ $current=path_url($page['slug']??'');
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="site-header" id="site-header">
   <div class="utility"><div class="container utility-in">
-    <p class="utility-context"><?=icon('map-pin')?> Company setup in UAE · Singapore · Hong Kong · UK · USA · Malaysia</p>
+    <p class="utility-context"><?=icon('map-pin')?> Company setup across the Middle East, Asia, Europe and the Americas</p>
     <ul class="utility-links">
       <li><a href="<?=e(wa_url())?>" target="_blank" rel="noopener"><?=icon('message-circle')?>WhatsApp</a></li>
       <li><a href="/login/"<?=$current==='/login/'?' aria-current="page"':''?>><?=icon('log-in')?>Login</a></li>

@@ -2,7 +2,7 @@
 require_once __DIR__.'/../includes/config.php';
 $page=['slug'=>'get-started','title'=>'Get Started | INCORPSYS','description'=>'Tell INCORPSYS what you need, where and when. A short guided enquiry for company incorporation, licensing, banking, visa and compliance support.'];
 $reg=site_registry();
-$countries=array_map(fn($s)=>$s['label'],$reg['sources'])+['undecided'=>'Not decided yet'];
+$countries=enquiry_countries();
 // Pre-fill from the setup finder or INCORPSYS Assist; only allow-listed values are accepted.
 $pre=[];
 foreach(['need','activity','structure','ownership','visa','timeline'] as $k){ $v=(string)($_GET[$k]??''); if(isset(ENQUIRY_OPTIONS[$k][$v])) $pre[$k]=$v; }

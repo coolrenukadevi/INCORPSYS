@@ -7,13 +7,17 @@ $jur = [];
 foreach (site_registry()['sources'] as $key => $src) {
   $jur[$key] = ['label' => $src['label'], 'desc' => $src['authority'], 'url' => '/'.$key.'/'];
 }
+foreach (site_registry()['pending'] as $key => $src) {
+  $jur[$key] = ['label' => $src['label'], 'desc' => 'Guide in preparation', 'url' => '/'.$key.'/'];
+}
 $pick = fn(array $keys) => array_values(array_intersect_key($jur, array_flip($keys)));
 return [
   'setup' => [
     'label' => 'Company Setup',
-    'intro' => 'Set up a company in six jurisdictions, each guided by its official authority.',
+    'intro' => 'Set up a company across the Middle East, Asia, Europe and the Americas, each step guided by its official authority.',
     'cols' => [
-      ['title' => 'Middle East & Asia', 'links' => $pick(['uae', 'singapore', 'hong-kong', 'malaysia']), 'icon' => 'map-pin'],
+      ['title' => 'Middle East', 'links' => $pick(['uae', 'saudi-arabia']), 'icon' => 'map-pin'],
+      ['title' => 'Asia', 'links' => $pick(['singapore', 'hong-kong', 'malaysia', 'philippines', 'thailand']), 'icon' => 'map-pin'],
       ['title' => 'Europe & Americas', 'links' => $pick(['uk', 'usa']), 'icon' => 'map-pin'],
     ],
     'all' => ['label' => 'Compare all jurisdictions', 'url' => '/jurisdictions/'],

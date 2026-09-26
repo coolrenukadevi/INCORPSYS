@@ -55,7 +55,7 @@ if (count($recent) >= 5) {
 }
 
 $wizard = ($_POST['form'] ?? '') === 'wizard';
-$countries = array_map(fn($s) => $s['label'], site_registry()['sources']) + ['undecided' => 'Not decided yet'];
+$countries = enquiry_countries();
 $in = [
     'name' => clean_line((string)($_POST['name'] ?? ''), 120),
     'email' => clean_line((string)($_POST['email'] ?? ''), 190),

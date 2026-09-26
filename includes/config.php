@@ -48,6 +48,9 @@ function form_secret(): string { return (string)(getenv('INCORPSYS_FORM_SECRET')
 function form_token(): string { $t=(string)time(); return $t.'.'.hash_hmac('sha256',$t,form_secret()); }
 function site_data(): array { static $d=null; return $d ??= require __DIR__.'/data.php'; }
 function site_registry(): array { static $r=null; return $r ??= require __DIR__.'/../content/registry.php'; }
+// Every jurisdiction a visitor can choose: guides published (sources) plus those in preparation (pending).
+function jurisdiction_labels(): array { $r=site_registry(); return array_map(fn($s)=>$s['label'],$r['sources']+$r['pending']); }
+function enquiry_countries(): array { return jurisdiction_labels()+['undecided'=>'Not decided yet']; }
 require_once __DIR__.'/../partials/icons.php';
 require_once __DIR__.'/../partials/components.php';
 require_once __DIR__.'/../content/source-registry.php';

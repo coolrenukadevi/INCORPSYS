@@ -16,4 +16,5 @@ $topics=[
 ];
 $services=[
  'company-incorporation'=>'Company Incorporation','business-licensing'=>'Business Licensing','corporate-banking'=>'Corporate Banking Support','compliance-documentation'=>'Compliance & Documentation','visa-residency'=>'Visa & Residency Support','ongoing-support'=>'Ongoing Corporate Support','registered-office-solutions'=>'Registered Office Solutions','tax-registration'=>'Tax Registration & Setup','due-diligence'=>'Corporate Due Diligence','business-expansion'=>'International Business Expansion'];
-return ['sources'=>$sources,'topics'=>$topics,'services'=>$services];
+$pending=require __DIR__.'/pending-jurisdictions.php';
+return ['sources'=>$sources,'pending'=>$pending,'topics'=>$topics,'services'=>$services];

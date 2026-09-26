@@ -19,6 +19,8 @@ $stub = function (string $dir, string $slug, string $template) use ($root, &$wri
 };
 foreach ($pages as $slug => $page) { $stub(str_starts_with($slug, 'legal/') ? $slug : 'pages/'.$slug, $slug, '_page_template.php'); }
 foreach ($hubs as $hub) { $stub('pages/'.$hub, $hub, '_hub_template.php'); }
+// Jurisdictions in preparation: pages exist (noindex) but stay out of the sitemap until verified content is added.
+foreach (array_keys(site_registry()['pending']) as $hub) { $stub('pages/'.$hub, $hub, '_hub_template.php'); }
 $services = require __DIR__.'/../content/services.php';
 $stub('pages/services', 'services', '_service_template.php');
 foreach (array_keys($services) as $sk) { $stub('pages/services/'.$sk, 'services/'.$sk, '_service_template.php'); }

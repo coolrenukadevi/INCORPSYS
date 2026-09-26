@@ -29,18 +29,19 @@ if($hub==='resources'){
 
 /* ---------- Jurisdiction hub ---------- */
 $src=$reg['sources'][$hub]??null;
+if(!$src&&($pend=$reg['pending'][$hub]??null)){require __DIR__.'/_pending_hub.php';return;}
 if(!$src){require __DIR__.'/../404.php';return;}
 $profiles=require __DIR__.'/../content/jurisdiction-profiles.php';
 $journeys=require __DIR__.'/../content/journeys.php';
 $services=require __DIR__.'/../content/services.php';
 $pr=$profiles[$hub];$label=$src['label'];$auth=$src['authority'];$verified=$src['verified']??null;
-$short=['uae'=>'UAE Government','singapore'=>'ACRA','hong-kong'=>'Companies Registry','uk'=>'GOV.UK','usa'=>'SBA','malaysia'=>'SSM'][$hub]??$auth;
+$short=authority_short($hub);
 $page=['slug'=>$hub,'title'=>'Company Formation in '.$label.' | INCORPSYS','description'=>'Company formation in '.$label.': structures, requirements, documents, registration steps and licensing, sourced from '.$short.' guidance.'];
 $crumbs=[['name'=>'Home','slug'=>''],['name'=>$label,'slug'=>$hub]];
 $facts=function(array $slugs) use($pages){ $h='<ul class="fact-list">'; $n=0; foreach($slugs as $s){ if(!isset($pages[$s])) continue; $n++; $h.='<li><p>'.e($pages[$s]['answer']).'</p><a class="link-arrow small" href="'.e(path_url($s)).'">'.e($pages[$s]['name']).icon('arrow-right').'</a></li>'; } return $n?$h.'</ul>':''; };
-$pending=fn(string $topic,array $links=[])=>'<div class="alert alert-warning">'.icon('triangle-alert').'<div><strong>Pending verification</strong>We have not yet verified '.e($topic).' for '.e($label).' from an official source. Check with the competent authority, or ask us to confirm it for your case.'.($links?' See also: '.implode(', ',array_map(fn($s)=>isset($pages[$s])?'<a href="'.e(path_url($s)).'">'.e($pages[$s]['name']).'</a>':'',$links)).'.':'').'</div></div>';
+$pending=fn(string $topic,array $links=[])=>verification_status('Official guidance on '.e($topic).' for '.e($label).' has not yet been confirmed in the INCORPSYS source registry. Check with the competent authority, or ask us to confirm it for your case.'.($links?' See also: '.implode(', ',array_filter(array_map(fn($s)=>isset($pages[$s])?'<a href="'.e(path_url($s)).'">'.e($pages[$s]['name']).'</a>':'',$links))).'.':''),['title'=>$short,'url'=>$src['url']]);
 $sections=[
-  'overview'=>'Overview','who'=>'Who can register','structures'=>'Available business structures',
+  'facts'=>'Quick facts','overview'=>'Overview','who'=>'Who can register','structures'=>'Available business structures',
   'zones'=>'Mainland, free zone and offshore','requirements'=>'Requirements','documents'=>'Documents',
   'process'=>'Registration process','authorities'=>'Government authorities','licensing'=>'Licensing',
   'banking'=>'Banking','tax'=>'Tax considerations','visa'=>'Visa and residency','compliance'=>'Compliance after registration',
@@ -54,6 +55,8 @@ include __DIR__.'/../partials/header.php';?>
 <section class="content-body"><div class="container layout-aside">
   <div class="content-main">
     <?=answer_block($pr['answer'])?>
+
+    <section class="content-section" id="facts"><h2>Quick facts</h2><p class="small muted">From <?=e($auth)?> guidance. Each value links to the guide that cites it; open items are marked rather than estimated.</p><?=compare_table('jurisdictions',[$hub])?></section>
 
     <section class="content-section" id="overview"><h2>Overview</h2><p><?=e($src['note'])?></p><p>This guide summarises what <?=e($auth)?> publishes and links to the official pages. Each statement below links to the in-depth guide that cites it.</p></section>
 
@@ -82,7 +85,7 @@ include __DIR__.'/../partials/header.php';?>
     <section class="content-section" id="costs"><h2>Costs</h2><?=price_table($hub,$auth)?></section>
     <section class="content-section" id="timeline"><h2>Timeline</h2><p>Processing times are set by <?=e($auth)?> and depend on the route, the activity and the completeness of the application. We do not estimate timelines the authority has not published. <a href="/resources/timeline-verification/">How to verify registration timelines</a>.</p></section>
 
-    <section class="content-section" id="compare"><h2>Compare with other jurisdictions</h2><?=compare_table('jurisdictions',[$hub])?><ul class="link-list mt-4"><?php foreach($reg['sources'] as $k=>$o): if($k===$hub) continue;?><li><a href="<?=e(path_url($k))?>"><?=icon('git-compare-arrows')?><?=e('Company formation in '.$o['label'])?></a></li><?php endforeach;?><li><a href="/jurisdictions/"><?=icon('git-compare-arrows')?>All six side by side</a></li></ul></section>
+    <section class="content-section" id="compare"><h2>Compare with other jurisdictions</h2><p>See how <?=e($label)?> compares on filing route, officers, registered office, tax, visas and compliance.</p><ul class="link-list mt-4"><?php foreach($reg['sources'] as $k=>$o): if($k===$hub) continue;?><li><a href="<?=e(path_url($k))?>"><?=icon('git-compare-arrows')?><?=e('Company formation in '.$o['label'])?></a></li><?php endforeach;?><li><a href="/jurisdictions/"><?=icon('git-compare-arrows')?>All jurisdictions side by side</a></li></ul></section>
 
     <section class="content-section" id="mistakes"><h2>Common mistakes</h2><ul class="check-list mistakes"><?php foreach($pr['mistakes'] as $m):?><li><?=icon('triangle-alert')?><span><?=e($m)?></span></li><?php endforeach;?></ul></section>
 
