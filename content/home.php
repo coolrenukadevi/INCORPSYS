@@ -94,7 +94,15 @@ return [
 
   'cta' => [
     'kicker' => 'Build Your Business Beyond Borders',
-    'title' => 'Your Global Business Starts With the Right Structure.',
-    'text' => 'Explore your jurisdiction, understand the requirements and take the next step with INCORPSYS.',
+    'title' => 'Your Global Business Starts Here',
+    'text' => 'Get expert guidance, source-linked information and end-to-end support for your international expansion.',
+    // Map pins: [label, key]. Positions live in site.css (.wm-pin--<key>, CSP forbids inline styles).
+    'pins' => [['USA', 'usa'], ['UK', 'uk'], ['UAE', 'uae'], ['Hong Kong', 'hong-kong'], ['Singapore', 'singapore'], ['Malaysia', 'malaysia']],
+    'features' => [
+      ['globe', 'Global Reach', 'Six key jurisdictions'],
+      ['badge-check', 'Expert Guidance', 'From setup to compliance'],
+      ['shield-check', 'Transparent Process', 'Clear information and support'],
+      ['handshake', 'Long-Term Partnership', 'Support beyond incorporation'],
+    ],
   ],
 ];

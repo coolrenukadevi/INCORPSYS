@@ -84,12 +84,3 @@ function art_ecosystem_lines(): string {
   foreach ($pts as [$x, $y]) $l .= '<path d="M150 150L'.$x.' '.$y.'"/>';
   return '<svg class="art-eco" viewBox="0 0 300 300" preserveAspectRatio="none" aria-hidden="true" focusable="false">'.$l.'</svg>';
 }
-
-/** Closing CTA: abstract node network (no map). */
-function art_network(): string {
-  $n = [[60, 70, 'UK'], [150, 40, 'HK'], [250, 90, 'SG'], [330, 50, 'MY'], [110, 160, 'US'], [280, 170, 'AE']];
-  $lines = '<path d="M60 70L150 40L250 90L330 50M150 40L110 160L280 170L250 90M60 70L110 160M330 50L280 170"/>';
-  $dots = '';
-  foreach ($n as [$x, $y, $t]) $dots .= '<circle cx="'.$x.'" cy="'.$y.'" r="16"/><text x="'.$x.'" y="'.($y + 4).'">'.$t.'</text>';
-  return '<svg class="art-net" viewBox="0 0 390 210" aria-hidden="true" focusable="false"><g class="an-l">'.$lines.'</g><g class="an-n">'.$dots.'</g></svg>';
-}

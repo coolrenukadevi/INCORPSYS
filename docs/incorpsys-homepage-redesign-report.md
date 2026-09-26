@@ -128,8 +128,53 @@ Accessibility, Best Practices and SEO score 100 on both.
   - 16:10 frame, anchored near the top so the full towers show.
   - Lazy-loaded with explicit width and height (no layout shift); `alt=""` because the card heading names the jurisdiction.
   - Subtle zoom on hover, off under reduced motion.
-- **Limitation:** the originals are 338 × 343 px, so the usable crop is about 270–322 px wide. On high-density screens the cards display at up to ~400 px (800 device pixels), so the images look slightly soft. Higher-resolution originals (at least 800 px wide, ideally 1200 px) would give crisp cards; drop them into the same folder with the same names.
+- **Limitation (resolved, see below):** the first originals were 338 × 343 px, so they looked slightly soft on high-density screens.
 - **QA after the change:**
   - `tools/qa.php`: 0 failures; html-validate: 0 errors; axe: 0 violations.
   - No overflow at 320–1440; no console errors.
   - Lighthouse: desktop 100 (LCP 0.5 s, CLS 0); mobile 97 (LCP 2.2 s, CLS 0).
+
+## Addendum — high-resolution city images and closing band (26 September 2026)
+
+### City images
+- **Source:** replaced with the higher-resolution images supplied in `Archive.zip`:
+  - Singapore: Marina Bay, 1920 × 1200
+  - USA: New York, 800 × 561
+  - Malaysia: Kuala Lumpur, 960 × 1200
+  - Hong Kong: Victoria Harbour, 1200 × 675
+  - UAE: Dubai, 883 × 589
+  - UK: Westminster, 980 × 653
+- **Processing:** each cropped to exactly 16:10 around its landmark and exported as WebP (quality 0.78) at 960 × 600 (USA 800 × 500, UAE 880 × 550). No upscaling. 47–107 KB each, about 435 KB in total, all lazy-loaded below the fold.
+- **Display:** because the files are now exactly the frame ratio, `object-position` is plain `center`. Cards display at up to ~400 CSS px, so the images are sharp on 2× screens.
+
+### Closing band before the footer (supplied design)
+The closing CTA (`partials/home/cta.php`) now follows the supplied banner design, in three parts.
+
+- **Left:**
+  - "Your Global Business Starts Here" with the supporting line
+  - Launch Your Entity (primary) and Talk to Our Expert (phone link)
+  - The "Build Your Business Beyond Borders" eyebrow stays as secondary brand messaging.
+- **Centre: dotted world map.**
+  - `assets/img/world-dots.svg` (40 KB, about 8 KB gzipped), generated from Natural Earth 1:50m land data (public domain) through the `world-atlas` package. Nothing is copied from the reference image.
+  - Pins for USA, UK, UAE, Hong Kong, Singapore and Malaysia are placed from each location's real longitude and latitude, positioned in CSS because the CSP forbids inline styles.
+  - Malaysia is pinned on East Malaysia so it does not sit on top of Singapore.
+  - The map is decorative (`aria-hidden`); every jurisdiction is linked in the cards above.
+- **Right:** Global Reach (six key jurisdictions), Expert Guidance, Transparent Process, Long-Term Partnership. Icons from the same Lucide set; `globe` and `handshake` added to `partials/icons.php`.
+- **Wording:** "verified information" in the reference is written as "source-linked information", because some comparison values are still "Not yet verified". No other claims were added.
+- **Layout by width:**
+  - Desktop: three columns.
+  - At 1180 px and below: copy and features side by side, map below.
+  - At 720 px and below: copy, then map, then features in two columns.
+  - At 480 px and below: one column with full-width buttons.
+- **Removed:** the old `art_network()` node graphic and its CSS.
+- **Unchanged:** header, footer and INCORPSYS Assist.
+
+### QA after this change
+- `tools/qa.php`: 275 URLs, 140 indexable, 140 in the sitemap, 0 failures, 0 warnings.
+- html-validate (served homepage): 0 errors.
+- axe: 0 violations, on the homepage at 390 / 768 / 1440 and on the 10-page sample.
+- No horizontal overflow at 320–1440; no console errors.
+- Lighthouse:
+  - desktop: 100, LCP 0.5 s, CLS 0
+  - mobile: 99, LCP 2.1 s, TBT 90 ms, CLS 0
+  - Accessibility, Best Practices and SEO: 100 on both

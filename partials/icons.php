@@ -2,6 +2,8 @@
 // Inline SVG icons from Lucide (ISC licence, see assets/icons-LICENSE.txt). Usage in templates: echo icon('check').
 function icon(string $name, string $class=''): string {
   static $paths=[
+    'globe'=>'<circle cx="12" cy="12" r="10" /><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /><path d="M2 12h20" />',
+    'handshake'=>'<path d="m11 17 2 2a1 1 0 1 0 3-3" /><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4" /><path d="m21 3 1 11h-2" /><path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3" /><path d="M3 4h8" />',
     'arrow-right'=>'<path d="M5 12h14" /><path d="m12 5 7 7-7 7" />',
     'arrow-up-right'=>'<path d="M7 7h10v10" /><path d="M7 17 17 7" />',
     'check'=>'<path d="M20 6 9 17l-5-5" />',

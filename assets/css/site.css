@@ -1051,18 +1051,29 @@ a.chip{text-decoration:none}
 /* FAQ source link */
 .faq-src{margin-top:var(--sp-2);font-size:var(--fs-sm)}
 
-/* Closing CTA */
-.hs-cta{padding-block:clamp(3rem,2rem + 3vw,5rem);background:radial-gradient(50% 80% at 90% 20%,rgba(79,70,229,.3),transparent 60%),linear-gradient(160deg,#04111F,#071A33);color:#C5D3E6}
-.fcta{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:var(--sp-10);align-items:center}
-.fcta h2{margin-top:var(--sp-2);font-size:var(--fs-3xl);letter-spacing:-.025em;color:#fff}
-.fcta p{margin-top:var(--sp-3);max-width:560px}
-.fcta-contact{list-style:none;display:flex;flex-wrap:wrap;gap:var(--sp-3) var(--sp-6);margin-top:var(--sp-6)}
-.fcta-contact a{display:inline-flex;align-items:center;gap:8px;min-height:24px;color:#E2E8F0;font-weight:var(--fw-medium)}
-.fcta-contact .icon{width:18px;height:18px;color:#93C5FD}
-.art-net{width:100%;height:auto}
-.an-l path{fill:none;stroke:#60A5FA;stroke-opacity:.45;stroke-width:1.2;stroke-dasharray:3 5}
-.an-n circle{fill:rgba(255,255,255,.06);stroke:#CBD5E1;stroke-opacity:.5}
-.an-n text{fill:#E2E8F0;font-size:11px;font-weight:700;text-anchor:middle;font-family:inherit}
+/* Closing CTA band: copy · dotted world map · features */
+.hs-cta{padding-block:clamp(2.5rem,1.75rem + 2.5vw,4rem);background:radial-gradient(45% 90% at 55% 40%,rgba(37,99,235,.28),transparent 65%),linear-gradient(160deg,#04111F,#071A33 60%,#0A2350);color:#C5D3E6;overflow:hidden}
+.fcta{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1.25fr) minmax(0,.8fr);gap:var(--sp-8);align-items:center}
+.fcta h2{margin-top:var(--sp-2);font-size:clamp(1.75rem,1.4rem + 1.2vw,2.35rem);line-height:1.15;letter-spacing:-.025em;color:#fff}
+.fcta p{margin-top:var(--sp-3);max-width:460px}
+.fcta-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:var(--sp-6)}
+.fcta-actions .btn .icon{width:18px;height:18px}
+.fcta-map{position:relative}
+.fcta-map img{display:block;width:100%;height:auto}
+.wm-pin{position:absolute;display:flex;align-items:center;gap:6px;transform:translate(-9px,-100%);color:#fff;font-size:13px;font-weight:600;line-height:1;white-space:nowrap;text-shadow:0 1px 6px rgba(4,17,31,.9)}
+.wm-mark{position:relative;flex:none;width:18px;height:18px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:linear-gradient(135deg,#FDBA74,#F97316);box-shadow:0 0 0 3px rgba(249,115,22,.25),0 0 18px rgba(249,115,22,.55)}
+.wm-mark::after{content:"";position:absolute;inset:5px;border-radius:50%;background:#fff}
+.wm-pin--usa{left:20.6%;top:29.1%}.wm-pin--uk{left:48%;top:17.9%}.wm-pin--uae{left:64.1%;top:40%}
+.wm-pin--hong-kong{left:81.2%;top:41.6%}.wm-pin--singapore{left:78.2%;top:57.2%}.wm-pin--malaysia{left:82.6%;top:54%}
+.wm-pin--uk,.wm-pin--singapore{flex-direction:row-reverse;transform:translate(calc(-100% + 9px),-100%)}
+.fcta-feats{list-style:none;display:grid;gap:var(--sp-4)}
+.fcta-feats li{display:flex;align-items:center;gap:12px;font-size:var(--fs-sm);line-height:1.4}
+.fcta-feats strong{display:block;color:#fff;font-weight:600;font-size:var(--fs-base)}
+.fcta-ic{flex:none;display:grid;place-items:center;width:42px;height:42px;border-radius:50%;border:1px solid rgba(147,197,253,.55);background:rgba(37,99,235,.18);color:#BFDBFE}
+.fcta-ic .icon{width:20px;height:20px}
+@media (max-width:1180px){.fcta{grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr)}.fcta-map{grid-column:1/-1;order:3;width:100%;max-width:760px;margin-inline:auto}}
+@media (max-width:720px){.fcta{grid-template-columns:1fr}.fcta-map{order:0}.fcta-feats{grid-template-columns:repeat(2,minmax(0,1fr))}.fcta-map{width:auto;margin:0 56px 0 0}.wm-pin{font-size:11px;gap:4px;transform:translate(-6px,-100%)}.wm-mark{width:12px;height:12px}.wm-mark::after{inset:3px}.wm-pin--uk,.wm-pin--singapore{transform:translate(calc(-100% + 6px),-100%)}}
+@media (max-width:480px){.fcta-feats{grid-template-columns:1fr}.fcta-actions .btn{flex:1 1 100%;justify-content:center}}
 
 /* Responsive */
 @media (max-width:1180px){
@@ -1084,7 +1095,7 @@ a.chip{text-decoration:none}
   .cost-cards{grid-template-columns:1fr}
   .engine{grid-template-columns:repeat(2,minmax(0,1fr))}
   .engine li:nth-child(2)::after{display:none}
-  .dec,.fcta{grid-template-columns:1fr}
+  .dec{grid-template-columns:1fr}
   .know-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
   .know-feature{grid-row:auto;grid-column:1/-1}
   .cfg-dl{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -1125,7 +1136,7 @@ a.chip{text-decoration:none}
 .home-main>section:nth-of-type(n+4){content-visibility:auto;contain-intrinsic-size:auto 900px}
 /* Jurisdiction card photos (supplied city images) */
 .jcard-art.has-photo{height:auto;aspect-ratio:16/10;overflow:hidden;background:#071A33}
-.jcard-art.has-photo img{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;object-position:center 12%}
+.jcard-art.has-photo img{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;object-position:center}
 .jcard-art.has-photo::after{content:"";position:absolute;inset:auto 0 0;height:48px;background:linear-gradient(180deg,rgba(7,26,51,0),rgba(7,26,51,.55));pointer-events:none}
 .jcard-art.has-photo .jcard-code{z-index:1;background:rgba(4,17,31,.6);border-color:rgba(255,255,255,.45);backdrop-filter:blur(4px)}
 .jcard:hover .jcard-art.has-photo img{transform:scale(1.03)}
